@@ -1,1 +1,2 @@
 Thay đổi mật khẩu sql cho phù hợp với file dự án : password : songlong 
+LLưuys: Khi mở FontEnd mở từ thư mục File_Aplication luôn nha! Nếu mà đúng thì khi mỏ sẽ thấy 2 thư mục BE_Hmart và FE_Hmart.
