@@ -145,6 +145,11 @@ CREATE TABLE [dbo].[Products](
 	[CreateDate] [date] NOT NULL,
 	[Available] [bit] NOT NULL,
 	[CategoryId] [char](4) NOT NULL,
+	[Origin][nvarchar](100) NULL,
+	[Guarentee][nvarchar](100)NULL,
+	[MadeOf][nvarchar](100)NULL,
+	[Color][nvarchar](100)NULL,
+	[Size][nvarchar](100)NULL,
  CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

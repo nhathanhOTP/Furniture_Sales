@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.8.0/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <script src="local.json"></script>
+</head>
+
+<body ng-app="load" ng-controller="load">
+
+    <form action="" class="col-lg-8 p-3 m-auto" style="border: 1px solid rgb(181, 181, 181);position: relative;">
+        <h2>Form location</h2>
+        <!-- <div class="m-5" style="position: relative;">
+            <div class="title-card">Search address</div>
+
+            <div class="" style="position: fixed;z-index: 1; width: 800px; ">
+                <input placeholder="Search your location..." id="search" type="search" class="form-control" name="">
+                <ul class="list-group" id="list_location" style="overflow-y:auto; max-height: 300px;">
+                    <li class="list-group-item" ng-repeat="lo in local | filter">
+                        <ul class="">
+                            <li class="" ng-repeat="dis in lo.districts">
+                                <ul class="">
+                                    <li class="" ng-repeat="wa in dis.wards">
+                                        {{lo.name}}, {{dis.name}}, {{wa.prefix}} {{wa.name}}{{dis.streets[$index].name==null?'':', Đường '+dis.streets[$index].name}}
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div> -->
+        <div class="row">
+            <div class="form-floating col-lg-6">
+                <select class="form-select" id="" aria-label="Floating label select example">
+              <option selected>Cty</option>
+              <option value="" ng-click="getCty($index)" ng-repeat="cty in local | orderBy:'name'">{{cty.name}}</option>
+            </select>
+            </div>
+
+
+            <div class="form-floating col-lg-6">
+                <select class="form-select" id="" aria-label="Floating label select example">
+              <option selected>Distrists</option>
+              <option value="" ng-repeat="dis in districts | orderBy:'name'" ng-click="getDistricts($index)">{{dis.name}}</option>
+            </select>
+            </div>
+        </div>
+        <div class="mt-3"></div>
+        <div class="row">
+            <div class="form-floating col-lg-6">
+                <select class="form-select" id="" aria-label="Floating label select example">
+              <option selected>Ward</option>
+              <option ng-repeat="wa in wards">{{wa.prefix}} {{wa.name}}</option>
+            </select>
+            </div>
+            <div class="form-floating col-lg-6">
+                <select class="form-select" id="" aria-label="Floating label select example">
+              <option selected>Streets</option>
+              <option ng-repeat="st in streets">{{st.prefix}} {{st.name}}</option>
+            </select>
+            </div>
+        </div>
+    </form>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+<script>
+    var app = angular.module("load", []);
+    $("#list_location").hide();
+    $("#search").focus(function() {
+        $("#list_location").show();
+    });
+    $("#search").blur(function() {
+        $("#list_location").hide(400);
+    });
+    $(document).ready(function() {
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#list_location li").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    app.controller("load", function($scope, $http) {
+
+        $http.get("local.json").then(function(d) {
+            $scope.local = d.data;
+            console.log($scope.local);
+        });
+        // Method use for distrist combobox
+        $scope.getCty = function(value) {
+            $scope.districts = $scope.local[value].districts;
+            $scope.ctyId = value;
+
+            $scope.wards = [];
+            $scope.streets = [];
+
+        };
+        // // Method use for cty combobox
+        $scope.getDistricts = function(value) {
+            disId = value;
+            $scope.loadWard_Streets($scope.ctyId, disId);
+        };
+
+        $scope.loadWard_Streets = function(cty, dis) {
+            $scope.wards = $scope.local[cty].districts[dis].wards;
+            $scope.streets = $scope.local[cty].districts[dis].streets;
+        }
+
+    })
+</script>
+
+</html>

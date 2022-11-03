@@ -31,10 +31,17 @@ public class Product  implements Serializable{
 	String image;
 	Double price;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdate")
+	@Column(name = "createdate")
 	Date createDate = new Date();
 	Boolean available;
-	
+	@Column(name = "guarentee")
+	String guarentee;
+	@Column(name="madeof")
+	String madeOf;
+	@Column(name="color")
+	String color;
+	@Column(name="size")
+	String size;
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")
 	Category category;
