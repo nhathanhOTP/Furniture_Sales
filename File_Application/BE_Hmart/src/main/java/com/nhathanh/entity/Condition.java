@@ -18,13 +18,15 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Conditions")
-public class Conditions {
+public class Condition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idconditions")
 	private int id;
-	@Column(name = "contents")
+	@Column(name = "minspend")
 	private String contents;
+	@Column(name="quantityrequest")
+	private int quantity;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "conditions")

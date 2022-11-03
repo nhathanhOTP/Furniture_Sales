@@ -29,13 +29,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Conditions](
 	[IdConditons] [int] IDENTITY(1,1) NOT NULL,
-	[Contents] nvarchar(200) NOT NULL,
+	[MinSpend][float] NULL,
+	[QuantityRequest][int]NULL,
  CONSTRAINT [PK_Conditons] PRIMARY KEY CLUSTERED 
 (
 	[IdConditons] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
 GO
 /****** Object:  Table [dbo].[Discount]  Script Date: 11/01/2022 3:07:02 PM ******/
 SET ANSI_NULLS ON
@@ -45,8 +45,8 @@ GO
 CREATE TABLE [dbo].[Discount](
 	[IdDiscount] [int] IDENTITY(1,1)  NOT NULL,
 	[PercentDecrease] FLOAT NOT NULL,
-	[TitleDiscount] NVARCHAR(100),
-	[ContentDiscount] NVARCHAR(100),
+	[TitleDiscount] NVARCHAR(100) NULL,
+	[ContentDiscount] NVARCHAR(100) NULL,
 	[StartDate] DATE NOT NULL,
 	[EndDate] DATE NOT NULL,
 	[IdProducts] int Not NULL,
@@ -140,7 +140,7 @@ GO
 CREATE TABLE [dbo].[Products](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
-	[Image] [nvarchar](50) NOT NULL,
+	[Image] [nvarchar](100) NOT NULL,
 	[Price] [float] NOT NULL,
 	[CreateDate] [date] NOT NULL,
 	[Available] [bit] NOT NULL,

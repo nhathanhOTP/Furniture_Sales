@@ -22,8 +22,8 @@ public class Discount {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "iddiscount")
 	int idDiscount;
-	@Column(name = "percentdecrease")
-	private Float percentDecrease;
+	@Column(name = "valuediscount")
+	private Float valuediscount;
 	@Column(name = "titlediscount")
 	private String TitleDiscount;
 	@Column(name = "contentdiscount")
@@ -38,5 +38,5 @@ public class Discount {
 	Product product;
 	@ManyToOne
 	@JoinColumn(name = "ConditionsOfUse")
-	Conditions conditions;
+	Condition conditions;
 }

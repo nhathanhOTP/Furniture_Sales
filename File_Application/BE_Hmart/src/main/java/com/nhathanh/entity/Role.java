@@ -17,13 +17,13 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 @Entity
-@Table(name = "roles")
+@Table(name = "Roles")
 public class Role  implements Serializable{
 	@Id
 	private String id;
 	private String name;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "role")
 	List<Account> account;
 }
