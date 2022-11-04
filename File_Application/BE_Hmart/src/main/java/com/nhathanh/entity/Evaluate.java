@@ -30,6 +30,6 @@ public class Evaluate {
 	private String Images;
 	
 	@ManyToOne
-	@JoinColumn(name = "IdProducts")
+	@JoinColumn(name = "IdProduct")
 	Product product;
 }

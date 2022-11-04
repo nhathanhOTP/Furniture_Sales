@@ -3,8 +3,8 @@ package com.nhathanh.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,17 +21,21 @@ import lombok.Data;
 @Table(name = "Accounts")
 public class Account  implements Serializable{
 	@Id
-	String username;
-	String password;
-	String fullname;
-	String email;
-	String photo;
+	private String username;
+	private String password;
+	private String fullname;
+	private String email;
+	private String photo;
 	
 	@ManyToOne
-	@JoinColumn(name = "roleId")
+	@JoinColumn(name = " roleId")
 	Role role;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Order> orders;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "account")
+	List<Favourite> favourite;
 }

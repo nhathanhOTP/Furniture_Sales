@@ -26,14 +26,24 @@ import lombok.Data;
 public class Product  implements Serializable{
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
-	String name;
-	String image;
-	Double price;
+	private Integer id;
+	private String name;
+	private String image;
+	private Double price;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdate")
-	Date createDate = new Date();
-	Boolean available;
+	@Column(name = "createdate")
+	private Date createDate = new Date();
+	private Boolean available;
+	@Column(name = "origin")
+	private String origin;
+	@Column(name = "guarentee")
+	private String guarentee;
+	@Column(name="madeof")
+	private String madeOf;
+	@Column(name="color")
+	private String color;
+	@Column(name="size")
+	private String size;
 	
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")
@@ -45,10 +55,13 @@ public class Product  implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
-	List<Discount> discount;	
+	List<Discount> discounts;	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
-	List<Evaluate> evaluate;
+	List<Evaluate> evaluates;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
+	List<Favourite> favourites;	
 }
