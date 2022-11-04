@@ -34,7 +34,7 @@ public class Discount {
 	private Date EndDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "IdProducts")
+	@JoinColumn(name = "IdProduct")
 	Product product;
 	@ManyToOne
 	@JoinColumn(name = "ConditionsOfUse")

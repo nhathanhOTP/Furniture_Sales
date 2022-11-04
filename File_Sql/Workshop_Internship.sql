@@ -49,7 +49,7 @@ CREATE TABLE [dbo].[Discount](
 	[ContentDiscount] NVARCHAR(100) NULL,
 	[StartDate] DATE NOT NULL,
 	[EndDate] DATE NOT NULL,
-	[IdProducts] int Not NULL,
+	[IdProduct] int Not NULL,
 	[ConditionsOfUse] int NOT NULL,
  CONSTRAINT [PK_Discount] PRIMARY KEY CLUSTERED 
 (
@@ -65,7 +65,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Evaluate](
 	[IdEvaluate] [int] IDENTITY(1,1) NOT NULL,
-	[IdProducts] [int] NOT NULL,
+	[IdProduct] [int] NOT NULL,
 	[Contents] [nvarchar](max) NOT NULL,
 	[NumberStart] [int] NOT NULL,
 	[Images] [nvarchar](250) NOT NULL,
@@ -174,6 +174,22 @@ CREATE TABLE [dbo].[Roles](
 ) ON [PRIMARY]
 
 GO
+/****** Object:  Table [dbo].[Favourites]   Script Date: 11/01/2022 3:07:02 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Favourites](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nvarchar](50) NOT NULL,
+	[IdProduct] [int] NOT NULL,
+	[DateCreate] [date]NOT NULL,
+ CONSTRAINT [PK_Favorites] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
 ALTER TABLE [dbo].[Accounts] ADD  CONSTRAINT [DF_Customers_Photo]  DEFAULT (N'Photo.gif') FOR [Photo]
 GO
@@ -191,7 +207,8 @@ ALTER TABLE [dbo].[Products] ADD  CONSTRAINT [DF_Products_ProductDate]  DEFAULT 
 GO
 ALTER TABLE [dbo].[Products] ADD  CONSTRAINT [DF_Products_Available]  DEFAULT ((1)) FOR [Available]
 GO
-
+--FK_KEY TABLES
+---------------------------------------------------------------->---------------------------------------------------------------->
 ALTER TABLE [dbo].[OrderDetails]  WITH CHECK ADD  CONSTRAINT [FK_OrderDetails_Orders] FOREIGN KEY([OrderId])
 REFERENCES [dbo].[Orders] ([Id])
 ON UPDATE CASCADE
@@ -199,12 +216,14 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[OrderDetails] CHECK CONSTRAINT [FK_OrderDetails_Orders]
 GO
+---------------------------------------------------------------->---------------------------------------------------------------->
 ALTER TABLE [dbo].[OrderDetails]  WITH CHECK ADD  CONSTRAINT [FK_OrderDetails_Products] FOREIGN KEY([ProductId])
 REFERENCES [dbo].[Products] ([Id])
 ON UPDATE CASCADE
 GO
 ALTER TABLE [dbo].[OrderDetails] CHECK CONSTRAINT [FK_OrderDetails_Products]
 GO
+---------------------------------------------------------------->---------------------------------------------------------------->
 ALTER TABLE [dbo].[Orders]  WITH CHECK ADD  CONSTRAINT [FK_Orders_Customers] FOREIGN KEY([Username])
 REFERENCES [dbo].[Accounts] ([Username])
 ON UPDATE CASCADE
@@ -212,6 +231,7 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Orders] CHECK CONSTRAINT [FK_Orders_Customers]
 GO
+---------------------------------------------------------------->---------------------------------------------------------------->
 ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK3ess0s7i9qs6sim1pf9kxhkpq] FOREIGN KEY([CategoryId])
 REFERENCES [dbo].[Categories] ([Id])
 ON DELETE CASCADE
@@ -219,20 +239,23 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK3ess0s7i9qs6sim1pf9kxhkpq]
 GO
-ALTER TABLE [dbo].[Evaluate]  WITH CHECK ADD  CONSTRAINT [FK_Evaluation_Products] FOREIGN KEY([IdProducts])
+---------------------------------------------------------------->---------------------------------------------------------------->
+ALTER TABLE [dbo].[Evaluate]  WITH CHECK ADD  CONSTRAINT [FK_Evaluation_Product] FOREIGN KEY([IdProduct])
 REFERENCES [dbo].[Products] ([Id])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[Evaluate] CHECK CONSTRAINT [FK_Evaluation_Products]
+ALTER TABLE [dbo].[Evaluate] CHECK CONSTRAINT [FK_Evaluation_Product]
 GO
-ALTER TABLE [dbo].[Discount]  WITH CHECK ADD  CONSTRAINT [FK_Discount_Products] FOREIGN KEY([IdProducts])
+---------------------------------------------------------------->---------------------------------------------------------------->
+ALTER TABLE [dbo].[Discount]  WITH CHECK ADD  CONSTRAINT [FK_Discount_Product] FOREIGN KEY([IdProduct])
 REFERENCES [dbo].[Products] ([Id])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[Discount] CHECK CONSTRAINT [FK_Discount_Products]
+ALTER TABLE [dbo].[Discount] CHECK CONSTRAINT [FK_Discount_Product]
 GO
+---------------------------------------------------------------->---------------------------------------------------------------->
 ALTER TABLE [dbo].[Discount]  WITH CHECK ADD  CONSTRAINT [FK_Discount_Conditions] FOREIGN KEY([ConditionsOfUse])
 REFERENCES [dbo].[Conditions] ([IdConditons])
 ON UPDATE CASCADE
@@ -240,6 +263,7 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Discount] CHECK CONSTRAINT [FK_Discount_Conditions]
 GO
+---------------------------------------------------------------->---------------------------------------------------------------->
 ALTER TABLE [dbo].[Accounts]  WITH CHECK ADD  CONSTRAINT [FK_Account_Role] FOREIGN KEY([role])
 REFERENCES [dbo].[Roles] ([Id])
 ON UPDATE CASCADE
@@ -247,6 +271,21 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Accounts] CHECK CONSTRAINT [FK_Account_Role]
 GO
+---------------------------------------------------------------->---------------------------------------------------------------->
+ALTER TABLE [dbo].[Favourites]  WITH CHECK ADD  CONSTRAINT [FK_Favorite_Account] FOREIGN KEY([Username])
+REFERENCES [dbo].[Accounts] ([Username])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[Favourites] CHECK CONSTRAINT [FK_Favorite_Account]
+GO
+---------------------------------------------------------------->---------------------------------------------------------------->
+ALTER TABLE [dbo].[Favourites]  WITH CHECK ADD  CONSTRAINT [FK_Favorite_Product] FOREIGN KEY([IdProduct])
+REFERENCES [dbo].[Products] ([Id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[Favourites] CHECK CONSTRAINT [FK_Favorite_Product]
+GO
+---------------------------------------------------------------->---------------------------------------------------------------->
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Mã khách hàng' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Accounts', @level2type=N'COLUMN',@level2name=N'Username'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Mật khẩu đăng nhập' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Accounts', @level2type=N'COLUMN',@level2name=N'Password'

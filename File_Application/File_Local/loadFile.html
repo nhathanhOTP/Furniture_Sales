@@ -42,15 +42,15 @@
 
         </div> -->
         <div class="row">
-            <div class="form-floating col-lg-6">
-                <select class="form-select" id="" aria-label="Floating label select example">
+            <div class=" col-lg-6">
+                <select class="form-select" id="floatingSelectCty" aria-label="Floating label select example">
               <option selected>Cty</option>
               <option value="" ng-click="getCty($index)" ng-repeat="cty in local | orderBy:'name'">{{cty.name}}</option>
             </select>
             </div>
 
 
-            <div class="form-floating col-lg-6">
+            <div class=" col-lg-6">
                 <select class="form-select" id="" aria-label="Floating label select example">
               <option selected>Distrists</option>
               <option value="" ng-repeat="dis in districts | orderBy:'name'" ng-click="getDistricts($index)">{{dis.name}}</option>
@@ -59,13 +59,13 @@
         </div>
         <div class="mt-3"></div>
         <div class="row">
-            <div class="form-floating col-lg-6">
+            <div class=" col-lg-6">
                 <select class="form-select" id="" aria-label="Floating label select example">
               <option selected>Ward</option>
               <option ng-repeat="wa in wards">{{wa.prefix}} {{wa.name}}</option>
             </select>
             </div>
-            <div class="form-floating col-lg-6">
+            <div class=" col-lg-6">
                 <select class="form-select" id="" aria-label="Floating label select example">
               <option selected>Streets</option>
               <option ng-repeat="st in streets">{{st.prefix}} {{st.name}}</option>
