@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.8.0/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .input-color-container {
+            position: relative;
+            overflow: hidden;
+            width: 40px;
+            height: 40px;
+            border: solid 2px #ddd;
+            border-radius: 40px;
+        }
+        
+        .input-color {
+            position: absolute;
+            right: -8px;
+            top: -8px;
+            width: 56px;
+            height: 56px;
+            border: none;
+        }
+        
+        .input-color-label {
+            cursor: pointer;
+            text-decoration: underline;
+            color: #3498db;
+        }
+    </style>
+</head>
+
+<body ng-app="image" ng-controller="upload">
+    <button ng-click="add()">Add</button>
+    <input type="file" multiple name="file" id="gallery-photo-add" accept="image/gif, image/jpeg, image/png">
+    <div>
+        <h1>Image form backend</h1> <br>
+        <img src="/File_Local/Images/SanPham/img-sub/{{img}}" ng-repeat="img in images" width="200" height="200" alt="">
+    </div>
+    <div class="input-color-container">
+        <input id="input-color" value="#ed6868" class="input-color" type="color">
+    </div>
+    <label class="input-color-label" for="input-color">
+        I am a clickable label, try me
+      </label>
+</body>
+<script>
+    const app = angular.module("image", []);
+    var host = "http://localhost:8080";
+    const formData = new FormData();
+    var fileName;
+    var listImages = [];
+
+    function removeImage(element, index) {
+        element.remove();
+        listImages.splice(index, 1);
+        console.log(listImages);
+    }
+
+    app.controller("upload", function($scope, $http) {
+        $scope.images = [];
+
+        $('#gallery-photo-add').change(function(event) {
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            fileName = event.target.files[0];
+            listImages.push(fileName);
+            var img = document.createElement("img");
+            //Set properties
+            img.src = tmppath;
+            img.width = 200;
+            img.height = 200;
+            //End set properties
+            //Get index value in Array listImage
+            let index = listImages.indexOf(fileName);
+            //Add event for tag img
+            img.addEventListener('click', () => {
+                removeImage(img, index);
+            });
+            $("body").append(img);
+            console.log(listImages);
+        });
+
+
+        $scope.add = function() {
+            formData.delete("listImages[]");
+            for (var i = 0; i < listImages.length; i++) {
+                formData.append('listImages[]', listImages[i]);
+            }
+            $http.post(`${host}/uploadObject`, formData, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-type': undefined
+                }
+            }).then(resp => {
+                try {
+                    var data = resp.data;
+                    alert(data);
+                } catch (error) {
+
+                }
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+        $scope.displayAllImage = function() {
+            $http.get(`${host}/getAllImage`).then(resp => {
+                $scope.images = resp.data;
+                console.log(resp.data);
+            });
+        }
+        $scope.displayAllImage();
+    });
+</script>

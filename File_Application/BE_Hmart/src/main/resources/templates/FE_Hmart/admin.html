@@ -28,9 +28,10 @@
     <link rel="stylesheet" href="assets/css/font.awesome.css" />
     <link rel="stylesheet" href="assets/css/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 </head>
 
-<body>
+<body ng-app="admin" ng-controller="admin-controller">
     <!-- breadcrumb-area start -->
     <div class="breadcrumb-area">
         <div class="container">
@@ -144,16 +145,29 @@
                                         <form action="#">
                                             <div class="panel-body">
                                                 <div class="row">
-                                                    <div class="col-sm-3 text-center">
-                                                        <label for="image">
-                                                            <img src="assets/images/about/promo-video-img.webp"
-                                                                style="max-width: 100% ; height: 300px;">
-                                                        </label>
+                                                    <div class="col-sm-3 text-center main-image">
+                                                        <label for="main-image" class="" style="box-shadow: 0 0 10px rgb(190, 190, 190);border: 1px solid rgb(209, 209, 209);border-radius: 15px;cursor: pointer;">
+                                                        <img src="File_Local/icon/no_image_300_300.jpg" alt="Product" id="main-img">
+                                                    </label>
                                                     </div>
-                                                    <div class="col-sm-8">
+
+                                                    <div class="col-sm-9" style="box-shadow: 0 0 10px rgb(190, 190, 190);max-height:400px; height: 300px;border: 1px solid rgb(211, 211, 211);border-radius: 10px;">
+                                                        <div class="add-sub-img">
+                                                            <label for="gallery-photo-add" class="">
+                                                                <img src="/File_Local/icon/update-File.gif" class="gallery" width="20" height="20" alt="" style="border-radius: 50%;">
+                                                            </label>
+                                                            <input type="file" style="visibility: hidden;" multiple name="file" id="gallery-photo-add" accept="image/gif, image/jpeg, image/png">
+                                                        </div>
+                                                        <div class="d-flex mb-2 sub-img" style="max-height:400px; height: 300px; overflow-y: auto; ">
+                                                        </div>
+                                                    </div> <input type="file" class="form-group" id="main-image" style="visibility: hidden;" accept="image/gif, image/jpeg, image/png"></input>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
                                                         <div class="default-form-box col-sm-12">
                                                             <div>Name</div>
-                                                            <input class="form-group" >
+                                                            <input class="form-group">
                                                         </div>
                                                         <div class="default-form-box col-sm-12">
                                                             <div>Description</div>
@@ -165,59 +179,61 @@
                                                                 <input class="form-group">
                                                             </div>
                                                             <div class="default-form-box col-sm-6">
-                                                                <div>Quantity</div>
+                                                                <div>Origin</div>
                                                                 <input class="form-group">
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <div>Image</div>
-                                                        <input type="file" class="form-group" id="image"></input>
-                                                    </div>
                                                     <div class="default-form-box col-sm-8">
                                                         <div>Create Date</div>
                                                         <input type="date" class="default-form-box">
                                                     </div>
+                                                    <div class="default-form-box col-sm-4 ">
+                                                        <div>Color</div>
+                                                        <input id="input-color" class="input-color" type="color" value="#ed6868">
+                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="default-form-box col-sm-3">
+                                                    <div class="default-form-box col-sm-6">
                                                         <div>Size</div>
                                                         <input class="default-form-box">
                                                     </div>
-                                                    <div class="default-form-box col-sm-4">
-                                                        <div>Color</div>
-                                                        <input class="default-form-box">
-                                                    </div>
-                                                    <div class="default-form-box col-sm-4">
+
+                                                    <div class="col-sm-6">
                                                         <div>Status</div>
-                                                        <input class="default-form-box">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled" disabled>
+                                                            <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled switch status products</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="default-form-box col-sm-3">
-                                                        <div>Barnd Id</div>
+                                                        <div>Made of</div>
                                                         <input class="default-form-box">
                                                     </div>
                                                     <div class="default-form-box col-sm-4">
-                                                        <div>Category Id</div>
-                                                        <input class="default-form-box">
+                                                        <div>Category</div>
+                                                        <select name="" id="" class="form-control">
+                                                            <option value="{{c.id}}" class="" ng-repeat="c in cate">{{c.name}}</option>
+                                                        </select>
                                                     </div>
                                                     <div class="default-form-box col-sm-4">
-                                                        <div>Discount id</div>
+                                                        <div>Guarenty</div>
                                                         <input class="default-form-box">
                                                     </div>
                                                 </div>
                                             </div>
-                                         </div>
-                                        <div class="text-center ">
-                                            <button class="bg-primary text-white" style="border-radius: 5px ;">Create</button>
-                                            <button  class="bg-warning text-white" style="border-radius: 5px ;">Update</button>
-                                            <button  class="bg-danger text-white" style="border-radius: 5px ;">Delete</button>
-                                            <button  class="bg-info text-white" style="border-radius: 5px ;">Reset</button>
-                                        </div>
+                                    </div>
+                                    <div class="text-center ">
+                                        <button class="bg-primary text-white" style="border-radius: 5px ;" ng-click="add()">Create</button>
+                                        <button class="bg-warning text-white" style="border-radius: 5px ;">Update</button>
+                                        <button class="bg-danger text-white" style="border-radius: 5px ;">Delete</button>
+                                        <button class="bg-info text-white" style="border-radius: 5px ;">Reset</button>
+                                    </div>
                                     </form>
                                 </div>
                             </div>
@@ -251,7 +267,7 @@
     <script src="assets/js/main.min.js"></script>
 
     <!--Main JS (Common Activation Codes)-->
-    <!-- <script src="assets/js/main.js"></script> -->
+    <script src="assets/js/main.js"></script>
 </body>
 
 
