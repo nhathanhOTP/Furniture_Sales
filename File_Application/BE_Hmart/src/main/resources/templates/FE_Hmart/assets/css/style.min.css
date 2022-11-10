@@ -11024,3 +11024,109 @@ only screen and (max-width:767px) {
     border-radius: 15px;
     cursor: pointer;
 }
+
+.colors {
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 15px;
+}
+
+.colors input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 70px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    animation: display;
+    animation-duration: 2.5s;
+}
+
+.colors input[type=color]::-webkit-color-swatch {
+    border-radius: 15px;
+    border: none;
+}
+
+.colors input[type=color]::-moz-color-swatch {
+    border-radius: 10px;
+    border: none;
+}
+
+.colors #btn-color {
+    border: 1px dashed #454545;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+    margin-left: 15px;
+    color: #8a8a8a;
+}
+
+.colors #btn-color:hover {
+    box-shadow: 0 0 10px gray;
+}
+
+.more-color {
+    position: relative;
+}
+
+.a-color button {
+    cursor: pointer;
+    background-color: #eb2606;
+    text-align: center;
+    font-size: 10px;
+    border-radius: 10px;
+    border: 1px solid ghostwhite;
+    color: white;
+    position: absolute;
+    margin-top: 50px;
+    min-width: 60px;
+    padding-bottom: 0px;
+    margin-left: 10px;
+    height: 20px;
+    animation: display;
+    animation-duration: 2.5s;
+    opacity: .7;
+    display: none;
+}
+
+@keyframes display {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: .7;
+    }
+}
+
+.a-color:hover button {
+    display: block;
+}
+
+tr td input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 60px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    animation-duration: 2.5s;
+}
+
+tr td input[type=color]::-webkit-color-swatch {
+    border-radius: 25px;
+    border: none;
+}
+
+tr td input[type=color]::-moz-color-swatch {
+    border-radius: 25px;
+    border: none;
+}
