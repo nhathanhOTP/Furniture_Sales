@@ -29,6 +29,8 @@ public class Order  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	String address;
+	String note;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Createdate")
 	Date createDate = new Date();
@@ -36,6 +38,10 @@ public class Order  implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "Username")
 	Account account;
+	
+	@ManyToOne
+	@JoinColumn(name = "Status")
+	OrderStatus orderStatus;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
