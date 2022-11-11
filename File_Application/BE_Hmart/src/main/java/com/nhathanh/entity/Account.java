@@ -25,10 +25,11 @@ public class Account  implements Serializable{
 	private String password;
 	private String fullname;
 	private String email;
+	private String phone;
 	private String photo;
 	
 	@ManyToOne
-	@JoinColumn(name = " roleId")
+	@JoinColumn(name = "role")
 	Role role;
 	
 	@JsonIgnore

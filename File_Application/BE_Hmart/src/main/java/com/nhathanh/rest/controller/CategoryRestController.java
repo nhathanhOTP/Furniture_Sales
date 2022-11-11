@@ -16,6 +16,11 @@ public class CategoryRestController {
 	@Autowired
 	CategoryDAO cateDAO;
 
+	@GetMapping("/hfn/categories/getAll")
+	public List<Category> categories() {
+		return cateDAO.findAll();
+	}
+	
 	@GetMapping("/check/file")
 	public List<Category> check() {
 		return cateDAO.findAll();
