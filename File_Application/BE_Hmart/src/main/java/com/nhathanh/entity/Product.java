@@ -39,10 +39,10 @@ public class Product  implements Serializable{
 	@Column(name = "createdate")
 	private Date createDate = new Date();
 	private Boolean available;
-<<<<<<< HEAD
-=======
+<<<<<<<<< Temporary merge branch 1
+=========
 	@Column(name = "origin")
->>>>>>> github/New-PhiHung
+>>>>>>>>> Temporary merge branch 2
 	private String origin;
 	@Column(name = "guarentee")
 	private String guarentee;

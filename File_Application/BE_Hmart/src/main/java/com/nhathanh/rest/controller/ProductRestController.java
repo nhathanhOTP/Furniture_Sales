@@ -19,6 +19,13 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 <<<<<<< HEAD
+import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.*;
+
+import com.nhathanh.dao.*;
+import com.nhathanh.entity.*;
+=======
+<<<<<<< HEAD
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,18 +46,18 @@ import com.nhathanh.dao.CategoryDAO;
 import com.nhathanh.dao.ProductDAO;
 import com.nhathanh.entity.Category;
 import com.nhathanh.entity.Product;
-=======
+=========
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.nhathanh.dao.*;
 import com.nhathanh.entity.*;
->>>>>>> github/New-PhiHung
+>>>>>>>>> Temporary merge branch 2
 
 @CrossOrigin("*")
 @RestController
 public class ProductRestController {
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
 	public static final String hmart = "src\\main\\resources\\templates\\FE_Hmart\\File_Local\\Images";
 	@Autowired
 	CategoryDAO cteDao;
@@ -190,7 +197,7 @@ public class ProductRestController {
 			Files.copy(inputStream, path.resolve(nameImage), StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
-=======
+=========
 
 	@Autowired
 	ProductDAO productDao;
@@ -217,6 +224,5 @@ public class ProductRestController {
 		return item;
 	}
 
->>>>>>> github/New-PhiHung
->>>>>>> Main_merge
+>>>>>>>>> Temporary merge branch 2
 }
