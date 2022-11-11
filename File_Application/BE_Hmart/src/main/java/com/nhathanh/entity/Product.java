@@ -31,9 +31,28 @@ public class Product  implements Serializable{
 	String image;
 	Double price;
 	@Temporal(TemporalType.DATE)
+<<<<<<< HEAD
 	@Column(name = "Createdate")
 	Date createDate = new Date();
 	Boolean available;
+=======
+	@Column(name = "createdate")
+	private Date createDate = new Date();
+	private Boolean available;
+<<<<<<< HEAD
+=======
+	@Column(name = "origin")
+>>>>>>> github/New-PhiHung
+	private String origin;
+	@Column(name = "guarentee")
+	private String guarentee;
+	@Column(name="madeof")
+	private String madeOf;
+	@Column(name="color")
+	private String color;
+	@Column(name="size")
+	private String size;
+>>>>>>> Main_merge
 	
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")
