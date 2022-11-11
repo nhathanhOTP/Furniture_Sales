@@ -26,22 +26,11 @@ public class Account  implements Serializable{
 	private String fullname;
 	private String email;
 	private String phone;
-<<<<<<< HEAD
 	private String photo;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "role")
-	private String photo;
-	
-	@ManyToOne
-	@JoinColumn(name = " roleId")
-
-=======
-	private String photo;
-	
-	@ManyToOne
-	@JoinColumn(name = "role")
->>>>>>> Main_merge
 	Role role;
 	
 	@JsonIgnore

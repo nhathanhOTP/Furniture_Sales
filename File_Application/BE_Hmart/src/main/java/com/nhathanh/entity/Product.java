@@ -31,18 +31,11 @@ public class Product  implements Serializable{
 	String image;
 	Double price;
 	@Temporal(TemporalType.DATE)
-<<<<<<< HEAD
-	@Column(name = "Createdate")
-	Date createDate = new Date();
-	Boolean available;
-=======
 	@Column(name = "createdate")
 	private Date createDate = new Date();
 	private Boolean available;
-<<<<<<<<< Temporary merge branch 1
-=========
+
 	@Column(name = "origin")
->>>>>>>>> Temporary merge branch 2
 	private String origin;
 	@Column(name = "guarentee")
 	private String guarentee;
@@ -52,7 +45,6 @@ public class Product  implements Serializable{
 	private String color;
 	@Column(name="size")
 	private String size;
->>>>>>> Main_merge
 	
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")
