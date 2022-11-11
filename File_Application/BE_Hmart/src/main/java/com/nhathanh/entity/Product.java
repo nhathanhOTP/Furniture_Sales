@@ -34,6 +34,8 @@ public class Product  implements Serializable{
 	@Column(name = "createdate")
 	private Date createDate = new Date();
 	private Boolean available;
+	@Column(name = "origin")
+	private String origin;
 	@Column(name = "guarentee")
 	private String guarentee;
 	@Column(name="madeof")
