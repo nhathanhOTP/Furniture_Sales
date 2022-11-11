@@ -35,42 +35,18 @@ public class SaveFileRestController {
 		return hmart;
 	}
 
-	@PostMapping("/uploadObject")
-	public String postImage(@RequestParam("listImages[]") ArrayList<MultipartFile> object)
-			throws FileNotFoundException {
-		Path path = Paths.get(createFloder());
-		if (object != null) {
-			try {
-				for (int i = 0; i < object.size(); i++) {
-					// Get name file MultipartFile
-					String fileName = object.get(i).getOriginalFilename().trim();
-					//Get type file(jpg,png,...) MultipartFile
-					String typeImage = fileName.substring(fileName.indexOf("."), fileName.length());
-					// Set file name and save with name file auto 0->...;
-					String nameImage = String.valueOf(i + typeImage);
-					InputStream inputStream = object.get(i).getInputStream();
-					Files.copy(inputStream, path.resolve(nameImage), StandardCopyOption.REPLACE_EXISTING);
+	
 
-				}
-				System.out.println("Save file successfully!");
-			} catch (Exception e) {
-				return "Error!";
-			}
-			return "Save file successfully!";
-		}
-		return "Error";
-	}
-
-	// Api get all image
-	@GetMapping("/getAllImage")
-	public ArrayList<String> getAll() { 
-		File[] children = new File(hmart).listFiles();
-		ArrayList<String> ds = new ArrayList<String>();
-		for (int i = 0; i < children.length; i++) {
-			ds.add(children[i].getName());
-		}
-		return ds;
-	}
+//	// Api get all image
+//	@GetMapping("/getAllImage")
+//	public ArrayList<String> getAll() { 
+//		File[] children = new File(hmart).listFiles();
+//		ArrayList<String> ds = new ArrayList<String>();
+//		for (int i = 0; i < children.length; i++) {
+//			ds.add(children[i].getName());
+//		}
+//		return ds;
+//	}
 
 	// Return Image
 	public ResponseEntity<ByteArrayResource> getImage(String file) {

@@ -84,7 +84,7 @@ GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Categories](
-	[Id] [char](4) NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
 (
@@ -144,7 +144,7 @@ CREATE TABLE [dbo].[Products](
 	[Price] [float] NOT NULL,
 	[CreateDate] [date] NOT NULL,
 	[Available] [bit] NOT NULL,
-	[CategoryId] [char](4) NOT NULL,
+	[CategoryId] [int] NOT NULL,
 	[Origin][nvarchar](100) NULL,
 	[Guarentee][nvarchar](100)NULL,
 	[MadeOf][nvarchar](100)NULL,
