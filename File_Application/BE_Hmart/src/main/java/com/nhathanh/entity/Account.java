@@ -30,6 +30,11 @@ public class Account  implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "role")
+	private String photo;
+	
+	@ManyToOne
+	@JoinColumn(name = " roleId")
+
 	Role role;
 	
 	@JsonIgnore
