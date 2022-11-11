@@ -1,6 +1,7 @@
 package com.nhathanh.rest.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,14 +12,17 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +56,7 @@ public class ProductRestController {
 	}
 
 	@RequestMapping("/getImage/{floder}")
-    @ResponseBody
+	@ResponseBody
 	public ResponseEntity<ByteArrayResource> image(@PathVariable("floder") String folder) throws FileNotFoundException {
 		File[] children = new File(hmart + "\\" + folder).listFiles();
 		String nameFile = "";
@@ -94,20 +98,38 @@ public class ProductRestController {
 		if (!uploadRootDir.exists()) {
 			uploadRootDir.mkdirs();
 		}
-		return path; 
+		return path;
 	}
-	//Get list sub image form name folder
+
+	// Get list sub image form name folder
 	@GetMapping("/getImage/subImage/{floder}")
-	public ArrayList<String> getSubImage(@PathVariable("floder")String nameFolder){
-		ArrayList<String> ds = new ArrayList<String>();
+	@ResponseBody
+	public ArrayList<File> getSubImage(@PathVariable("floder") String nameFolder) throws IOException {
+		ArrayList<File> ds = new ArrayList<File>();
 		File[] children = new File(hmart + "\\" + nameFolder).listFiles();
 		if (children != null) {
 			for (int i = 0; i < children.length; i++) {
-				ds.add(children[i].getName());
+				if(!children[i].getName().contains("main")) {
+					ds.add(children[i]);
+				}
 			}
 		}
 		return ds;
 	}
+	// Get list sub image form name folder
+		@GetMapping("/getImage/mainImage/{floder}")
+		@ResponseBody
+		public File getMainImage(@PathVariable("floder") String nameFolder) throws IOException {
+			File[] children = new File(hmart + "\\" + nameFolder).listFiles();
+			if (children != null) {
+				for (int i = 0; i < children.length; i++) {
+					if(children[i].getName().contains("main")) {
+						return children[i];
+					}
+				}
+			}
+			return null;
+		}
 
 	// Save images
 	@PostMapping("/uploadImages")
@@ -132,6 +154,12 @@ public class ProductRestController {
 			}
 		}
 		return "Error";
+	}
+
+	// Update product
+	@PutMapping("/update/product")
+	public Product updateProduct(@RequestBody Product pr) {
+		return prDao.save(pr);
 	}
 
 	// Method save images
