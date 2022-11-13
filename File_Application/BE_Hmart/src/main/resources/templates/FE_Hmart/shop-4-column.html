@@ -275,10 +275,12 @@
                     <h5 class="text-secondary" ng-show="cart.count == 0 || cart.count == null">Have a nice shopping <i class="bi bi-heart"></i></h5>
                 </div>
                 <div class="foot">
-                    <div class="buttons mt-30px">
+                    <div class="buttons mt-30px" ng-show="cart.count != 0 && cart.count != null">
                         <a href="cart.html" class="btn btn-dark btn-hover-primary mb-2">View cart</a>
                         <a ng-click="cart.clear()" class="btn current-btn">Reset</a>
                     </div>
+                    <div class="buttons mt-30px" ng-show="cart.count == 0 || cart.count == null">
+                        <a href="empty-cart.html" class="btn btn-dark btn-hover-primary mb-2">View cart</a> </div>
                 </div>
             </div>
         </div>

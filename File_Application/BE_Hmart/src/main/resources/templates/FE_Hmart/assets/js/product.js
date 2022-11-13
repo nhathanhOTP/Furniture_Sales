@@ -54,6 +54,10 @@ appPr.controller("product", function($scope, $http, $window) {
     }
 
     $scope.load_list_product();
+    $scope.clearWhenInCart = function() {
+        $scope.cart.clear();
+        $window.location.href = 'empty-cart.html';
+    }
 
     //Load du lieu cua cart
     var modalCart = document.getElementById("Modal-Cart");

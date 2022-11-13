@@ -62,6 +62,7 @@ appOd.controller("order", function($scope, $http, $window) {
             console.log("Save OrderDetail Sucess", resp);
             alert('Succesfull!');
             $scope.cart.clear();
+            $window.location.href = 'thank-you-page.html';
         }).catch(error => {
             console.log("Save OrderDetail Error", error);
             alert('Error! Please try again later!');
