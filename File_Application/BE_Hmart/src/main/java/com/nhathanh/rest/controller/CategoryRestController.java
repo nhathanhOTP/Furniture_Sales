@@ -20,9 +20,10 @@ public class CategoryRestController {
 	public List<Category> categories() {
 		return cateDAO.findAll();
 	}
-	
+
 	@GetMapping("/check/file")
 	public List<Category> check() {
 		return cateDAO.findAll();
 	}
+
 }

@@ -1,7 +1,6 @@
 package com.nhathanh.rest.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,25 +11,41 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.nhathanh.dao.*;
 import com.nhathanh.entity.*;
-
+=======
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.nhathanh.dao.CategoryDAO;
+import com.nhathanh.dao.ProductDAO;
+import com.nhathanh.entity.Category;
+import com.nhathanh.entity.Product;
+>>>>>>> Main_merge
 
 @CrossOrigin("*")
 @RestController
 public class ProductRestController {
+<<<<<<< HEAD
 
 	@Autowired
 	ProductDAO productDao;
@@ -57,6 +72,7 @@ public class ProductRestController {
 		return item;
 	}
 
+=======
 	public static final String hmart = "src\\main\\resources\\templates\\FE_Hmart\\File_Local\\Images";
 	@Autowired
 	CategoryDAO cteDao;
@@ -196,4 +212,5 @@ public class ProductRestController {
 			Files.copy(inputStream, path.resolve(nameImage), StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
+>>>>>>> Main_merge
 }
