@@ -18,7 +18,7 @@ import lombok.Data;
 @Entity 
 @Table(name = "Categories")
 public class Category implements Serializable{
-	@Id	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
 	String id;
 	String name;
 	

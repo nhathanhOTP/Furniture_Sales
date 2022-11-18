@@ -2,122 +2,149 @@ let hostPr = "http://localhost:8080/hfn/product";
 const appPr = angular.module("myProduct", []);
 
 //Xu li menu
-appPr.controller("product", function($scope, $http, $window) {
-    //Load du lieu cua tat ca category vao list
-    $scope.load_list_cate = function() {
-        var url = `http://localhost:8080/hfn/categories/getAll`;
-        $http.get(url).then(resp => {
-            $scope.list_cate = resp.data;
-            console.log("List Cate Sucess", resp);
-        }).catch(error => {
-            console.log("List Cate Error", error);
-        });
-    };
+appPr.controller("product",
+    function($scope, $http, $window) {
+        //Load du lieu cua tat ca category vao list
+        $scope.load_list_cate = function() {
+            var url = `http://localhost:8080/hfn/categories/getAll`;
+            $http.get(url).then(resp => {
+                $scope.list_cate = resp.data;
+                console.log("List Cate Sucess", resp);
+            }).catch(error => {
+                console.log("List Cate Error", error);
+            });
+        };
 
-    //Luu id category len session
-    $scope.saveIdCategory = function(id) {
-        if (id == 'null') {
-            sessionStorage.setItem("idCategory", null);
-        } else {
-            sessionStorage.setItem("idCategory", id);
-        }
-        $window.location.href = 'shop-4-column.html';
-    }
-
-    $scope.load_list_cate();
-
-    //Xu li product tai trang Shop-4-Column
-    //Load du lieu cua tat ca product vao list
-    $scope.load_list_product = function() {
-        var idCate = sessionStorage.getItem("idCategory");
-        if (idCate == null || idCate == 'null') {
-            var url = `${hostPr}/getAll`;
-        } else {
-            var url = `${hostPr}/cate/${idCate}`;
-        }
-        $http.get(url).then(resp => {
-            $scope.list_product = resp.data;
-            // $scope.list_product.forEach(e => {
-            //     if (e.available == true) {
-            //         e.remove();
-            //     }
-            // });
-            console.log("List Product Sucess", resp);
-        }).catch(error => {
-            console.log("List Product Error", error);
-        });
-    };
-    //Luu id product len session va chuyen huong den trang single-product
-    $scope.saveIdProduct = function(id) {
-        sessionStorage.setItem("idProduct", id);
-        $window.location.href = 'single-product.html';
-    }
-
-    $scope.load_list_product();
-
-    //Load du lieu cua cart
-    var modalCart = document.getElementById("Modal-Cart");
-    $scope.cart = {
-        items: [],
-        add(id) {
-            var item = this.items.find(item => item.id == id);
-            if (item) {
-                item.quantity++;
-                this.saveToLocalStorage();
+        //Luu id category len session
+        $scope.saveIdCategory = function(id) {
+            if (id == 'null') {
+                sessionStorage.setItem("idCategory", null);
             } else {
-                $http.get(`http://localhost:8080/hfn/item/${id}`).then(resp => {
-                    resp.data.quantity = 1;
-                    $scope.productMessage = resp.data;
-                    this.items.push(resp.data);
-                    this.saveToLocalStorage();
-                })
+                sessionStorage.setItem("idCategory", id);
             }
-        },
-        update(id, quantity) {
-            var item = this.items.find(item => item.id == id);
-            item.quantity = quantity;
-            this.saveToLocalStorage();
-        },
-
-        remove(id) {
-            var index = this.items.findIndex(item => item.id == id);
-            this.items.splice(index, 1);
-            this.saveToLocalStorage();
-        },
-
-        clear() {
-            this.items = [];
-            this.saveToLocalStorage();
-        },
-
-        gamt_of(id) {},
-
-        get count() {
-            return this.items
-                .map(item => item.quantity)
-                .reduce((total, quantity) => total += quantity, 0);
-        },
-
-        get amount() {
-            return this.items
-                .map(item => item.quantity * item.price)
-                .reduce((total, quantity) => total += quantity, 0);
-        },
-
-        saveToLocalStorage() {
-            var json = JSON.stringify(angular.copy(this.items));
-            localStorage.setItem("cart", json);
-        },
-
-        loadFormLocalStorage() {
-            var json = localStorage.getItem("cart");
-            this.items = json ? JSON.parse(json) : [];
-            console.log(this.items);
+            $window.location.href = 'shop-4-column.html';
         }
-    };
 
-    $scope.cart.loadFormLocalStorage();
-});
+        $scope.load_list_cate();
+
+        //Xu li product tai trang Shop-4-Column
+        //Load du lieu cua tat ca product vao list
+        $scope.load_list_product = function() {
+            var idCate = sessionStorage.getItem("idCategory");
+            if (idCate == null || idCate == 'null') {
+                var url = `${hostPr}/getAll`;
+            } else {
+                var url = `${hostPr}/cate/${idCate}`;
+            }
+
+            $http.get(url).then(resp => {
+                $scope.list_product = resp.data;
+                // $scope.list_product.forEach(e => {
+                //     if (e.available == true) {
+                //         e.remove();
+                //     }
+                // });
+                console.log("List Product Sucess", resp);
+            }).catch(error => {
+                console.log("List Product Error", error);
+            });
+        };
+
+        //Luu id product len session va chuyen huong den trang single-product
+        $scope.saveIdProduct = function(id) {
+            sessionStorage.setItem("idProduct", id);
+            $window.location.href = 'single-product.html';
+        }
+
+        var username = "tpph0503";
+
+        //Add to favourite list
+        $scope.addToFav = function(idPr) {
+            var item = {
+                account: {
+                    username: username
+                },
+                product: {
+                    id: idPr
+                }
+            };
+            $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => {
+                $scope.productMessage = resp.data;
+                console.log("Add Fav Sucess", resp);
+            }).catch(error => {
+                console.log("Add Fav Error", error);
+            });
+        }
+
+        $scope.load_list_product();
+        $scope.clearWhenInCart = function() {
+            $scope.cart.clear();
+            $window.location.href = 'empty-cart.html';
+        }
+
+        //Load du lieu cua cart
+        $scope.cart = {
+            items: [],
+            add(id) {
+                var item = this.items.find(item => item.id == id);
+                if (item) {
+                    item.quantity++;
+                    this.saveToLocalStorage();
+                } else {
+                    $http.get(`http://localhost:8080/hfn/item/${id}`).then(resp => {
+                        resp.data.quantity = 1;
+                        $scope.productMessage = resp.data;
+                        this.items.push(resp.data);
+                        this.saveToLocalStorage();
+                    })
+                }
+            },
+            update(id, quantity) {
+                var item = this.items.find(item => item.id == id);
+                item.quantity = quantity;
+                this.saveToLocalStorage();
+            },
+
+            remove(id) {
+                var index = this.items.findIndex(item => item.id == id);
+                this.items.splice(index, 1);
+                this.saveToLocalStorage();
+            },
+
+            clear() {
+                this.items = [];
+                this.saveToLocalStorage();
+            },
+
+            gamt_of(_id) {},
+
+            get count() {
+                return this.items
+                    .map(item => item.quantity)
+                    .reduce((total, quantity) => total += quantity, 0);
+            },
+
+            get amount() {
+                return this.items
+                    .map(item => item.quantity * item.price)
+                    .reduce((total, quantity) => total += quantity, 0);
+            },
+
+            saveToLocalStorage() {
+                var json = JSON.stringify(angular.copy(this.items));
+                localStorage.setItem("cart", json);
+            },
+
+            loadFormLocalStorage() {
+                var json = localStorage.getItem("cart");
+                this.items = json ? JSON.parse(json) : [];
+                console.log(this.items);
+            }
+        };
+
+        $scope.cart.loadFormLocalStorage();
+    }
+);
 
 //Xu li product tai trang Single-product
 appPr.controller("detail", function($scope, $http, $window) {
@@ -159,4 +186,65 @@ appPr.controller("detail", function($scope, $http, $window) {
     }
 
     $scope.load_product();
+
+    $scope.cart = {
+        items: [],
+        add(id) {
+            var item = this.items.find(item => item.id == id);
+            if (item) {
+                item.quantity++;
+                this.saveToLocalStorage();
+            } else {
+                $http.get(`http://localhost:8080/hfn/item/${id}`).then(resp => {
+                    resp.data.quantity = 1;
+                    $scope.productMessage = resp.data;
+                    this.items.push(resp.data);
+                    this.saveToLocalStorage();
+                })
+            }
+        },
+        update(id, quantity) {
+            var item = this.items.find(item => item.id == id);
+            item.quantity = quantity;
+            this.saveToLocalStorage();
+        },
+
+        remove(id) {
+            var index = this.items.findIndex(item => item.id == id);
+            this.items.splice(index, 1);
+            this.saveToLocalStorage();
+        },
+
+        clear() {
+            this.items = [];
+            this.saveToLocalStorage();
+        },
+
+        gamt_of(_id) {},
+
+        get count() {
+            return this.items
+                .map(item => item.quantity)
+                .reduce((total, quantity) => total += quantity, 0);
+        },
+
+        get amount() {
+            return this.items
+                .map(item => item.quantity * item.price)
+                .reduce((total, quantity) => total += quantity, 0);
+        },
+
+        saveToLocalStorage() {
+            var json = JSON.stringify(angular.copy(this.items));
+            localStorage.setItem("cart", json);
+        },
+
+        loadFormLocalStorage() {
+            var json = localStorage.getItem("cart");
+            this.items = json ? JSON.parse(json) : [];
+            console.log(this.items);
+        }
+    };
+
+    $scope.cart.loadFormLocalStorage();
 });

@@ -1,9 +1,8 @@
-let hostPr = "http://localhost:8080/hfn/product";
-let hostOd = "http://localhost:8080/hfn/order";
-const appOd = angular.module("myOrder", []);
+let hostFv = "http://localhost:8080/hfn/favour";
+const appFv = angular.module("myFav", []);
 
-appOd.controller("order", function($scope, $http, $window) {
-
+//Xu li menu
+appFv.controller("favourite", function($scope, $http, $window) {
     //Load du lieu cua tat ca category vao list
     $scope.load_list_cate = function() {
         var url = `http://localhost:8080/hfn/categories/getAll`;
@@ -15,6 +14,8 @@ appOd.controller("order", function($scope, $http, $window) {
         });
     };
 
+    $scope.load_list_cate();
+
     //Luu id category len session
     $scope.saveIdCategory = function(id) {
         if (id == 'null') {
@@ -25,52 +26,38 @@ appOd.controller("order", function($scope, $http, $window) {
         $window.location.href = 'shop-4-column.html';
     }
 
+    //Luu id product len session va chuyen huong den trang single-product
+    $scope.saveIdProduct = function(id) {
+        sessionStorage.setItem("idProduct", id);
+        $window.location.href = 'single-product.html';
+    }
+
     var username = "tpph0503";
-    //Load du lieu cua account vao form info
-    $scope.load_account = function() {
-        var url = `http://localhost:8080/hfn/Account/${username}`;
+
+    //Load add fav list
+    $scope.load_list_fav = function() {
+        var url = `${hostFv}/user/${username}`;
         $http.get(url).then(resp => {
-            $scope.account_info = resp.data;
-            console.log("Load Account Sucess", resp);
+            $scope.list_fav = resp.data;
+            console.log("List Fav Sucess", resp);
         }).catch(error => {
-            console.log("Load Account Error", error);
-        });
-    };
-    $scope.load_account();
-
-    $scope.order_info = {};
-
-    //Luu du lieu order_info vao backend
-    $scope.save_order = function() {
-        var url = `${hostOd}/save`;
-        $scope.order_info.account = $scope.account_info;
-        var order = $scope.order_info;
-        $http.post(url, order).then(resp => {
-            console.log("Save Order Sucess", resp);
-            $scope.save_orderDetail(resp.data);
-        }).catch(error => {
-            console.log("Save Order Error", error);
-            alert('Error! Please try again later!');
+            console.log("List Fav Error", error);
         });
     };
 
-    //Post du lieu cart vao backend de luu vao Order Detail
-    $scope.save_orderDetail = function(orderId) {
-        var url = `http://localhost:8080/hfn/OrderDetail/save/${orderId}`;
-        var item = $scope.cart.items;
-        $http.post(url, item).then(resp => {
-            console.log("Save OrderDetail Sucess", resp);
-            alert('Succesfull!');
-            $scope.cart.clear();
-            $window.location.href = 'thank-you-page.html';
+    //Xoa fav khoi list
+    $scope.deleteFav = function(id) {
+        var url = `${hostFv}/delete/${id}`;
+        $http.delete(url).then(resp => {
+            console.log("Del Fav Sucess", resp);
         }).catch(error => {
-            console.log("Save OrderDetail Error", error);
-            alert('Error! Please try again later!');
+            console.log("Del Fav Error", error);
         });
     };
+
+    $scope.load_list_fav();
 
     //Load du lieu cua cart
-    var modalCart = document.getElementById("Modal-Cart");
     $scope.cart = {
         items: [],
         add(id) {
@@ -87,6 +74,11 @@ appOd.controller("order", function($scope, $http, $window) {
                 })
             }
         },
+        update(id, quantity) {
+            var item = this.items.find(item => item.id == id);
+            item.quantity = quantity;
+            this.saveToLocalStorage();
+        },
 
         remove(id) {
             var index = this.items.findIndex(item => item.id == id);
@@ -99,7 +91,7 @@ appOd.controller("order", function($scope, $http, $window) {
             this.saveToLocalStorage();
         },
 
-        gamt_of(id) {},
+        gamt_of(_id) {},
 
         get count() {
             return this.items
@@ -125,6 +117,5 @@ appOd.controller("order", function($scope, $http, $window) {
         }
     };
 
-    $scope.load_list_cate();
     $scope.cart.loadFormLocalStorage();
 });

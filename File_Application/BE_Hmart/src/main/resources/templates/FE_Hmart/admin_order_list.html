@@ -2,7 +2,7 @@
 <html lang="zxx" dir="ltr">
 
 
-<!-- Mirrored from htmldemo.net/hmart/hmart/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Sep 2022 11:36:44 GMT -->
+<!-- Mirrored from htmldemo.net/hmart/hmart/my-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Sep 2022 11:36:37 GMT -->
 
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
     <!-- CSS
     ============================================ -->
     <!-- <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/font.awesome.css" />
+    
     <link rel="stylesheet" href="assets/css/pe-icon-7-stroke.css" />
     <link rel="stylesheet" href="assets/css/animate.min.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
@@ -25,22 +25,15 @@
     <!-- Style CSS -->
     <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
     <!-- Minify Version -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <style>
-        .product-name {
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 </head>
 
-<body>
-    <div class="main-wrapper" ng-app="myProduct" ng-controller="product">
+<body ng-app="myList" ng-controller="list">
+    <div class="main-wrapper">
         <header>
             <!-- Header top area start -->
             <div class="header-top">
@@ -277,7 +270,7 @@
                 <div class="foot">
                     <div class="buttons mt-30px" ng-show="cart.count != 0 && cart.count != null">
                         <a href="cart.html" class="btn btn-dark btn-hover-primary mb-2">View cart</a>
-                        <a ng-click="clearWhenInCart()" class="btn current-btn">Reset</a>
+                        <a ng-click="cart.clear()" class="btn current-btn">Reset</a>
                     </div>
                     <div class="buttons mt-30px" ng-show="cart.count == 0 || cart.count == null">
                         <a href="empty-cart.html" class="btn btn-dark btn-hover-primary mb-2">View cart</a> </div>
@@ -429,11 +422,11 @@
             <div class="container">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-12 text-center">
-                        <h2 class="breadcrumb-title">Cart</h2>
+                        <h2 class="breadcrumb-title">Staff Orders List</h2>
                         <!-- breadcrumb-list start -->
                         <ul class="breadcrumb-list">
                             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">Cart</li>
+                            <li class="breadcrumb-item active">Staff_Order_List</li>
                         </ul>
                         <!-- breadcrumb-list end -->
                     </div>
@@ -441,163 +434,106 @@
             </div>
         </div>
         <!-- breadcrumb-area end -->
-        <!-- Cart Area Start -->
-        <div class="cart-main-area pt-100px pb-100px">
+        <!-- account area start -->
+        <div class="account-dashboard pt-100px pb-100px">
             <div class="container">
-                <h3 class="cart-page-title">Your cart items</h3>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                        <form>
-                            <div class="table-content table-responsive cart-table-content">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Product Name</th>
-                                            <th>Price</th>
-                                            <th>Qty</th>
-                                            <th>Total</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="item in cart.items">
-                                            <td class="product-thumbnail">
-                                                <a href="#"><img class="img-responsive ml-15px" src="File_Local/Images/product-image/{{item.image}}/main.jpg" alt="" /></a>
-                                            </td>
-                                            <td class="product-price-cart"><span class="amount">{{item.name}}</span></td>
-                                            <td class="product-name"><span class="amount">{{item.price | number}} Vnd</span></td>
-                                            <td>
-                                                <input class="form-control text-center p-2" ng-change="cart.update(item.id, item.quantity)" type="number" ng-model="item.quantity" max="10" min="1" />
-                                            </td>
-                                            <td class="product-subtotal">{{item.price * item.quantity |number}} Vnd</td>
-                                            <td class="product-remove"> <a style="cursor: pointer;" ng-click="cart.remove(item.id)"><i class="fa fa-times"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="cart-shiping-update-wrapper">
-                                        <div class="cart-shiping-update">
-                                            <a href="shop-4-column.html">Continue Shopping</a>
-                                        </div>
-                                        <div class="cart-clear">
-                                            <button ng-click="clearWhenInCart()">Clear Shopping Cart</button>
-                                            <a href="checkout.html">Checkout</a>
-                                        </div>
-                                    </div>
+                <div class="">
+                    <div class="col-sm-12">
+                        <!-- Tab panes -->
+                        <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
+                            <div class="tab-pane fade show active" id="ProductManagement">
+                                <h4>List Products</h4>
+                                <div class="table_page table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>User</th>
+                                                <th>Date</th>
+                                                <th>Address</th>
+                                                <th>Note</th>
+                                                <th>Status</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="od in admin_list_order">
+                                                <td>{{od.id}}</td>
+                                                <td>{{od.account.username}}</td>
+                                                <td>{{od.createDate}}</td>
+                                                <td>{{od.address}}</td>
+                                                <td>{{od.note}}</td>
+                                                <td>{{od.orderStatus.name}}</td>
+                                                <td>
+                                                    <div class="">
+                                                        <a ng-click="load_orderDetail(od.id)" href="#scrollspyHeading1" class="text-info bi bi-eye-fill" style="font-size: 25px" aria-hidden="true"></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Cart Area End -->
-        <!-- Footer Area Start -->
-        <div class="footer-area">
-            <div class="footer-container">
-                <div class="footer-top">
-                    <div class="container">
-                        <div class="row">
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 mb-md-30px mb-lm-30px">
-                                <div class="single-wedge">
-                                    <div class="footer-logo">
-                                        <a href="index.html"><img src="assets/images/logo/footer-logo.png" alt=""></a>
-                                    </div>
-                                    <p class="about-text">Lorem ipsum dolor sit amet consl adipisi elit, sed do eiusmod templ incididunt ut labore
-                                    </p>
-                                    <ul class="link-follow">
-                                        <li>
-                                            <a class="m-0" title="Twitter" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-facebook"
-                                                aria-hidden="true"></i></a>
-                                        </li>
-                                        <li>
-                                            <a title="Tumblr" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-tumblr" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a title="Facebook" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-twitter" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a title="Instagram" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-instagram" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <br id="scrollspyHeading1" data-bs-spy="scroll">
+                            <div class="mt-30px bg-light pt-1" ng-show="order != null">
+                                <div class="mb-3 mt-20px pl-35px">
+                                    <h3>Chi Tiết Đơn Hàng Số {{order.id}}</h3>
                                 </div>
-                            </div>
-                            <!-- End single blog -->
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 col-sm-6 mb-lm-30px pl-lg-60px">
-                                <div class="single-wedge">
-                                    <h4 class="footer-herading">Services</h4>
-                                    <div class="footer-links">
-                                        <div class="footer-row">
-                                            <ul class="align-items-center">
-                                                <li class="li"><a class="single-link" href="my-account.html">My Account</a></li>
-                                                <li class="li"><a class="single-link" href="contact.html">Contact</a></li>
-                                                <li class="li"><a class="single-link" href="cart.html">Shopping cart</a></li>
-                                                <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shop</a></li>
-                                                <li class="li"><a class="single-link" href="login.html">Services Login</a></li>
-                                            </ul>
+                                <div class="row pl-35px">
+                                    <div class="contact_left p-0 col-5" style="min-height: 535px;">
+                                        <div class="pl-2">
+                                            <div class="mt-0">
+                                                <ul>
+                                                    <li><code>Mã đơn: </code><span class="fw-semibold" style="color: #eb1c24; font-size: 22px;">{{order.id}}</span></li>
+                                                    <li><code>Trạng Thái: </code><span style="color: #eb1c24">{{order.orderStatus.name}}</span></li>
+                                                    <li><code>Mã Khách Hàng: </code><span style="color: #eb1c24">{{order.account.username}}</span></li>
+                                                    <!-- <li><code>Mã Người Duyệt: </code>${thongTin.staffID}</span>
+                                                    </li> -->
+                                                    <li><code>Thời Gian: </code><span style="color: #eb1c24"><code>Ngày </code>{{order.createDate | date: 'dd/MM/yyyy'}} <code> lúc </code> {{order.createDate | date: 'hh:mm:ss'}}</li>
+                                                    <li>
+                                                        <hr>
+                                                    </li>
+                                                    <li><code>Tên Khách Hàng: </code><span>{{order.account.fullname}}</span></li>
+                                                    <li><code>Email: </code><span>{{order.account.email}}</span></li>
+                                                    <li><code>SDT: </code><span> {{order.account.phone}}</span></li>
+                                                    <li><code>Giao Đến: </code><span>{{order.address}}</span></li>
+                                                    <li><code>Giá: </code><span style="color: #eb1c24">{{totalPrice | number}} VND</span></li>
+                                                    <li><code>Ghi Chú: </code><span>{{order.note}}</span></li>
+                                                    <li><button ng-show="order.orderStatus.id == 2" ng-click="updateStatusDone(order.id)" class="btn-success text-light p-3 mt-20px" title="Hoàn Tất Đơn Hàng" style="border-radius: 6px;">Hoàn Tất Đơn Hàng </button></li>
+                                                    <li>
+                                                        <button ng-show="order.orderStatus.id == 1" ng-click="updateStatusCancel(order.id)" class="btn-danger text-light p-3 mt-20px" title="Hủy Đơn Hàng" style="border-radius: 6px;">Hủy Đơn Hàng </button>
+                                                        <button ng-show="order.orderStatus.id == 1" ng-click="updateStatusConfirm(order.id)" class="btn-info text-light p-3 mt-20px" title="Xác Nhận Đơn Hàng" style="border-radius: 6px;">Xác Nhận Đơn Hàng </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 col-sm-6 mb-lm-30px pl-lg-40px">
-                                <div class="single-wedge">
-                                    <h4 class="footer-herading">My Account</h4>
-                                    <div class="footer-links">
-                                        <div class="footer-row">
-                                            <ul class="align-items-center">
-                                                <li class="li"><a class="single-link" href="my-account.html">My Account</a></li>
-                                                <li class="li"><a class="single-link" href="contact.html">Contact</a></li>
-                                                <li class="li"><a class="single-link" href="cart.html">Shopping cart</a></li>
-                                                <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shop</a></li>
-                                                <li class="li"><a class="single-link" href="login.html">Services Login</a></li>
-                                            </ul>
-                                        </div>
+                                    <div class="col-7 pr-35px" style="min-height: 535px;">
+                                        <aside>
+                                            <div class="box_contact pb-3 mt-0">
+                                                <div class="accordion" id="accordionFlushExample">
+                                                    <div class="accordion-item" ng-repeat="ord in list_orderDetail">
+                                                        <h3 class="accordion-header" id="flush-headingOne">
+                                                            <div class="row pt-2 pb-2" style="min-height: 120px;">
+                                                                <div class="col-3 pl-35px"><img src="File_Local/Images/product-image/{{ord.product.image}}/main.jpg" alt="{{ord.product.name}}" width="107" height="107" style="border:0; object-fit: contain;"></div>
+                                                                <div class="col-9">
+                                                                    <ul>
+                                                                        <li class="m-0">
+                                                                            <p class="text-primary mb-0 mt-3" style="font-size:20px;">{{ord.product.name}}</p>
+                                                                        </li>
+                                                                        <li class="m-0" style="font-size: 17px;"><code>Số Lượng: </code><span class="text-success">{{ord.quantity}}</span></li>
+                                                                        <li class="m-0" style="font-size: 17px;"><code>Tổng Tiền: </code><span>
+                                                                            {{ord.price * ord.quantity | number}} Vnd
+                                                                        </span></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aside>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 col-sm-12">
-                                <div class="single-wedge">
-                                    <h4 class="footer-herading">Contact Info</h4>
-                                    <div class="footer-links">
-                                        <!-- News letter area -->
-                                        <p class="address">Address: Your Address Goes Here.</p>
-                                        <p class="phone">Phone/Fax:<a href="tel:0123456789"> 0123456789</a></p>
-                                        <p class="mail">Email:<a href="mailto:demo@example.com"> demo@example.com</a></p>
-                                        <p class="mail"><a href="https://demo@example.com/"> demo@example.com</a></p>
-                                        <!-- News letter area  End -->
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <div class="container">
-                        <div class="line-shape-top line-height-1">
-                            <div class="row flex-md-row-reverse align-items-center">
-                                <div class="col-md-6 text-center text-md-end">
-                                    <div class="payment-mth">
-                                        <a href="#"><img class="img img-fluid" src="assets/images/icons/payment.png" alt="payment-image"></a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-center text-md-start">
-                                    <p class="copy-text"> © 2021 <strong>Hmart</strong> Made With <i class="fa fa-heart" aria-hidden="true"></i> By
-                                        <a class="company-name" href="https://themeforest.net/user/codecarnival/portfolio">
-                                            <strong> Codecarnival </strong></a>.</p>
                                 </div>
                             </div>
                         </div>
@@ -605,8 +541,119 @@
                 </div>
             </div>
         </div>
-        <!-- Footer Area End -->
     </div>
+    <!-- account area start -->
+    <!-- Footer Area Start -->
+    <div class="footer-area">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        <!-- Start single blog -->
+                        <div class="col-md-6 col-lg-3 mb-md-30px mb-lm-30px">
+                            <div class="single-wedge">
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="assets/images/logo/footer-logo.png" alt=""></a>
+                                </div>
+                                <p class="about-text">Lorem ipsum dolor sit amet consl adipisi elit, sed do eiusmod templ incididunt ut labore
+                                </p>
+                                <ul class="link-follow">
+                                    <li>
+                                        <a class="m-0" title="Twitter" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-facebook"
+                                        aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a title="Tumblr" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-tumblr" aria-hidden="true"></i>
+                                    </a>
+                                    </li>
+                                    <li>
+                                        <a title="Facebook" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-twitter" aria-hidden="true"></i>
+                                    </a>
+                                    </li>
+                                    <li>
+                                        <a title="Instagram" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-instagram" aria-hidden="true"></i>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End single blog -->
+                        <!-- Start single blog -->
+                        <div class="col-md-6 col-lg-3 col-sm-6 mb-lm-30px pl-lg-60px">
+                            <div class="single-wedge">
+                                <h4 class="footer-herading">Services</h4>
+                                <div class="footer-links">
+                                    <div class="footer-row">
+                                        <ul class="align-items-center">
+                                            <li class="li"><a class="single-link" href="my-account.html">My Account</a></li>
+                                            <li class="li"><a class="single-link" href="contact.html">Contact</a></li>
+                                            <li class="li"><a class="single-link" href="cart.html">Shopping cart</a></li>
+                                            <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shop</a></li>
+                                            <li class="li"><a class="single-link" href="login.html">Services Login</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End single blog -->
+                        <!-- Start single blog -->
+                        <div class="col-md-6 col-lg-3 col-sm-6 mb-lm-30px pl-lg-40px">
+                            <div class="single-wedge">
+                                <h4 class="footer-herading">My Account</h4>
+                                <div class="footer-links">
+                                    <div class="footer-row">
+                                        <ul class="align-items-center">
+                                            <li class="li"><a class="single-link" href="my-account.html">My Account</a></li>
+                                            <li class="li"><a class="single-link" href="contact.html">Contact</a></li>
+                                            <li class="li"><a class="single-link" href="cart.html">Shopping cart</a></li>
+                                            <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shop</a></li>
+                                            <li class="li"><a class="single-link" href="login.html">Services Login</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End single blog -->
+                        <!-- Start single blog -->
+                        <div class="col-md-6 col-lg-3 col-sm-12">
+                            <div class="single-wedge">
+                                <h4 class="footer-herading">Contact Info</h4>
+                                <div class="footer-links">
+                                    <!-- News letter area -->
+                                    <p class="address">Address: Your Address Goes Here.</p>
+                                    <p class="phone">Phone/Fax:<a href="tel:0123456789"> 0123456789</a></p>
+                                    <p class="mail">Email:<a href="mailto:demo@example.com"> demo@example.com</a></p>
+                                    <p class="mail"><a href="https://demo@example.com/"> demo@example.com</a></p>
+                                    <!-- News letter area  End -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End single blog -->
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="line-shape-top line-height-1">
+                        <div class="row flex-md-row-reverse align-items-center">
+                            <div class="col-md-6 text-center text-md-end">
+                                <div class="payment-mth">
+                                    <a href="#"><img class="img img-fluid" src="assets/images/icons/payment.png" alt="payment-image"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center text-md-start">
+                                <p class="copy-text"> © 2021 <strong>Hmart</strong> Made With <i class="fa fa-heart" aria-hidden="true"></i> By
+                                    <a class="company-name" href="https://themeforest.net/user/codecarnival/portfolio">
+                                        <strong> Codecarnival </strong></a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Area End -->
+
     <!-- Global Vendor, plugins JS -->
     <!-- JS Files
     ============================================ -->
@@ -625,13 +672,14 @@
     <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/main.min.js"></script>
-    <script src="assets/js/product.js"></script>
+    <script src="assets/js/order_list.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
 
     <!--Main JS (Common Activation Codes)-->
-    <!-- <script src="assets/js/main.js"></script> -->
 </body>
 
 
-<!-- Mirrored from htmldemo.net/hmart/hmart/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Sep 2022 11:36:44 GMT -->
+<!-- Mirrored from htmldemo.net/hmart/hmart/my-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Sep 2022 11:36:37 GMT -->
 
 </html>

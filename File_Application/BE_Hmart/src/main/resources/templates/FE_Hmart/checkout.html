@@ -54,8 +54,8 @@
                         <div class="col d-none d-lg-block">
                             <div class="top-nav">
                                 <ul>
-                                    <li><a href="tel:0123456789"><i class="fa fa-phone"></i> +012 3456 789</a></li>
-                                    <li><a href="mailto:demo@example.com"><i class="fa fa-envelope-o"></i> demo@example.com</a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> +84 769 628 823</a></li>
+                                    <li><a href=""><i class="fa fa-envelope-o"></i> hungtppps16493@fpt.edu.vn</a></li>
                                     <li><a href="my-account.html"><i class="fa fa-user"></i> Account</a></li>
                                 </ul>
                             </div>
@@ -83,15 +83,9 @@
                         </div>
                         <div class="col-lg-3 col">
                             <div class="header-actions">
-                                <!-- Single Wedge Start -->
-                                <a href="#offcanvas-wishlist" class="header-action-btn offcanvas-toggle">
-                                    <i class="pe-7s-like"></i>
-                                </a>
-                                <!-- Single Wedge End -->
                                 <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                                     <i class="pe-7s-shopbag"></i>
-                                    <span class="header-action-num">01</span>
-                                    <!-- <span class="cart-amount">€30.00</span> -->
+                                    <span class="header-action-num">{{cart.count?cart.count:'0'}}</span>
                                 </a>
                                 <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                     <i class="pe-7s-menu"></i>
@@ -128,8 +122,7 @@
                                 <!-- Single Wedge End -->
                                 <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                                     <i class="pe-7s-shopbag"></i>
-                                    <span class="header-action-num">01</span>
-                                    <!-- <span class="cart-amount">€30.00</span> -->
+                                    <span class="header-action-num">{{cart.count}}</span>
                                 </a>
                                 <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                     <i class="pe-7s-menu"></i>
@@ -232,37 +225,13 @@
                                             </li>
                                     </ul>
                                     </li>
-                                    <li class="dropdown "><a href="#">Blog <i class="fa fa-angle-down"></i></a>
-                                        <ul class="sub-menu">
-                                            <li class="dropdown position-static"><a href="blog-grid-left-sidebar.html">Blog Grid
-                                                <i class="fa fa-angle-right"></i></a>
-                                                <ul class="sub-menu sub-menu-2">
-                                                    <li><a href="blog-grid.html">Blog Grid</a></li>
-                                                    <li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
-                                                    <li><a href="blog-grid-right-sidebar.html">Blog Grid Right Sidebar</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown position-static"><a href="blog-list-left-sidebar.html">Blog List
-                                                <i class="fa fa-angle-right"></i></a>
-                                                <ul class="sub-menu sub-menu-2">
-                                                    <li><a href="blog-list.html">Blog List</a></li>
-                                                    <li><a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a></li>
-                                                    <li><a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown position-static"><a href="blog-single-left-sidebar.html">Single
-                                                Blog <i class="fa fa-angle-right"></i></a>
-                                                <ul class="sub-menu sub-menu-2">
-                                                    <li><a href="blog-single.html">Single Blog</a>
-                                                        <li><a href="blog-single-left-sidebar.html">Single Blog Left Sidebar</a>
-                                                        </li>
-                                                        <li><a href="blog-single-right-sidebar.html">Single Blog Right Sidebar</a>
-                                                        </li>
-                                                </ul>
-                                                </li>
+                                    <li class="dropdown "><a href="#">Categories <i class="fa fa-angle-down"></i></a>
+                                        <ul class="sub-menu" style="cursor: pointer;">
+                                            <li><a ng-click="saveIdCategory('null')">Tất Cả</a></li>
+                                            <li ng-repeat="cate in list_cate"><a ng-click="saveIdCategory(cate.id)">{{cate.name}}</a></li>
                                         </ul>
-                                        </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                    </li>
+                                    <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -285,49 +254,6 @@
         <!-- offcanvas overlay start -->
         <div class="offcanvas-overlay"></div>
         <!-- offcanvas overlay end -->
-        <!-- OffCanvas Wishlist Start -->
-        <div id="offcanvas-wishlist" class="offcanvas offcanvas-wishlist">
-            <div class="inner">
-                <div class="head">
-                    <span class="title">Wishlist</span>
-                    <button class="offcanvas-close">×</button>
-                </div>
-                <div class="body customScroll">
-                    <ul class="minicart-product-list">
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/1.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Modern Smart Phone</a>
-                                <span class="quantity-price">1 x <span class="amount">$21.86</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/2.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Bluetooth Headphone</a>
-                                <span class="quantity-price">1 x <span class="amount">$13.28</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/3.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Smart Music Box</a>
-                                <span class="quantity-price">1 x <span class="amount">$17.34</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="foot">
-                    <div class="buttons">
-                        <a href="wishlist.html" class="btn btn-dark btn-hover-primary mt-30px">view wishlist</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- OffCanvas Wishlist End -->
         <!-- OffCanvas Cart Start -->
         <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
             <div class="inner">
@@ -336,38 +262,25 @@
                     <button class="offcanvas-close">×</button>
                 </div>
                 <div class="body customScroll">
-                    <ul class="minicart-product-list">
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/1.webp" alt="Cart product Image"></a>
+                    <ul class="minicart-product-list" ng-show="cart.count != 0 && cart.count != null">
+                        <li ng-repeat="it in cart.items">
+                            <a href="single-product.html" class="image"><img src="File_Local/Images/product-image/{{it.image}}/main.jpg" alt="Cart product Image"></a>
                             <div class="content">
-                                <a href="single-product.html" class="title">Modern Smart Phone</a>
-                                <span class="quantity-price">1 x <span class="amount">$18.86</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/2.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Bluetooth Headphone</a>
-                                <span class="quantity-price">1 x <span class="amount">$43.28</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/3.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Smart Music Box</a>
-                                <span class="quantity-price">1 x <span class="amount">$37.34</span></span>
-                                <a href="#" class="remove">×</a>
+                                <a href="single-product.html" class="title">{{it.name}}</a>
+                                <span class="quantity-price">{{it.quantity}} x <span class="amount">{{it.price | number}}Vnd</span></span>
+                                <a ng-click="cart.remove(it.id)" style="cursor: pointer;" class="remove">×</a>
                             </div>
                         </li>
                     </ul>
+                    <h5 class="text-secondary" ng-show="cart.count == 0 || cart.count == null">Have a nice shopping <i class="bi bi-heart"></i></h5>
                 </div>
                 <div class="foot">
-                    <div class="buttons mt-30px">
-                        <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-                        <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
+                    <div class="buttons mt-30px" ng-show="cart.count != 0 && cart.count != null">
+                        <a href="cart.html" class="btn btn-dark btn-hover-primary mb-2">View cart</a>
+                        <a ng-click="cart.clear()" class="btn current-btn">Reset</a>
                     </div>
+                    <div class="buttons mt-30px" ng-show="cart.count == 0 || cart.count == null">
+                        <a href="empty-cart.html" class="btn btn-dark btn-hover-primary mb-2">View cart</a> </div>
                 </div>
             </div>
         </div>

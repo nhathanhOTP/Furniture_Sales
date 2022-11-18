@@ -31,9 +31,10 @@ public class Product  implements Serializable{
 	String image;
 	Double price;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdate")
-	Date createDate = new Date();
-	Boolean available;
+	@Column(name = "createdate")
+	private Date createDate = new Date();
+	private Boolean available;
+	@Column(name = "origin")
 	private String origin;
 	@Column(name = "guarentee")
 	private String guarentee;
@@ -43,7 +44,6 @@ public class Product  implements Serializable{
 	private String color;
 	@Column(name="size")
 	private String size;
-
 	
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")

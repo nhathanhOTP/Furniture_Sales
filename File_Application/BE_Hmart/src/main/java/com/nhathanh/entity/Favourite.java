@@ -21,6 +21,7 @@ public class Favourite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	@ManyToOne
 	@JoinColumn(name = "username")
 	Account account;
@@ -28,7 +29,8 @@ public class Favourite {
 	@ManyToOne
 	@JoinColumn(name = "idproduct")
 	Product product;
-	@Temporal(TemporalType.DATE)
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date datecreate = new Date();
 
 }

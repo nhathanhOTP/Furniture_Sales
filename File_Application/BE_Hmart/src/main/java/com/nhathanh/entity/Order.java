@@ -31,7 +31,7 @@ public class Order  implements Serializable{
 	String address;
 	String note;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Createdate")
 	Date createDate = new Date();
 	

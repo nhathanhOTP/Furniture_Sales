@@ -13,7 +13,13 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.*;
+
+import com.nhathanh.dao.*;
+import com.nhathanh.entity.*;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +44,33 @@ import com.nhathanh.entity.Product;
 @CrossOrigin("*")
 @RestController
 public class ProductRestController {
+	//By Phi Hung
+	@Autowired
+	ProductDAO productDao;
+	
+	@GetMapping("/hfn/product/getAll")
+	public List<Product> getAll(){
+		return productDao.findAll();
+	}
+	
+	@GetMapping("/hfn/product/{id}")
+	public Product getOne(@PathVariable("id") Integer id) {
+		return productDao.findById(id).get();
+	}
+	
+	@GetMapping("/hfn/product/cate/{id}")
+	public List<Product> getByCate(@PathVariable("id") String id) {
+		return productDao.findByCategoryId(id);
+	}
+	
+	@GetMapping("/hfn/item/{id}")
+	public Item getItem(@PathVariable("id") Integer id) {
+		Item item = new Item();
+		BeanUtils.copyProperties(productDao.findById(id).get(), item);
+		return item;
+	}
+
+	//By Nha Thanh
 	public static final String hmart = "src\\main\\resources\\templates\\FE_Hmart\\File_Local\\Images";
 	public static final String File_local = "src\\main\\resources\\templates\\FE_Hmart\\File_Local";
 	@Autowired
@@ -209,71 +242,4 @@ public class ProductRestController {
 			System.out.println(e);
 		}
 	}
-	
-	// Remove sub-image
-		@PostMapping("/update/product/sub-image")
-		public void updateProduct(@RequestBody ArrayList<String> object) throws IOException {
-			for (int i = 0; i < object.size(); i++) {
-				String fileName = object.get(i);
-				System.out.println(fileName);
-		        try {
-		            boolean result = Files.deleteIfExists(Paths.get("src\\main\\resources\\templates\\FE_Hmart\\File_Local\\"+fileName));
-		            if (result) {
-		                System.out.println("File is deleted!");
-		            } else {
-		                System.out.println("Sorry, unable to delete the file.");
-		            }
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-			}
-		}
-
-		// Update sub-image
-		@PostMapping("/update/product/new/sub-image")
-		public String updateNewSubImage(@RequestParam("listImages[]") ArrayList<MultipartFile> object,
-				@RequestParam("nameFloder") String nameFolder) throws IOException {
-			if (object != null) {
-				System.out.println(object.size() + " tong file update");
-				try {
-					for (int i = 0; i < object.size(); i++) {
-						saveImage(object.get(i), nameFolder,String.valueOf(i)); 
-					}
-					System.out.println("Save file successfully!");
-					// Return name floder
-					return nameFolder;
-				} catch (Exception e) {
-					System.out.println(e);
-					return "Error!";
-				}
-			}
-			return nameFolder;
-		}
-	/////////////// Trần Phạm Phi Hùng
-
-	@Autowired
-	ProductDAO productDao;
-
-	@GetMapping("/hfn/product/getAll")
-	public List<Product> getAll() {
-		return productDao.findAll();
-	}
-
-	@GetMapping("/hfn/product/{id}")
-	public Product getOne(@PathVariable("id") Integer id) {
-		return productDao.findById(id).get();
-	}
-
-	@GetMapping("/hfn/product/cate/{id}")
-	public List<Product> getByCate(@PathVariable("id") String id) {
-		return productDao.findByCategoryId(id);
-	}
-
-	@GetMapping("/hfn/item/{id}")
-	public Item getItem(@PathVariable("id") Integer id) {
-		Item item = new Item();
-		BeanUtils.copyProperties(productDao.findById(id).get(), item);
-		return item;
-	}
-
 }
