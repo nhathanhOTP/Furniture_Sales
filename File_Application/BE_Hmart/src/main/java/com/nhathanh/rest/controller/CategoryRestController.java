@@ -1,9 +1,21 @@
 package com.nhathanh.rest.controller;
 
-public class CategoryRestController {
+import java.util.List;
 
-<<<<<<< HEAD
-=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nhathanh.dao.CategoryDAO;
+import com.nhathanh.entity.Category;
+
+@CrossOrigin("*")
+@RestController
+public class CategoryRestController {
+	@Autowired
+	CategoryDAO cateDAO;
+	
 	@GetMapping("/hfn/categories/getAll")
 	public List<Category> categories() {
 		return cateDAO.findAll();
@@ -13,5 +25,4 @@ public class CategoryRestController {
 	public List<Category> check() {
 		return cateDAO.findAll();
 	}
->>>>>>> Main_merge
 }

@@ -28,12 +28,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Conditions](
-	[IdConditons] [int] IDENTITY(1,1) NOT NULL,
+	[IdConditions] [int] IDENTITY(1,1) NOT NULL,
 	[MinSpend][float] NULL,
 	[QuantityRequest][int]NULL,
  CONSTRAINT [PK_Conditons] PRIMARY KEY CLUSTERED 
 (
-	[IdConditons] ASC
+	[IdConditions] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -44,11 +44,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Discount](
 	[IdDiscount] [int] IDENTITY(1,1)  NOT NULL,
-	[PercentDecrease] FLOAT NOT NULL,
+	[valueDecrease] FLOAT NOT NULL,
 	[TitleDiscount] NVARCHAR(100) NULL,
 	[ContentDiscount] NVARCHAR(100) NULL,
 	[StartDate] DATE NOT NULL,
 	[EndDate] DATE NOT NULL,
+	[DiscountForm] bit NOT NULL,
 	[IdProduct] int Not NULL,
 	[ConditionsOfUse] int NOT NULL,
  CONSTRAINT [PK_Discount] PRIMARY KEY CLUSTERED 
@@ -95,6 +96,7 @@ CREATE TABLE [dbo].[Categories](
 GO
 SET ANSI_PADDING OFF
 GO
+
 /****** Object:  Table [dbo].[OrderDetails]    Script Date: 11/01/2022 3:07:02 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -257,7 +259,7 @@ ALTER TABLE [dbo].[Discount] CHECK CONSTRAINT [FK_Discount_Product]
 GO
 ---------------------------------------------------------------->---------------------------------------------------------------->
 ALTER TABLE [dbo].[Discount]  WITH CHECK ADD  CONSTRAINT [FK_Discount_Conditions] FOREIGN KEY([ConditionsOfUse])
-REFERENCES [dbo].[Conditions] ([IdConditons])
+REFERENCES [dbo].[Conditions] ([IdConditions])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO

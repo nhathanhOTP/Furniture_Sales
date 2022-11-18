@@ -1,11 +1,6 @@
 package com.nhathanh.rest.controller;
 
-<<<<<<< HEAD
-public class ProductRestController {
-
-=======
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,21 +10,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
-
-import com.nhathanh.dao.*;
-import com.nhathanh.entity.*;
-=======
-<<<<<<< HEAD
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,20 +32,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nhathanh.dao.CategoryDAO;
 import com.nhathanh.dao.ProductDAO;
 import com.nhathanh.entity.Category;
+import com.nhathanh.entity.Item;
 import com.nhathanh.entity.Product;
-=========
-import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
-
-import com.nhathanh.dao.*;
-import com.nhathanh.entity.*;
->>>>>>>>> Temporary merge branch 2
 
 @CrossOrigin("*")
 @RestController
 public class ProductRestController {
-<<<<<<<<< Temporary merge branch 1
 	public static final String hmart = "src\\main\\resources\\templates\\FE_Hmart\\File_Local\\Images";
+	public static final String File_local = "src\\main\\resources\\templates\\FE_Hmart\\File_Local";
 	@Autowired
 	CategoryDAO cteDao;
 
@@ -129,27 +110,30 @@ public class ProductRestController {
 		File[] children = new File(hmart + "\\" + nameFolder).listFiles();
 		if (children != null) {
 			for (int i = 0; i < children.length; i++) {
-				if(!children[i].getName().contains("main")) {
+				if (!children[i].getName().contains("main")) {
 					ds.add(children[i]);
 				}
 			}
 		}
 		return ds;
 	}
+
 	// Get list sub image form name folder
-		@GetMapping("/getImage/mainImage/{floder}")
-		@ResponseBody
-		public File getMainImage(@PathVariable("floder") String nameFolder) throws IOException {
-			File[] children = new File(hmart + "\\" + nameFolder).listFiles();
-			if (children != null) {
-				for (int i = 0; i < children.length; i++) {
-					if(children[i].getName().contains("main")) {
-						return children[i];
-					}
+	@GetMapping("/getImage/mainImage/{floder}")
+	@ResponseBody
+	public File getMainImage(@PathVariable("floder") String nameFolder) throws IOException {
+		File[] children = new File(hmart + "\\" + nameFolder).listFiles();
+		File mainImage = new File("src\\main\\resources\\templates\\FE_Hmart\\File_Local\\icon\\no_image_300_300.jpg");
+		if (children != null) {
+			for (int i = 0; i < children.length; i++) {
+				if (children[i].getName().contains("main")) {
+					mainImage = children[i];
+					return mainImage;
 				}
 			}
-			return null;
 		}
+		return mainImage;
+	}
 
 	// Save images
 	@PostMapping("/uploadImages")
@@ -158,13 +142,13 @@ public class ProductRestController {
 			throws IOException {
 		// Save main img
 		saveImage(imgMain, nameFoloder, "main");
-
+		String unid = UUID.randomUUID().toString();
 		// Save sub img
 		if (object != null) {
 			try {
 				for (int i = 0; i < object.size(); i++) {
-					saveImage(object.get(i), nameFoloder, String.valueOf(i));
-				}
+					saveImage(object.get(i), nameFoloder,String.valueOf(i));
+				} 
 				System.out.println("Save file successfully!");
 				// Return name floder
 				return nameFoloder;
@@ -182,41 +166,109 @@ public class ProductRestController {
 		return prDao.save(pr);
 	}
 
-	// Method save images
-	public void saveImage(MultipartFile file, String nameFoloder, String nameFile) throws IOException {
-		Path path = Paths.get(createFloder(hmart + "\\" + nameFoloder));
+	// Update main image
+	@PutMapping("/update/main-image/product")
+	public String updateMainImage(@RequestParam("main-img") MultipartFile imgMain,
+			@RequestParam("nameFloder") String nameFolder) throws IOException {
+		File[] children = new File(hmart + "\\" + nameFolder).listFiles();
+		try {
+			if (children != null) {
+				for (int i = 0; i < children.length; i++) {
+					if (children[i].getName().contains("main")) {
+						children[i].delete();
+						// Save new main img
+						saveImage(imgMain, nameFolder, "main");
+						System.out.println("Update main image successfully!");
+						return "OK";
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "Error";
+	}
 
-		if (file != null) {
-			// Get name file MultipartFile
-			String fileNameMain = file.getOriginalFilename().trim();
-			// Get type file(jpg,png,...) MultipartFile
-			String typeImage = fileNameMain.substring(fileNameMain.indexOf("."), fileNameMain.length());
-			// Set file name and save with name file auto 0->...;
-			String nameImage = String.valueOf(nameFile + typeImage);
-			InputStream inputStream = file.getInputStream();
-			Files.copy(inputStream, path.resolve(nameImage), StandardCopyOption.REPLACE_EXISTING);
+
+
+	// Method save images
+	public void saveImage(MultipartFile file, String nameFolder, String nameFile) throws IOException {
+		Path path = Paths.get(createFloder(hmart + "\\" + nameFolder));
+		try {
+			if (file != null) {
+				// Get name file MultipartFile
+				String fileNameMain = file.getOriginalFilename().trim();
+				// Get type file(jpg,png,...) MultipartFile
+				String typeImage = fileNameMain.substring(fileNameMain.indexOf("."), fileNameMain.length());
+				// Set file name and save with name file...;
+				String nameImage = String.valueOf(nameFile + typeImage);
+				InputStream inputStream = file.getInputStream();
+				Files.copy(inputStream, path.resolve(nameImage), StandardCopyOption.REPLACE_EXISTING);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
-=========
+	
+	// Remove sub-image
+		@PostMapping("/update/product/sub-image")
+		public void updateProduct(@RequestBody ArrayList<String> object) throws IOException {
+			for (int i = 0; i < object.size(); i++) {
+				String fileName = object.get(i);
+				System.out.println(fileName);
+		        try {
+		            boolean result = Files.deleteIfExists(Paths.get("src\\main\\resources\\templates\\FE_Hmart\\File_Local\\"+fileName));
+		            if (result) {
+		                System.out.println("File is deleted!");
+		            } else {
+		                System.out.println("Sorry, unable to delete the file.");
+		            }
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
+
+		// Update sub-image
+		@PostMapping("/update/product/new/sub-image")
+		public String updateNewSubImage(@RequestParam("listImages[]") ArrayList<MultipartFile> object,
+				@RequestParam("nameFloder") String nameFolder) throws IOException {
+			if (object != null) {
+				System.out.println(object.size() + " tong file update");
+				try {
+					for (int i = 0; i < object.size(); i++) {
+						saveImage(object.get(i), nameFolder,String.valueOf(i)); 
+					}
+					System.out.println("Save file successfully!");
+					// Return name floder
+					return nameFolder;
+				} catch (Exception e) {
+					System.out.println(e);
+					return "Error!";
+				}
+			}
+			return nameFolder;
+		}
+	/////////////// Trần Phạm Phi Hùng
 
 	@Autowired
 	ProductDAO productDao;
-	
+
 	@GetMapping("/hfn/product/getAll")
-	public List<Product> getAll(){
+	public List<Product> getAll() {
 		return productDao.findAll();
 	}
-	
+
 	@GetMapping("/hfn/product/{id}")
 	public Product getOne(@PathVariable("id") Integer id) {
 		return productDao.findById(id).get();
 	}
-	
+
 	@GetMapping("/hfn/product/cate/{id}")
 	public List<Product> getByCate(@PathVariable("id") String id) {
 		return productDao.findByCategoryId(id);
 	}
-	
+
 	@GetMapping("/hfn/item/{id}")
 	public Item getItem(@PathVariable("id") Integer id) {
 		Item item = new Item();
@@ -224,5 +276,4 @@ public class ProductRestController {
 		return item;
 	}
 
->>>>>>>>> Temporary merge branch 2
 }
