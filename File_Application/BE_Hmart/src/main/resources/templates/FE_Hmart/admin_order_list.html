@@ -489,7 +489,7 @@
                                                     <li><code>Mã Khách Hàng: </code><span style="color: #eb1c24">{{order.account.username}}</span></li>
                                                     <!-- <li><code>Mã Người Duyệt: </code>${thongTin.staffID}</span>
                                                     </li> -->
-                                                    <li><code>Thời Gian: </code><span style="color: #eb1c24"><code>ngày</code> {{order.createDate}}</li>
+                                                    <li><code>Thời Gian: </code><span style="color: #eb1c24"><code>Ngày </code>{{order.createDate | date: 'dd/MM/yyyy'}} <code> lúc </code> {{order.createDate | date: 'hh:mm:ss'}}</li>
                                                     <li>
                                                         <hr>
                                                     </li>
@@ -497,12 +497,12 @@
                                                     <li><code>Email: </code><span>{{order.account.email}}</span></li>
                                                     <li><code>SDT: </code><span> {{order.account.phone}}</span></li>
                                                     <li><code>Giao Đến: </code><span>{{order.address}}</span></li>
-                                                    <li><code>Giá: </code><span style="color: #eb1c24"><fmt:formatNumber type="number" maxFractionDigits="0" value="${thongTin.price}" /> VND</span></li>
+                                                    <li><code>Giá: </code><span style="color: #eb1c24">{{totalPrice | number}} VND</span></li>
                                                     <li><code>Ghi Chú: </code><span>{{order.note}}</span></li>
                                                     <li><button ng-show="order.orderStatus.id == 2" ng-click="updateStatusDone(order.id)" class="btn-success text-light p-3 mt-20px" title="Hoàn Tất Đơn Hàng" style="border-radius: 6px;">Hoàn Tất Đơn Hàng </button></li>
                                                     <li>
                                                         <button ng-show="order.orderStatus.id == 1" ng-click="updateStatusCancel(order.id)" class="btn-danger text-light p-3 mt-20px" title="Hủy Đơn Hàng" style="border-radius: 6px;">Hủy Đơn Hàng </button>
-                                                        <button ng-show="order.orderStatus.id == 1" ng-click="updateStatusCofirm(order.id)" class="btn-info text-light p-3 mt-20px" title="Xác Nhận Đơn Hàng" style="border-radius: 6px;">Xác Nhận Đơn Hàng </button>
+                                                        <button ng-show="order.orderStatus.id == 1" ng-click="updateStatusConfirm(order.id)" class="btn-info text-light p-3 mt-20px" title="Xác Nhận Đơn Hàng" style="border-radius: 6px;">Xác Nhận Đơn Hàng </button>
                                                     </li>
                                                 </ul>
                                             </div>

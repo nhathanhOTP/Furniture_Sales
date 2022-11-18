@@ -53,10 +53,10 @@ appList.controller("list", function($scope, $http, $window) {
 
     $scope.load_orderDetail = function(id) {
         var url = `${hostList}/detail/${id}`;
+        $scope.load_list_orderDetail(id);
         $http.get(url).then(resp => {
             $scope.order = resp.data;
             console.log("Order Sucess", resp);
-            $scope.load_list_orderDetail(id);
         }).catch(error => {
             console.log("Order Error", error);
         });
@@ -65,10 +65,18 @@ appList.controller("list", function($scope, $http, $window) {
     $scope.load_list_orderDetail = function(id) {
         var url = `${hostList}/listDetail/${id}`;
         $http.get(url).then(resp => {
+            $scope.orderTotalPrice(resp.data);
             $scope.list_orderDetail = resp.data;
             console.log("List OrderDetail Sucess", resp);
         }).catch(error => {
             console.log("List OrderDetail Error", error);
+        });
+    };
+
+    $scope.orderTotalPrice = function(data) {
+        $scope.totalPrice = 0;
+        data.forEach(element => {
+            $scope.totalPrice += (element.price * element.quantity);
         });
     };
 
@@ -92,7 +100,7 @@ appList.controller("list", function($scope, $http, $window) {
             $scope.order = resp.data;
             console.log("Update Sucess", resp);
             $scope.load_list_order();
-            alert("Cancel sucessfull!");
+            alert("Order Done!");
         }).catch(error => {
             console.log("Update Error", error);
         });
@@ -105,7 +113,7 @@ appList.controller("list", function($scope, $http, $window) {
             $scope.order = resp.data;
             console.log("Update Sucess", resp);
             $scope.load_list_order();
-            alert("Cancel sucessfull!");
+            alert("Confirm sucessfull!");
         }).catch(error => {
             console.log("Update Error", error);
         });
