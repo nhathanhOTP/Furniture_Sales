@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from htmldemo.net/hmart/hmart/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Sep 2022 11:36:44 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,9 +27,10 @@
     <!-- Minify Version -->
     <link rel="stylesheet" href="assets/css/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script src="assets/js/angular1.7.9.min.js"></script>
 </head>
 
-<body>
+<body ng-app="admin">
     <div class="main-wrapper">
         <header>
             <!-- Header top area start -->
@@ -202,12 +204,12 @@
                                                 <li class="title"><a href="#">Single Product Page</a></li>
                                                 <li><a href="single-product-slider.html">Product Slider</a></li>
                                                 <li><a href="single-product-gallery-left.html">Product Gallery Left</a>
-                                                <li><a href="single-product-gallery-right.html">Product Gallery Right</a> </li>
-                                                <li><a href="single-product-sticky-left.html">Product Sticky Left</a>
-                                                </li>
-                                                <li><a href="single-product-sticky-right.html">Product Sticky Right</a>
-                                                </li>
-                                                <li><a href="cart.html">Cart Page</a></li>
+                                                    <li><a href="single-product-gallery-right.html">Product Gallery Right</a> </li>
+                                                    <li><a href="single-product-sticky-left.html">Product Sticky Left</a>
+                                                    </li>
+                                                    <li><a href="single-product-sticky-right.html">Product Sticky Right</a>
+                                                    </li>
+                                                    <li><a href="cart.html">Cart Page</a></li>
                                             </ul>
                                             <ul class="d-block p-0 border-0">
                                                 <li class="title"><a href="#">Single Product Page</a></li>
@@ -218,40 +220,40 @@
                                                 <li><a href="login.html">Login & Register Page</a></li>
                                                 <li><a href="empty-cart.html">Empty Cart Page</a></li>
                                             </ul>
-                                        </li>
+                                            </li>
                                     </ul>
-                                </li>
-                                <li class="dropdown "><a href="#">Blog <i class="fa fa-angle-down"></i></a>
-                                    <ul class="sub-menu">
-                                        <li class="dropdown position-static"><a href="blog-grid-left-sidebar.html">Blog Grid
+                                    </li>
+                                    <li class="dropdown "><a href="#">Blog <i class="fa fa-angle-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li class="dropdown position-static"><a href="blog-grid-left-sidebar.html">Blog Grid
                                                 <i class="fa fa-angle-right"></i></a>
-                                            <ul class="sub-menu sub-menu-2">
-                                                <li><a href="blog-grid.html">Blog Grid</a></li>
-                                                <li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
-                                                <li><a href="blog-grid-right-sidebar.html">Blog Grid Right Sidebar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown position-static"><a href="blog-list-left-sidebar.html">Blog List
+                                                <ul class="sub-menu sub-menu-2">
+                                                    <li><a href="blog-grid.html">Blog Grid</a></li>
+                                                    <li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
+                                                    <li><a href="blog-grid-right-sidebar.html">Blog Grid Right Sidebar</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown position-static"><a href="blog-list-left-sidebar.html">Blog List
                                                 <i class="fa fa-angle-right"></i></a>
-                                            <ul class="sub-menu sub-menu-2">
-                                                <li><a href="blog-list.html">Blog List</a></li>
-                                                <li><a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a></li>
-                                                <li><a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown position-static"><a href="blog-single-left-sidebar.html">Single
+                                                <ul class="sub-menu sub-menu-2">
+                                                    <li><a href="blog-list.html">Blog List</a></li>
+                                                    <li><a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a></li>
+                                                    <li><a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown position-static"><a href="blog-single-left-sidebar.html">Single
                                                 Blog <i class="fa fa-angle-right"></i></a>
-                                            <ul class="sub-menu sub-menu-2">
-                                                <li><a href="blog-single.html">Single Blog</a>
-                                                <li><a href="blog-single-left-sidebar.html">Single Blog Left Sidebar</a>
+                                                <ul class="sub-menu sub-menu-2">
+                                                    <li><a href="blog-single.html">Single Blog</a>
+                                                        <li><a href="blog-single-left-sidebar.html">Single Blog Left Sidebar</a>
+                                                        </li>
+                                                        <li><a href="blog-single-right-sidebar.html">Single Blog Right Sidebar</a>
+                                                        </li>
+                                                </ul>
                                                 </li>
-                                                <li><a href="blog-single-right-sidebar.html">Single Blog Right Sidebar</a>
-                                                </li>
-                                            </ul>
+                                        </ul>
                                         </li>
-                                    </ul>
-                                </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -442,39 +444,39 @@
                                         <li><a href="single-product-slider.html">Product Slider</a></li>
                                         <li><a href="single-product-gallery-left.html">Product Gallery Left</a>
                                     </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="menu-text">Single Product Page</span></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="single-product-gallery-right.html">Product Gallery
+                                    </li>
+                                    <li>
+                                        <a href="#"><span class="menu-text">Single Product Page</span></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="single-product-gallery-right.html">Product Gallery
                                                 Right</a> </li>
-                                        <li><a href="single-product-sticky-left.html">Product Sticky Left</a>
-                                        </li>
-                                        <li><a href="single-product-sticky-right.html">Product Sticky Right</a>
-                                        </li>
-                                        <li><a href="compare.html">Compare Page</a></li>
-                                        <li><a href="wishlist.html">Wishlist Page</a></li>
-                                        <li><a href="my-account.html">Account Page</a></li>
-                                        <li><a href="login.html">Login & Register Page</a></li>
-                                        <li><a href="empty-cart.html">Empty Cart Page</a></li>
-                                    </ul>
+                                            <li><a href="single-product-sticky-left.html">Product Sticky Left</a>
+                                            </li>
+                                            <li><a href="single-product-sticky-right.html">Product Sticky Right</a>
+                                            </li>
+                                            <li><a href="compare.html">Compare Page</a></li>
+                                            <li><a href="wishlist.html">Wishlist Page</a></li>
+                                            <li><a href="my-account.html">Account Page</a></li>
+                                            <li><a href="login.html">Login & Register Page</a></li>
+                                            <li><a href="empty-cart.html">Empty Cart Page</a></li>
+                                        </ul>
+                                    </li>
+                            </ul>
+                            </li>
+                            <li><a href="#"><span class="menu-text">Blog</span></a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog-grid.html">Blog Grid Page</a></li>
+                                    <li><a href="blog-grid-left-sidebar.html">Grid Left Sidebar</a></li>
+                                    <li><a href="blog-grid-right-sidebar.html">Grid Right Sidebar</a></li>
+                                    <li><a href="blog-list.html">Blog List Page</a></li>
+                                    <li><a href="blog-list-left-sidebar.html">List Left Sidebar</a></li>
+                                    <li><a href="blog-list-right-sidebar.html">List Right Sidebar</a></li>
+                                    <li><a href="blog-single.html">Blog Single Page</a></li>
+                                    <li><a href="blog-single-left-sidebar.html">Single Left Sidebar</a></li>
+                                    <li><a href="blog-single-right-sidebar.html">Single Right Sidbar</a>
+                                </ul>
                                 </li>
-                            </ul>
-                        </li>
-                        <li><a href="#"><span class="menu-text">Blog</span></a>
-                            <ul class="sub-menu">
-                                <li><a href="blog-grid.html">Blog Grid Page</a></li>
-                                <li><a href="blog-grid-left-sidebar.html">Grid Left Sidebar</a></li>
-                                <li><a href="blog-grid-right-sidebar.html">Grid Right Sidebar</a></li>
-                                <li><a href="blog-list.html">Blog List Page</a></li>
-                                <li><a href="blog-list-left-sidebar.html">List Left Sidebar</a></li>
-                                <li><a href="blog-list-right-sidebar.html">List Right Sidebar</a></li>
-                                <li><a href="blog-single.html">Blog Single Page</a></li>
-                                <li><a href="blog-single-left-sidebar.html">Single Left Sidebar</a></li>
-                                <li><a href="blog-single-right-sidebar.html">Single Right Sidbar</a>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- OffCanvas Menu End -->
@@ -518,7 +520,7 @@
         </div>
         <!-- breadcrumb-area end -->
         <!-- login area start -->
-        <div class="login-register-area pt-100px pb-100px">
+        <div class="login-register-area pt-100px pb-100px" ng-controller="login">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-12 ml-auto mr-auto">
@@ -535,16 +537,16 @@
                                 <div id="lg1" class="tab-pane active">
                                     <div class="login-form-container">
                                         <div class="login-register-form">
-                                            <form action="#" method="post">
-                                                <input type="text" name="user-name" placeholder="Username" />
-                                                <input type="password" name="user-password" placeholder="Password" />
+                                            <form>
+                                                <input type="text" name="user-name" placeholder="Username" ng-model="user.username" />
+                                                <input type="password" name="user-password" placeholder="Password" ng-model="user.password" />
                                                 <div class="button-box">
                                                     <div class="login-toggle-btn">
                                                         <input type="checkbox" />
                                                         <a class="flote-none" href="javascript:void(0)">Remember me</a>
                                                         <a href="#">Forgot Password?</a>
                                                     </div>
-                                                    <button type="submit"><span>Login</span></button>
+                                                    <button ng-click="login(user)"><span>Login</span></button>
                                                 </div>
                                             </form>
                                         </div>
@@ -665,11 +667,13 @@
                         <div class="line-shape-top line-height-1">
                             <div class="row flex-md-row-reverse align-items-center">
                                 <div class="col-md-6 text-center text-md-end">
-                                    <div class="payment-mth"><a href="#"><img class="img img-fluid" src="assets/images/icons/payment.png" alt="payment-image"></a></div>
+                                    <div class="payment-mth">
+                                        <a href="#"><img class="img img-fluid" src="assets/images/icons/payment.png" alt="payment-image"></a>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 text-center text-md-start">
-                                    <p class="copy-text"> © 2021 <strong>Hmart</strong> Made With <i class="fa fa-heart"
-                                        aria-hidden="true"></i> By <a class="company-name" href="https://themeforest.net/user/codecarnival/portfolio">
+                                    <p class="copy-text"> © 2021 <strong>Hmart</strong> Made With <i class="fa fa-heart" aria-hidden="true"></i> By
+                                        <a class="company-name" href="https://themeforest.net/user/codecarnival/portfolio">
                                             <strong> Codecarnival </strong></a>.</p>
                                 </div>
                             </div>
@@ -697,7 +701,7 @@
     <!-- Minify Version -->
     <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/main.min.js"></script>
+    <script src="assets/js/login_check.js"></script>
 
     <!--Main JS (Common Activation Codes)-->
     <!-- <script src="assets/js/main.js"></script> -->
@@ -705,4 +709,5 @@
 
 
 <!-- Mirrored from htmldemo.net/hmart/hmart/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Sep 2022 11:36:44 GMT -->
+
 </html>

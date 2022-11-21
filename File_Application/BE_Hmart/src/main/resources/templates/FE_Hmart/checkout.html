@@ -466,8 +466,40 @@
                             <div class="additional-info-wrap">
                                 <h4>Billing Details</h4>
                                 <div class="billing-info col-lg-12 mt-30px mb-30px">
+                                    <!-- <label>Address</label>
+                                    <input type="text" placeholder="Delivery address" ng-model="order_info.address" /> -->
                                     <label>Address</label>
-                                    <input type="text" placeholder="Delivery address" ng-model="order_info.address" />
+
+                                    <div class="row">
+                                        <div class=" col-lg-6">
+                                            <select class="form-select" id="floatingSelectCty" aria-label="Floating label select example">
+                                              <option selected>Cty</option>
+                                              <option value="" ng-click="getCty($index)" ng-repeat="cty in local">{{cty.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class=" col-lg-6">
+                                            <select class="form-select" id="" aria-label="Floating label select example">
+                                              <option selected>Distrists</option>
+                                              <option value="" ng-repeat="dis in districts" ng-click="getDistricts($index)">{{dis.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3"></div>
+                                    <div class="row">
+                                        <div class=" col-lg-6">
+                                            <select class="form-select" id="" aria-label="Floating label select example">
+                                              <option selected>Ward</option>
+                                              <option ng-repeat="wa in wards" ng-click="getWard(wa.prefix,wa.name)">{{wa.prefix}} {{wa.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class=" col-lg-6">
+                                            <select class="form-select" id="" aria-label="Floating label select example">
+                                              <option selected>Streets</option>
+                                              <option ng-repeat="st in streets" ng-click="getStreet(st.prefix,st.name)">{{st.prefix}} {{st.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="additional-info">
                                     <label>Order notes</label>
@@ -490,6 +522,12 @@
                                     <div class="your-order-middle">
                                         <ul>
                                             <li ng-repeat="item in cart.items"><span class="order-middle-left">{{item.name}}</span>X {{item.quantity}} <span class="order-price">{{item.price * item.quantity | number}} Vnd</span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="your-order-bottom" ng-show="order_info.address==''||order_info.address!=undefined">
+                                        <h6>Address</h6>
+                                        <ul>
+                                            <li>{{order_info.address}}</li>
                                         </ul>
                                     </div>
                                     <div class="your-order-bottom">

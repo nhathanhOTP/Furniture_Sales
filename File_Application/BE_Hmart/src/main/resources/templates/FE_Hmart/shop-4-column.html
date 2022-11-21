@@ -55,7 +55,7 @@
                             <div class="top-nav">
                                 <ul>
                                     <li><a href=""><i class="fa fa-phone"></i> +84 769 628 823</a></li>
-                                    <li><a href=""><i class="fa fa-envelope-o"></i> hungtppps16493@fpt.edu.vn</a></li>
+                                    <li><a href=""><i class="fa fa-envelope-o"></i>{{user.email}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -264,7 +264,7 @@
                 <div class="body customScroll">
                     <ul class="minicart-product-list" ng-show="cart.count != 0 && cart.count != null">
                         <li ng-repeat="it in cart.items">
-                            <a href="single-product.html" class="image"><img src="File_Local/Images/product-image/{{it.image}}/main.jpg" alt="Cart product Image"></a>
+                            <a href="single-product.html" class="image"><img src="http://localhost:8080/getImage/{{it.image}}" alt="Cart product Image"></a>
                             <div class="content">
                                 <a href="single-product.html" class="title">{{it.name}}</a>
                                 <span class="quantity-price">{{it.quantity}} x <span class="amount">{{it.price | number}}Vnd</span></span>
@@ -496,8 +496,8 @@
                                                         </span>
                                                         <div class="thumb">
                                                             <a href="single-product.html" class="image">
-                                                                <img src="File_Local/Images/product-image/{{pr.image}}/main.jpg" alt="Product" />
-                                                                <img class="hover-image" src="File_Local/Images/product-image/{{pr.image}}/main.jpg" alt="Product" />
+                                                                <img src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
+                                                                <img class="hover-image" src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
                                                             </a>
                                                         </div>
                                                         <div class="content pt-1">
@@ -529,8 +529,8 @@
                                                         <div class="product">
                                                             <div class="thumb">
                                                                 <a href="single-product.html" class="image">
-                                                                    <img src="File_Local/Images/product-image/{{pr.image}}/main.jpg" alt="Product" />
-                                                                    <img class="hover-image" src="File_Local/Images/product-image/{{pr.image}}/main.jpg" alt="Product" />
+                                                                    <img src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
+                                                                    <img class="hover-image" src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
                                                                 </a>
                                                                 <span class="badges">
                                                                 <span class="new">New</span>
@@ -559,7 +559,7 @@
                                                                 <span class="new">{{pr.price | number}} Vnd</span>
                                                                 </span>
                                                                 <div class="actions">
-                                                                    button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i class="pe-7s-shopbag"></i></button>
+                                                                    <button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i class="pe-7s-shopbag"></i></button>
                                                                     <button class="action wishlist" title="Wishlist" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
                                                                             class="pe-7s-like"></i></button>
                                                                     <button class="action quickview" data-link-action="quickview" ng-click="saveIdProduct(pr.id)" title="Quick view"><i class="pe-7s-look"></i></button>
@@ -707,67 +707,10 @@
         </div>
         <!-- Footer Area End -->
     </div>
-    <!-- Modal Cart -->
-    <div class="modal customize-class fade" id="exampleModal-Cart" data-aos-delay="200" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="pe-7s-close"></i></button>
-                    <div class="tt-modal-messages text-success">
-                        <i class="bi bi-check-circle text-success"></i> Added to cart successfully!
-                    </div>
-                    <br>
-                    <div class="tt-modal-product">
-                        <div class="tt-img">
-                            <img src="File_Local/Images/product-image/{{productMessage.image}}/main.jpg" alt="Modern Smart Phone">
-                        </div>
-                        <br>
-                        <h2 class="tt-title"><a href="#">{{productMessage.name}}</a></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal wishlist -->
-    <div class="modal customize-class fade" id="exampleModal-Wishlist" data-aos-delay="200" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="pe-7s-close"></i></button>
-                    <div class="tt-modal-messages text-danger">
-                        <i class="bi bi-check-circle text-danger"></i> Added To Your Favourite <i class="bi bi-heart text-danger"></i>!
-                    </div>
-                    <br>
-                    <div class="tt-modal-product">
-                        <div class="tt-img">
-                            <img src="File_Local/Images/product-image/{{productMessage.product.image}}/main.jpg" alt="{{productMessage.product.name}}">
-                        </div>
-                        <br>
-                        <h2 class="tt-title"><a href="#">{{productMessage.product.name}}</a></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal compare -->
-    <div class="modal customize-class fade" id="exampleModal-Compare" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="pe-7s-close"></i></button>
-                    <div class="tt-modal-messages">
-                        <i class="pe-7s-check"></i> Added to compare successfully!
-                    </div>
-                    <div class="tt-modal-product">
-                        <div class="tt-img">
-                            <img src="File_Local/Images/product-image/1.webp" alt="Modern Smart Phone">
-                        </div>
-                        <h2 class="tt-title"><a href="#">Modern Smart Phone</a></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+    <div ng-include="'/modal/ModalWishList.html'"></div>
+    <div ng-include="'/modal/ModalCompare.html'"></div>
     <!-- Global Vendor, plugins JS -->
     <!-- JS Files
     ============================================ -->
@@ -787,6 +730,7 @@
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/main.min.js"></script>
     <script src="assets/js/product.js"></script>
+    <script src="assets/js/login_check.js"></script>
 
     <!--Main JS (Common Activation Codes)-->
     <!-- <script src="assets/js/main.js"></script> -->

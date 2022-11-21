@@ -1,0 +1,21 @@
+<!-- Modal Cart -->
+<div class="modal customize-class fade" id="exampleModal-Cart" data-aos-delay="200" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="pe-7s-close"></i></button>
+                <div class="tt-modal-messages text-success">
+                    <i class="bi bi-check-circle text-success"></i> Added to cart successfully!
+                </div>
+                <br>
+                <div class="tt-modal-product">
+                    <div class="tt-img">
+                        <img src="http://localhost:8080/getImage/{{productMessage.image}}" alt="Modern Smart Phone">
+                    </div>
+                    <br>
+                    <h2 class="tt-title"><a href="#">{{productMessage.name}}</a></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

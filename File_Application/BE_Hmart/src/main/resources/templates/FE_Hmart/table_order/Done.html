@@ -1,0 +1,30 @@
+<div class="table_page table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th>Note</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="od in admin_list_order | filter : 'Done'">
+                <td>{{$index+1}}</td>
+                <td>{{od.account.username}}</td>
+                <td>{{od.createDate}}</td>
+                <td>{{od.address}}</td>
+                <td>{{od.note}}</td>
+                <td>{{od.orderStatus.name}}</td>
+                <td>
+                    <div class="">
+                        <a ng-click="load_orderDetail(od.id)" href="#scrollspyHeading1" class="text-info bi bi-eye-fill" style="font-size: 25px" aria-hidden="true"></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

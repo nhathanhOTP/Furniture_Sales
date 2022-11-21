@@ -10,16 +10,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
-
-import com.nhathanh.dao.*;
-import com.nhathanh.entity.*;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,25 +39,25 @@ import com.nhathanh.entity.Product;
 @CrossOrigin("*")
 @RestController
 public class ProductRestController {
-	//By Phi Hung
+	// By Phi Hung
 	@Autowired
 	ProductDAO productDao;
-	
+
 	@GetMapping("/hfn/product/getAll")
-	public List<Product> getAll(){
+	public List<Product> getAll() {
 		return productDao.findAll();
 	}
-	
+
 	@GetMapping("/hfn/product/{id}")
 	public Product getOne(@PathVariable("id") Integer id) {
 		return productDao.findById(id).get();
 	}
-	
+
 	@GetMapping("/hfn/product/cate/{id}")
 	public List<Product> getByCate(@PathVariable("id") String id) {
 		return productDao.findByCategoryId(id);
 	}
-	
+
 	@GetMapping("/hfn/item/{id}")
 	public Item getItem(@PathVariable("id") Integer id) {
 		Item item = new Item();
@@ -70,7 +65,7 @@ public class ProductRestController {
 		return item;
 	}
 
-	//By Nha Thanh
+	// By Nha Thanh
 	public static final String hmart = "src\\main\\resources\\templates\\FE_Hmart\\File_Local\\Images";
 	public static final String File_local = "src\\main\\resources\\templates\\FE_Hmart\\File_Local";
 	@Autowired
@@ -168,31 +163,6 @@ public class ProductRestController {
 		return mainImage;
 	}
 
-	// Save images
-	@PostMapping("/uploadImages")
-	public String postImage(@RequestParam("listImages[]") ArrayList<MultipartFile> object,
-			@RequestParam("nameFloder") String nameFoloder, @RequestParam("main-img") MultipartFile imgMain)
-			throws IOException {
-		// Save main img
-		saveImage(imgMain, nameFoloder, "main");
-		String unid = UUID.randomUUID().toString();
-		// Save sub img
-		if (object != null) {
-			try {
-				for (int i = 0; i < object.size(); i++) {
-					saveImage(object.get(i), nameFoloder,String.valueOf(i));
-				} 
-				System.out.println("Save file successfully!");
-				// Return name floder
-				return nameFoloder;
-			} catch (Exception e) {
-				System.out.println(e);
-				return "Error!";
-			}
-		}
-		return "Error";
-	}
-
 	// Update product
 	@PutMapping("/update/product")
 	public Product updateProduct(@RequestBody Product pr) {
@@ -222,8 +192,6 @@ public class ProductRestController {
 		return "Error";
 	}
 
-
-
 	// Method save images
 	public void saveImage(MultipartFile file, String nameFolder, String nameFile) throws IOException {
 		Path path = Paths.get(createFloder(hmart + "\\" + nameFolder));
@@ -241,5 +209,84 @@ public class ProductRestController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+
+	// Save images
+	@PostMapping("/uploadImages")
+	public String postImage(@RequestParam("listImages[]") ArrayList<MultipartFile> object,
+			@RequestParam("nameFloder") String nameFoloder, @RequestParam("main-img") MultipartFile imgMain)
+			throws IOException {
+		// Save main img
+		saveImage(imgMain, nameFoloder, "main");
+		String unid = UUID.randomUUID().toString();
+		// Save sub img
+		if (object != null) {
+			try {
+				for (int i = 0; i < object.size(); i++) {
+					saveImage(object.get(i), nameFoloder, String.valueOf(i));
+				}
+				System.out.println("Save file successfully!");
+				// Return name floder
+				return nameFoloder;
+			} catch (Exception e) {
+				System.out.println(e);
+				return "Error!";
+			}
+		}
+		return "Error";
+	}
+
+	// Method action with images
+	@PostMapping("/update/product/new/sub-image")
+	public void actionNewSubImage(@RequestParam("listImages[]") ArrayList<MultipartFile> object,
+			@RequestParam("nameFloder") String nameFloder) {
+		Path path = Paths.get(createFloder(hmart + "\\" + nameFloder));
+		// Save new sub image
+		Random generator = new Random();
+		if (object != null) {
+			try {
+				for (int i = 0; i < object.size(); i++) {
+					saveImage(object.get(i), nameFloder, String.valueOf(generator.nextInt()));
+				}
+				System.out.println("Save file successfully!");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+
+//Remove old image
+	@PostMapping("/remove/product/sub-image")
+	public void removeImage(@RequestBody() ArrayList<String> listRemove) {
+		String path = "src\\main\\resources\\templates\\FE_Hmart\\File_Local\\";
+		if (listRemove != null) {
+			for (int i = 0; i < listRemove.size(); i++) {
+				try {
+					File file = new File(path + listRemove.get(i));
+					if (file.delete()) {
+						System.out.println(file.getName() + " is deleted!");
+					} else {
+						System.out.println("Sorry, unable to delete the file.");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	// Get sub image
+	@GetMapping("/get/sub/images/{floder}")
+	public List<String> getSubImages(@PathVariable("floder") String nameFolder) {
+		List<String> ds = new ArrayList<>();
+		File[] children = new File(hmart + "\\" + nameFolder).listFiles();
+		if (children != null) {
+			for (int i = 0; i < children.length; i++) {
+				ds.add(children[i].getName());
+			}
+			return ds;
+		}
+		return null;
+
 	}
 }

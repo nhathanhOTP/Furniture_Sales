@@ -1,6 +1,10 @@
 let hostSg = "http://localhost:8080/hfn/product";
 const appSg = angular.module("myDetail", []);
+let hostNhaThanh = "http://localhost:8080";
 
+function getImages() {
+
+}
 //Xu li product tai trang Single-product
 appSg.controller("detail", function($scope, $http, $window) {
 
@@ -42,6 +46,9 @@ appSg.controller("detail", function($scope, $http, $window) {
                 $scope.product = resp.data;
                 $scope.load_product_cate($scope.product.category.id);
                 console.log("Product Sucess", resp);
+                $http.get(`${hostNhaThanh}/get/sub/images/${$scope.product.image}`).then(resp => {
+                    $scope.subImage = resp.data;
+                });
             }).catch(error => {
                 console.log("Product Error", error);
             });
@@ -93,6 +100,7 @@ appSg.controller("detail", function($scope, $http, $window) {
                 $http.get(`http://localhost:8080/hfn/item/${id}`).then(resp => {
                     resp.data.quantity = $scope.productQty;
                     $scope.productMessage = resp.data;
+
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
                 })
@@ -143,4 +151,21 @@ appSg.controller("detail", function($scope, $http, $window) {
     };
 
     $scope.cart.loadFormLocalStorage();
+
+    //Method cut value colors
+    $scope.cutValueColors = function(value) {
+        var ds = [];
+        var start = 0;
+        var chart = "";
+        if (value != undefined) {
+            for (var i = 0; i < value.length; i++) {
+                if (value.charAt(i) == '+') {
+                    chart = value.substring(start, i++);
+                    ds.push(chart.trim());
+                    start = i;
+                }
+            }
+        }
+        return ds;
+    }
 });

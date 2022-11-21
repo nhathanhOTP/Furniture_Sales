@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="assets/js/angular1.7.9.min.js"></script>
 
 
 </head>
@@ -60,7 +60,7 @@
                     <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
                         <ul role="tablist" class="nav navbar-expand-lg dashboard-list">
                             <li><a href="#ProductManagement" data-bs-toggle="tab" class="nav-link active" id="product">Product Management</a></li>
-                            <li><a href="#account-details" data-bs-toggle="tab" class="nav-link" id="productEdit">Create Products</a></li>
+                            <li><a href="#account-details" data-bs-toggle="tab" ng-click="product={}" class="nav-link" id="productEdit">Create Products</a></li>
 
                             <li><a href="#discount" data-bs-toggle="tab" class="nav-link" id="">Discount</a></li>
                             <li><a href="#conditent" data-bs-toggle="tab" class="nav-link" id="">Conditent discount</a></li>
@@ -86,6 +86,7 @@
                                             <th>Colors</th>
                                             <th>Categories</th>
                                             <th>Size</th>
+                                            <th>Quantity</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -104,6 +105,7 @@
                                             </td>
                                             <td>{{pr.category.name}}</td>
                                             <td>{{pr.size}}</td>
+                                            <td>{{pr.soLuong==null?0:pr.soLuong}}</td>
                                             <td>
                                                 <div class="">
                                                     <button ng-click="edit(pr)" class="text-warning fa fa-pencil " style="font-size: 25px" aria-hidden="true"></button>
@@ -161,11 +163,16 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <div class="default-form-box col-sm-12">
-                                                            <div>Name</div>
-                                                            <input ng-model="product.name" class="form-group">
+                                                        <div class="row">
+                                                            <div class="default-form-box col-sm-6">
+                                                                <div>Name</div>
+                                                                <input ng-model="product.name" class="form-group">
+                                                            </div>
+                                                            <div class="default-form-box col-sm-6">
+                                                                <div>Quantity</div>
+                                                                <input ng-model="product.soLuong" type="number" class="form-group">
+                                                            </div>
                                                         </div>
-
                                                         <div class="row">
                                                             <div class="default-form-box col-sm-6">
                                                                 <div>Price</div>
@@ -257,7 +264,7 @@
                                         <div>ConditionsOfUse</div>
                                         <select name="" id="" class="form-control" ng-model="discount.conditions.id">
                                             <option value="" disabled>Choose condtions use</option>
-                                            <option ng-value="con.id" class="" ng-repeat="con in conditents">Min spend {{con.contents| currency : 'VND '}} || Quantity request {{con.quantity}} </option>
+                                            <option ng-value="con.id" class="" ng-repeat="con in conditents">Min spend {{con.contents| currency : 'VND '}} || Quantity request {{con.quantity}} products</option>
                                         </select>
                                     </div>
                                 </div>
@@ -270,10 +277,9 @@
                                     </select>
                                 </div>
                                 <div class="row">
-                                    <div class="default-form-box col-sm-6">
+                                    <div class="default-form-box col-sm-6" ng-hide="discount.discountform==undefined">
                                         <label for="exampleInput1">Value discount</label>
                                         <input type="number" ng-model="discount.valuedecrease" class="form-control" id="" aria-describedby="" placeholder=" ">
-
                                     </div>
                                     <div class="default-form-box col-sm-6">
                                         <label for="">TitleDiscount</label>
@@ -284,11 +290,11 @@
                                 <div class="row">
                                     <div class="default-form-box col-sm-6">
                                         <label for="">StartDate</label>
-                                        <input type="date" class="form-control" id="" placeholder="" ng-model="discount.startDate">
+                                        <input type="datetime-local" class="form-control" id="" placeholder="" ng-model="discount.startDate">
                                     </div>
                                     <div class="default-form-box col-sm-6">
                                         <label for=""> EndDate</label>
-                                        <input type="date" class="form-control" id="" aria-describedby="" placeholder=" " ng-model="discount.endDate">
+                                        <input type="datetime-local" class="form-control" id="" aria-describedby="" placeholder=" " ng-model="discount.endDate">
                                     </div>
                                 </div>
 

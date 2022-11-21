@@ -458,7 +458,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="od in list_order">
-                                                <td>{{od.id}}</td>
+                                                <td>{{$index+1}}</td>
                                                 <td>{{od.account.username}}</td>
                                                 <td>{{od.createDate}}</td>
                                                 <td>{{od.address}}</td>
@@ -489,7 +489,7 @@
                                                     <li><code>Mã Khách Hàng: </code><span style="color: #eb1c24">{{order.account.username}}</span></li>
                                                     <!-- <li><code>Mã Người Duyệt: </code>${thongTin.staffID}</span>
                                                     </li> -->
-                                                    <li><code>Thời Gian: </code><span style="color: #eb1c24"><code>ngày</code> {{order.createDate}}</li>
+                                                    <li><code>Thời Gian: </code><span style="color: #eb1c24"><code>ngày</code> {{order.createDate|date:'M/d/yy h:mm a'}}</li>
                                                     <li>
                                                         <hr>
                                                     </li>
@@ -497,7 +497,7 @@
                                                     <li><code>Email: </code><span>{{order.account.email}}</span></li>
                                                     <li><code>SDT: </code><span> {{order.account.phone}}</span></li>
                                                     <li><code>Giao Đến: </code><span>{{order.address}}</span></li>
-                                                    <li><code>Giá: </code><span style="color: #eb1c24"><fmt:formatNumber type="number" maxFractionDigits="0" value="${thongTin.price}" /> VND</span></li>
+                                                    <li><code>Giá: </code><span style="color: #eb1c24"><fmt:formatNumber type="number" maxFractionDigits="0" value="{{totalPrice}} " />{{totalPrice|number}} VND</span></li>
                                                     <li><code>Ghi Chú: </code><span>{{order.note}}</span></li>
                                                 </ul>
                                                 <button ng-show="order.orderStatus.id == 1" ng-click="updateStatusCancel(order.id)" class="btn-danger p-2 mt-20px" title="Hủy Đơn Hàng" style="border-radius: 5px;">Hủy Đơn Hàng </button>
@@ -506,28 +506,24 @@
                                     </div>
                                     <div class="col-7 pr-35px" style="min-height: 535px;">
                                         <aside>
-                                            <div class="box_contact pb-3 mt-0">
-                                                <div class="accordion" id="accordionFlushExample">
-                                                    <div class="accordion-item" ng-repeat="ord in list_orderDetail">
-                                                        <h3 class="accordion-header" id="flush-headingOne">
-                                                            <div class="row pt-2 pb-2" style="min-height: 120px;">
-                                                                <div class="col-3 pl-35px"><img src="File_Local/Images/product-image/{{ord.product.image}}/main.jpg" alt="{{ord.product.name}}" width="107" height="107" style="border:0; object-fit: contain;"></div>
-                                                                <div class="col-9">
-                                                                    <ul>
-                                                                        <li class="m-0">
-                                                                            <p class="text-primary mb-0 mt-3" style="font-size:20px;">{{ord.product.name}}</p>
-                                                                        </li>
-                                                                        <li class="m-0" style="font-size: 17px;"><code>Số Lượng: </code><span class="text-success">{{ord.quantity}}</span></li>
-                                                                        <li class="m-0" style="font-size: 17px;"><code>Tổng Tiền: </code><span>
-                                                                            {{ord.price * ord.quantity | number}} Vnd
-                                                                        </span></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </h3>
-                                                    </div>
-                                                </div>
+                                            <div class="table_page table-responsive">
+                                                <table>
+
+                                                    <tbody>
+                                                        <tr ng-repeat="ord in list_orderDetail">
+                                                            <td><img src="http://localhost:8080/getImage/{{ord.product.image}}" alt="{{ord.product.name}}" width="107" height="107" style="border:0; object-fit: contain;"></td>
+                                                            <td>{{ord.product.name}}</td>
+                                                            <td>
+                                                                <code>Số Lượng: </code><span class="text-success">{{ord.quantity}}
+                                                            </td>
+                                                            <td>Tổng tiền: <code>Tổng Tiền: </code><span>
+                                                                {{ord.price * ord.quantity | number}} Vnd
+                                                            </span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
+
                                         </aside>
                                     </div>
                                 </div>

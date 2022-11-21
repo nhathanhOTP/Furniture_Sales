@@ -56,7 +56,7 @@ appPr.controller("product",
             $window.location.href = 'single-product.html';
         }
 
-        var username = "tpph0503";
+        var username = localStorage.getItem("user");
 
         //Add to favourite list
         $scope.addToFav = function(idPr) {

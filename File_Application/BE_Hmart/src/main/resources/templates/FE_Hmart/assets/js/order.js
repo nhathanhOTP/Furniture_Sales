@@ -47,6 +47,8 @@ appOd.controller("order", function($scope, $http, $window) {
         var order = $scope.order_info;
         $http.post(url, order).then(resp => {
             console.log("Save Order Sucess", resp);
+            //Remove quantity of products
+
             $scope.save_orderDetail(resp.data);
         }).catch(error => {
             console.log("Save Order Error", error);
@@ -127,4 +129,44 @@ appOd.controller("order", function($scope, $http, $window) {
 
     $scope.load_list_cate();
     $scope.cart.loadFormLocalStorage();
+
+    // File by Nha Thanh
+    $http.get("/File_Local/JSON/local.json").then(function(d) {
+        $scope.local = d.data;
+        console.log($scope.local);
+    });
+    var tp, quan, phuong, duong;
+    // Method use for distrist combobox
+    $scope.getCty = function(value) {
+        $scope.districts = $scope.local[value].districts;
+        $scope.ctyId = value;
+
+        $scope.wards = [];
+        $scope.streets = [];
+        tp = "TP " + $scope.local[value].name;
+        $scope.order_info.address = tp;
+    };
+    // // Method use for cty combobox
+    $scope.getDistricts = function(value) {
+        disId = value;
+        $scope.loadWard_Streets($scope.ctyId, disId);
+
+
+    };
+
+    $scope.loadWard_Streets = function(cty, dis) {
+        $scope.wards = $scope.local[cty].districts[dis].wards;
+        $scope.streets = $scope.local[cty].districts[dis].streets;
+        quan = ", " + $scope.districts[dis].name; + ", ";
+        $scope.order_info.address = tp + quan;
+    }
+    $scope.getWard = function(value1, value2) {
+        phuong = value1 + " " + value2;
+        $scope.order_info.address = tp + quan + ", " + phuong;
+    }
+    $scope.getStreet = function(value1, value2) {
+        duong = value1 + " " + value2;
+        $scope.order_info.address = tp + quan + ", " + phuong + ", " + duong + ".";
+    }
+
 });

@@ -258,7 +258,7 @@
                 <div class="body customScroll">
                     <ul class="minicart-product-list" ng-show="cart.count != 0 && cart.count != null">
                         <li ng-repeat="it in cart.items">
-                            <a href="single-product.html" class="image"><img src="File_Local/Images/product-image/{{it.image}}/main.jpg" alt="Cart product Image"></a>
+                            <a href="single-product.html" class="image"><img src="File_Local/Images/{{it.image}}/main.jpg" alt="Cart product Image"></a>
                             <div class="content">
                                 <a href="single-product.html" class="title">{{it.name}}</a>
                                 <span class="quantity-price">{{it.quantity}} x <span class="amount">{{it.price | number}}Vnd</span></span>
@@ -443,46 +443,21 @@
                         <!-- Swiper -->
                         <div class="swiper-container zoom-top">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/main.jpg" alt="">
-                                    <a class="venobox full-preview" data-gall="myGallery" href="File_Local/Images/product-image/{{product.image}}/main.jpg">
+                                <div class="swiper-slide" ng-repeat="sub in subImage">
+                                    <img class="img-responsive m-auto" src="File_Local/Images/{{product.image}}/{{sub}}" alt="">
+                                    <a class="venobox full-preview" data-gall="myGallery" href="File_Local/Images/{{product.image}}/{{sub}}">
                                         <i class="fa fa-arrows-alt" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/1.jpg" alt="">
-                                    <a class="venobox full-preview" data-gall="myGallery" href="File_Local/Images/product-image/{{product.image}}/1.jpg">
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/2.jpg" alt="">
-                                    <a class="venobox full-preview" data-gall="myGallery" href="File_Local/Images/product-image/{{product.image}}/2.jpg">
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/3.jpg" alt="">
-                                    <a class="venobox full-preview" data-gall="myGallery" href="File_Local/Images/product-image/{{product.image}}/3.jpg">
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+
                             </div>
                         </div>
                         <div class="swiper-container mt-20px zoom-thumbs slider-nav-style-1 small-nav">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/main.jpg" alt="">
+                                <div class="swiper-slide" ng-repeat="sub in subImage">
+                                    <img class="img-responsive m-auto" src="File_Local/Images/{{product.image}}/{{sub}}" alt="">
                                 </div>
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/1.jpg" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/2.jpg" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="File_Local/Images/product-image/{{product.image}}/3.jpg" alt="">
-                                </div>
+
                             </div>
                             <!-- Add Arrows -->
                             <div class="swiper-buttons">
@@ -490,6 +465,7 @@
                                 <div class="swiper-button-prev"></div>
                             </div>
                         </div>
+
                     </div>
                     <div class="col-lg-6 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
                         <div class="product-details-content quickview-content ml-25px">
@@ -542,14 +518,13 @@
                             </div>
                             <div class="pro-details-quality">
                                 <div class="col-2 p-0">
-                                    <input class="form-control p-2 text-center bg-dark text-light" ng-model="productQty" value="1" type="number" min="1" max="20" style="font-size: 16px;" />
+                                    <input class="form-control p-2 text-center " ng-model="productQty" value="1" type="number" min="1" max="20" style="font-size: 16px;" />
                                 </div>
                                 <div class="pro-details-cart">
-                                    <button class="add-cart" ng-click="cart.addWithQty(product.id)"> Add To
-                                        Cart</button>
+                                    <button class="add-cart" ng-click="cart.addWithQty(product.id)"> Add To Cart</button>
                                 </div>
                                 <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                                    <a href="wishlist.html"><i class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="bg-light" style="border: 1px solid rgb(203, 203, 203);"><i class="pe-7s-like text-danger" ></i></a>
                                 </div>
                             </div>
                         </div>
@@ -566,7 +541,7 @@
                                             <li><span>Origin </span>{{product.origin}}</li>
                                             <li><span>Guarentee </span>{{product.guarentee}}</li>
                                             <li><span>Materials </span>{{product.madeOf}}</li>
-                                            <li><span>Color </span>{{product.color}}</li>
+                                            <li><span>Color </span><input type="color" disabled value="{{s}}" ng-repeat="s in cutValueColors(product.color)"></li>
                                             <li><span>Dimensions </span>{{product.size}}</li>
                                         </ul>
                                     </div>
@@ -684,6 +659,7 @@
             <div class="container">
                 <!-- Section Title & Tab Start -->
                 <!-- Section Title & Tab End -->
+                <h3>The products of the same type </h3>
                 <div class="row">
                     <div class="col">
                         <div class="new-product-slider swiper-container slider-nav-style-1">
@@ -697,8 +673,8 @@
                                         </span>
                                         <div class="thumb">
                                             <a href="single-product.html" class="image">
-                                                <img src="File_Local/Images/product-image/{{item.image}}/main.jpg" alt="Product" />
-                                                <img class="hover-image" src="File_Local/Images/product-image/{{item.image}}/main.jpg" alt="Product" />
+                                                <img ng-src="http://localhost:8080/getImage/{{item.image}}" alt="Product" />
+                                                <img class="hover-image" ng-src="http://localhost:8080/getImage/{{item.image}}" alt="Product" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -853,7 +829,7 @@
                     <br>
                     <div class="tt-modal-product">
                         <div class="tt-img">
-                            <img src="File_Local/Images/product-image/{{productMessage.image}}/main.jpg" alt="Modern Smart Phone">
+                            <img src="File_Local/Images/{{productMessage.image}}/main.jpg" alt="Modern Smart Phone">
                         </div>
                         <br>
                         <h2 class="tt-title"><a href="#">{{productMessage.name}}</a></h2>
@@ -873,7 +849,7 @@
                     </div>
                     <div class="tt-modal-product">
                         <div class="tt-img">
-                            <img src="File_Local/Images/product-image/1.webp" alt="Modern Smart Phone">
+                            <img src="File_Local/Images/1.webp" alt="Modern Smart Phone">
                         </div>
                         <h2 class="tt-title"><a href="#">Modern Smart Phone</a></h2>
                     </div>
@@ -892,7 +868,7 @@
                     </div>
                     <div class="tt-modal-product">
                         <div class="tt-img">
-                            <img src="assets/images/product-image/1.webp" alt="Modern Smart Phone">
+                            <img src="assets/images/1.webp" alt="Modern Smart Phone">
                         </div>
                         <h2 class="tt-title"><a href="#">Modern Smart Phone</a></h2>
                     </div>

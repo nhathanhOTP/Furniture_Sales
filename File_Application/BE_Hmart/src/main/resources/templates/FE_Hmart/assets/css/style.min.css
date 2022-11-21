@@ -11130,3 +11130,18 @@ tr td input[type=color]::-moz-color-swatch {
     border-radius: 25px;
     border: none;
 }
+
+.product-anotherinfo-wrapper ul li input[type="color"] {
+    border: none;
+    width: 60px;
+    height: 35px;
+}
+
+.product-anotherinfo-wrapper ul li input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.product-anotherinfo-wrapper ul li input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}

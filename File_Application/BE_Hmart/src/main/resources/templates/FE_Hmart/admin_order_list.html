@@ -439,15 +439,26 @@
             <div class="container">
                 <div class="">
                     <div class="col-sm-12">
+                        <!-- Nav tabs -->
+                        <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
+                            <ul role="tablist" class="nav navbar-expand-lg dashboard-list">
+                                <li><a href="#a" data-bs-toggle="tab" class="nav-link  show active" ng-click="order=null">Waiting for confirm</a></li>
+                                <li><a href="#b" data-bs-toggle="tab" class="nav-link" ng-click="order=null">Processing</a></li>
+                                <li><a href="#c" data-bs-toggle="tab" class="nav-link " ng-click="order=null">Done</a></li>
+                                <li><a href="#d" data-bs-toggle="tab" class="nav-link" ng-click="order=null">Cancelled</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
                         <!-- Tab panes -->
                         <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
-                            <div class="tab-pane fade show active" id="ProductManagement">
-                                <h4>List Products</h4>
+                            <div class="tab-pane fade show active" id="a">
                                 <div class="table_page table-responsive">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Id</th>
+                                                <th></th>
                                                 <th>User</th>
                                                 <th>Date</th>
                                                 <th>Address</th>
@@ -457,8 +468,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="od in admin_list_order">
-                                                <td>{{od.id}}</td>
+                                            <tr ng-repeat="od in admin_list_order | filter : 'Waiting for confirm'">
+                                                <td>{{$index+1}}</td>
                                                 <td>{{od.account.username}}</td>
                                                 <td>{{od.createDate}}</td>
                                                 <td>{{od.address}}</td>
@@ -474,6 +485,16 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="b">
+                                <div ng-include="'/table_order/Processing.html'"></div>
+                            </div>
+                            <div class="tab-pane fade" id="c">
+                                <div ng-include="'/table_order/Done.html'"></div>
+                            </div>
+                            <div class="tab-pane fade" id="d">
+                                <div ng-include="'/table_order/Cancelled.html'"></div>
+                            </div>
+
                             <br id="scrollspyHeading1" data-bs-spy="scroll">
                             <div class="mt-30px bg-light pt-1" ng-show="order != null">
                                 <div class="mb-3 mt-20px pl-35px">
@@ -510,27 +531,21 @@
                                     </div>
                                     <div class="col-7 pr-35px" style="min-height: 535px;">
                                         <aside>
-                                            <div class="box_contact pb-3 mt-0">
-                                                <div class="accordion" id="accordionFlushExample">
-                                                    <div class="accordion-item" ng-repeat="ord in list_orderDetail">
-                                                        <h3 class="accordion-header" id="flush-headingOne">
-                                                            <div class="row pt-2 pb-2" style="min-height: 120px;">
-                                                                <div class="col-3 pl-35px"><img src="File_Local/Images/product-image/{{ord.product.image}}/main.jpg" alt="{{ord.product.name}}" width="107" height="107" style="border:0; object-fit: contain;"></div>
-                                                                <div class="col-9">
-                                                                    <ul>
-                                                                        <li class="m-0">
-                                                                            <p class="text-primary mb-0 mt-3" style="font-size:20px;">{{ord.product.name}}</p>
-                                                                        </li>
-                                                                        <li class="m-0" style="font-size: 17px;"><code>Số Lượng: </code><span class="text-success">{{ord.quantity}}</span></li>
-                                                                        <li class="m-0" style="font-size: 17px;"><code>Tổng Tiền: </code><span>
-                                                                            {{ord.price * ord.quantity | number}} Vnd
-                                                                        </span></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </h3>
-                                                    </div>
-                                                </div>
+                                            <div class="table_page table-responsive">
+                                                <table>
+                                                    <tbody>
+                                                        <tr ng-repeat="ord in list_orderDetail">
+                                                            <td><img src="http://localhost:8080/getImage/{{ord.product.image}}" alt="{{ord.product.name}}" width="107" height="107" style="border:0; object-fit: contain;"></td>
+                                                            <td>{{ord.product.name}}</td>
+                                                            <td>
+                                                                <code>Số Lượng: </code><span class="text-success">{{ord.quantity}}
+                                                            </td>
+                                                            <td>Tổng tiền: <code>Tổng Tiền: </code><span>
+                                                                {{ord.price * ord.quantity | number}} Vnd
+                                                            </span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </aside>
                                     </div>
