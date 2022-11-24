@@ -26,10 +26,12 @@ public class Evaluate {
 	private String Contents;
 	@Column(name = "numberstart")
 	private int NumberStart;
-	@Column(name = "images")
-	private String Images;
+	private boolean statusEva;
 	
 	@ManyToOne
 	@JoinColumn(name = "IdProduct")
 	Product product;
+	@ManyToOne
+	@JoinColumn(name = "username")
+	Account account;
 }

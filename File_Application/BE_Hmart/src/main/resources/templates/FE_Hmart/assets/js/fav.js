@@ -32,17 +32,23 @@ appFv.controller("favourite", function($scope, $http, $window) {
         $window.location.href = 'single-product.html';
     }
 
-    var username = "tpph0503";
-
+    var user = JSON.parse(localStorage.getItem("user"));
     //Load add fav list
     $scope.load_list_fav = function() {
-        var url = `${hostFv}/user/${username}`;
-        $http.get(url).then(resp => {
-            $scope.list_fav = resp.data;
-            console.log("List Fav Sucess", resp);
-        }).catch(error => {
-            console.log("List Fav Error", error);
-        });
+        if (user.username == null || user.username == undefined) {
+            alert("Please login with your account!");
+            window.location.href = "login.html";
+        } else {
+            var url = `${hostFv}/user/${user.username}`;
+            $http.get(url).then(resp => {
+                $scope.list_fav = resp.data;
+                console.log("List Fav Sucess", resp);
+            }).catch(error => {
+                console.log("List Fav Error", error);
+            });
+        }
+
+
     };
 
     //Xoa fav khoi list
@@ -50,6 +56,7 @@ appFv.controller("favourite", function($scope, $http, $window) {
         var url = `${hostFv}/delete/${id}`;
         $http.delete(url).then(resp => {
             console.log("Del Fav Sucess", resp);
+            $window.reload();
         }).catch(error => {
             console.log("Del Fav Error", error);
         });
@@ -64,14 +71,21 @@ appFv.controller("favourite", function($scope, $http, $window) {
             var item = this.items.find(item => item.id == id);
             if (item) {
                 item.quantity++;
-                this.saveToLocalStorage();
+                if (item.quantity > item.productQty) {
+                    item.quantity = item.productQty;
+                    alert("The products just left " + item.productQty + "!");
+                } else {
+                    this.saveToLocalStorage();
+                    alert("Add to cart successfully!");
+                }
             } else {
                 $http.get(`http://localhost:8080/hfn/item/${id}`).then(resp => {
                     resp.data.quantity = 1;
                     $scope.productMessage = resp.data;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
-                })
+                    alert("Add to cart successfully!");
+                });
             }
         },
         update(id, quantity) {

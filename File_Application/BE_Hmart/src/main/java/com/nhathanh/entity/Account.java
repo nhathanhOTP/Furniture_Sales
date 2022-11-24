@@ -44,4 +44,8 @@ public class Account  implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<TheTimeUsed> TheTimeUsed;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "account")
+	List<Evaluate> evaluate;
 }

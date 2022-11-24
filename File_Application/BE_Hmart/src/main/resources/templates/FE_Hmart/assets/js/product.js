@@ -54,7 +54,7 @@ appPr.controller("product",
         $scope.load_list_idProFav = function() {
             $http.get(`http://localhost:8080/hfn/favour/checkExist/${username}`).then(resp => {
                 $scope.list_idProFav = resp.data;
-                console.log("list idPr ",resp.data);
+                console.log("list idPr ", resp.data);
             }).catch(error => {
                 console.log("Load list id Product favour ", error);
             });
@@ -62,7 +62,7 @@ appPr.controller("product",
 
         $scope.checkExist = function(idPr) {
             $scope.list_idProFav.forEach(e => {
-                if(e == idPr){
+                if (e == idPr) {
                     return false;
                 }
             });
@@ -70,37 +70,38 @@ appPr.controller("product",
         }
 
         //var username = localStorage.getItem("user");
-        
+
         //Add to favourite list
         $scope.addToFav = function(idPr) {
             var user = JSON.parse(localStorage.getItem("user"));
             if (user == null || user == undefined) {
                 alert("Please login with your account!");
-                window.console.href = "login.html";
+                window.location.href = "login.html";
+            } else {
+                var item = {
+                    account: {
+                        username: user.username
+                    },
+                    product: {
+                        id: idPr
+                    }
+                };
+                $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => {
+                    $scope.productMessage = resp.data;
+                    $scope.load_list_idProFav();
+                    console.log("Add Fav Sucess", resp);
+                }).catch(error => {
+                    console.log("Add Fav Error", error);
+                });
             }
-            var item = {
-                account: {
-                    user: username
-                },
-                product: {
-                    id: idPr
-                }
-            };
-            $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => {
-                $scope.productMessage = resp.data;
-                $scope.load_list_idProFav();
-                console.log("Add Fav Sucess", resp);
-            }).catch(error => {
-                console.log("Add Fav Error", error);
-            });
         }
-        
+
         $scope.load_list_idProFav();
-        $timeout(function () {
+        $timeout(function() {
             $scope.load_list_product();
         }, 1000);
 
-        
+
         $scope.clearWhenInCart = function() {
             $scope.cart.clear();
             $window.location.href = 'empty-cart.html';
