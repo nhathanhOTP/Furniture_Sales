@@ -13,4 +13,5 @@ public class Item {
 	private double price;
 	private String image;
 	private int quantity;
+	private int productQty;
 }

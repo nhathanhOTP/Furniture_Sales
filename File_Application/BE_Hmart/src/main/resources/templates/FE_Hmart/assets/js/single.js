@@ -95,7 +95,13 @@ appSg.controller("detail", function($scope, $http, $window) {
             var item = this.items.find(item => item.id == id);
             if (item) {
                 item.quantity += $scope.productQty;
-                this.saveToLocalStorage();
+                if (item.quantity > item.productQty) {
+                    item.quantity = item.productQty;
+                    alert("The product is only " + item.productQty);
+                } else {
+                    this.saveToLocalStorage();
+                    alert("Add Sucessfull!");
+                }
             } else {
                 $http.get(`http://localhost:8080/hfn/item/${id}`).then(resp => {
                     resp.data.quantity = $scope.productQty;
@@ -103,9 +109,10 @@ appSg.controller("detail", function($scope, $http, $window) {
 
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
-                })
+                    alert("Add Sucessfull!");
+                });
             }
-            alert("Add Sucessfull!");
+
         },
         update(id, quantity) {
             var item = this.items.find(item => item.id == id);

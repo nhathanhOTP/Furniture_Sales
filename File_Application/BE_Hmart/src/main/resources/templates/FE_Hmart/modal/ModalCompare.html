@@ -1,8 +1,8 @@
 <!-- Modal Cart -->
-<div class="modal customize-class fade" id="exampleModal-Cart" data-aos-delay="200" tabindex="-1" aria-hidden="true">
+<div class="modal customize-class fade" id="exampleModal-Cart" data-aos-delay="400" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-body text-center">
+            <div class="modal-body text-center" ng-show="checkQuantity">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="pe-7s-close"></i></button>
                 <div class="tt-modal-messages text-success">
                     <i class="bi bi-check-circle text-success"></i> Added to cart successfully!
@@ -14,6 +14,20 @@
                     </div>
                     <br>
                     <h2 class="tt-title"><a href="#">{{productMessage.name}}</a></h2>
+                </div>
+            </div>
+
+            <div class="modal-body text-center" ng-show="!checkQuantity">
+                <div class="tt-modal-messages text-danger">
+                    <i class="bi bi-x-circle text-danger"></i> Oh no! production just only {{productMessage.productQty}} left!
+                </div>
+                <br>
+                <div class="tt-modal-product">
+                    <div class="tt-img">
+                        <img src="http://localhost:8080/getImage/{{productMessage.image}}" alt="Modern Smart Phone" style="opacity: 0.3;">
+                    </div>
+                    <br>
+                    <h2 class="tt-title text-warning">{{productMessage.name}}</h2>
                 </div>
             </div>
         </div>

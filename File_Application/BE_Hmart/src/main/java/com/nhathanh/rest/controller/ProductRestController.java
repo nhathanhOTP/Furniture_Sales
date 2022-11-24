@@ -45,7 +45,13 @@ public class ProductRestController {
 
 	@GetMapping("/hfn/product/getAll")
 	public List<Product> getAll() {
-		return productDao.findAll();
+		List<Product> ds = productDao.findAll();
+		for (int i = 0; i < ds.size(); i++) {
+			if (ds.get(i).getProductQty() < 1 || ds.get(i).getAvailable() == false) {
+				ds.remove(i);
+			}
+		}
+		return ds;
 	}
 
 	@GetMapping("/hfn/product/{id}")

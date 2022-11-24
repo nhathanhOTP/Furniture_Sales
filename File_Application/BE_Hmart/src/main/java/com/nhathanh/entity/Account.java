@@ -40,4 +40,8 @@ public class Account  implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Favourite> favourite;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "account")
+	List<TheTimeUsed> TheTimeUsed;
 }

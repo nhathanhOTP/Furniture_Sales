@@ -45,7 +45,7 @@ public class Product  implements Serializable{
 	@Column(name="size")
 	private String size;
 	@Column(name="soluong")
-	private Integer soLuong;
+	private Integer productQty;
 	
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")

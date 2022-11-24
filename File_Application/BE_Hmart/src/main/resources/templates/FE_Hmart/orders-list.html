@@ -417,23 +417,7 @@
             </div>
         </div>
         <!-- OffCanvas Menu End -->
-        <!-- breadcrumb-area start -->
-        <div class="breadcrumb-area">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-12 text-center">
-                        <h2 class="breadcrumb-title">Orders List</h2>
-                        <!-- breadcrumb-list start -->
-                        <ul class="breadcrumb-list">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">Order_list</li>
-                        </ul>
-                        <!-- breadcrumb-list end -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- breadcrumb-area end -->
+
         <!-- account area start -->
         <div class="account-dashboard pt-100px pb-100px">
             <div class="container">
@@ -442,27 +426,33 @@
                         <!-- Tab panes -->
                         <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
                             <div class="tab-pane fade show active" id="ProductManagement">
-                                <h4>List Products</h4>
+                                <div class="row">
+                                    <h4 class="col-7">My order</h4>
+                                    <div class="col-5"><input type="text" placeholder="Search" class="" style="border-radius: 10px; width: 450px; height: 35px; border: 1px solid rgb(195, 195, 195);" ng-model="search"> </div>
+                                </div>
                                 <div class="table_page table-responsive">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Id</th>
-                                                <th>User</th>
-                                                <th>Date</th>
+                                                <th>Code orders</th>
                                                 <th>Address</th>
-                                                <th>Note</th>
                                                 <th>Status</th>
-                                                <th></th>
+                                                <th>
+                                                    <select name="" id="" class="" ng-model="filters">
+                                                        <option value="Waiting for confirm">Waiting for confirm</option>
+                                                        <option value="Processing">Processing</option>
+                                                        <option value="Done">Done</option>
+                                                        <option value="Cancel">Cancel</option>
+                                                        <option value="">All</option>
+                                                    </select>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="od in list_order">
-                                                <td>{{$index+1}}</td>
-                                                <td>{{od.account.username}}</td>
-                                                <td>{{od.createDate}}</td>
+                                            <tr ng-repeat="od in pager.items | filter : filters  |filter : search | orderBy: '-id'">
+                                                <td>{{od.id}}</td>
+
                                                 <td>{{od.address}}</td>
-                                                <td>{{od.note}}</td>
                                                 <td>{{od.orderStatus.name}}</td>
                                                 <td>
                                                     <div class="">
@@ -472,7 +462,23 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="panel-footer text-center mt-4">
+                                        <button ng-click="pager.first()" class="bg-primary text-white p-2" style="border-radius: 5px; width: 80px;">
+                                            <i class="fa fa-step-backward" aria-hidden="true"></i>
+                                        </button>
+                                        <button ng-click="pager.prev()" class="bg-primary text-white p-2" style="border-radius: 5px ;width: 80px;">
+                                            <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="bg-success text-white p-2" style="border-radius: 5px ;width: 90px;">{{pager.page + 1}} of {{pager.count}}</button>
+                                        <button ng-click="pager.next()" class="bg-primary text-white p-2" style="border-radius: 5px ;width: 80px;">
+                                            <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                        </button>
+                                        <button ng-click="pager.last()" class="bg-primary text-white p-2" style="border-radius: 5px ;width: 80px;">
+                                            <i class="fa fa-step-forward" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
                                 </div>
+
                             </div>
                             <br id="scrollspyHeading1" data-bs-spy="scroll">
                             <div class="mt-30px bg-light pt-1" ng-show="order != null">
@@ -480,7 +486,7 @@
                                     <h3>Chi Tiết Đơn Hàng Số {{order.id}}</h3>
                                 </div>
                                 <div class="row pl-35px">
-                                    <div class="contact_left p-0 col-5" style="min-height: 535px;">
+                                    <div class="contact_left p-0 col-5" style="min-height: 500px;">
                                         <div class="pl-2">
                                             <div class="mt-0">
                                                 <ul>
@@ -500,11 +506,11 @@
                                                     <li><code>Giá: </code><span style="color: #eb1c24"><fmt:formatNumber type="number" maxFractionDigits="0" value="{{totalPrice}} " />{{totalPrice|number}} VND</span></li>
                                                     <li><code>Ghi Chú: </code><span>{{order.note}}</span></li>
                                                 </ul>
-                                                <button ng-show="order.orderStatus.id == 1" ng-click="updateStatusCancel(order.id)" class="btn-danger p-2 mt-20px" title="Hủy Đơn Hàng" style="border-radius: 5px;">Hủy Đơn Hàng </button>
+                                                <button ng-show="order.orderStatus.id == 1" data-bs-toggle="modal" data-bs-target="#exampleModal-order" class="btn-danger p-2 mt-20px" title="Hủy Đơn Hàng" style="border-radius: 5px;">Hủy Đơn Hàng </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-7 pr-35px" style="min-height: 535px;">
+                                    <div class="col-7 pr-35px" style="min-height: 500px;">
                                         <aside>
                                             <div class="table_page table-responsive">
                                                 <table>
@@ -526,6 +532,10 @@
 
                                         </aside>
                                     </div>
+                                    <label ng-show="order.orderStatus.id == 3" class="text-success text-center m-auto mb-3">Your order has been successfully paid! <i class="bi bi-check-circle "></i></label>
+                                    <label ng-show="order.orderStatus.id == 2" class="text-warning text-center m-auto mb-3">Your order is in the process of reviewing please wait for the process to complete! <i class="bi bi-plugin "></i></label>
+                                    <label ng-show="order.orderStatus.id == 4" class="text-danger text-center m-auto mb-3">Your parcel has been canceled! <i class="bi bi-exclamation-octagon "></i></label>
+
                                 </div>
                             </div>
                         </div>
@@ -644,6 +654,7 @@
             </div>
         </div>
     </div>
+    <div ng-include="'/modal/ModalCancel.html'"></div>
     <!-- Footer Area End -->
 
     <!-- Global Vendor, plugins JS -->

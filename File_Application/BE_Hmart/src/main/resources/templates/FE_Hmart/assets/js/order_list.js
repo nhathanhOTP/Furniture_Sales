@@ -25,7 +25,8 @@ appList.controller("list", function($scope, $http, $window) {
     }
 
     $scope.load_list_cate();
-
+    //Load du lieu cua tat ca order vao list theo username
+    var user = JSON.parse(localStorage.getItem("user"));
     //Load du lieu cua tat ca order vao list theo username
     $scope.load_admin_list_order = function() {
         var url = `${hostList}/getAll`;
@@ -35,13 +36,13 @@ appList.controller("list", function($scope, $http, $window) {
         }).catch(error => {
             console.log("List Order Error", error);
         });
+
     };
     $scope.load_admin_list_order();
 
-    //Load du lieu cua tat ca order vao list theo username
-    var username = 'tpph0503';
+
     $scope.load_list_order = function() {
-        var url = `${hostList}/user/${username}`;
+        var url = `${hostList}/user/${user.username}`;
         $http.get(url).then(resp => {
             $scope.list_order = resp.data;
             console.log("List Order Sucess", resp);
@@ -86,8 +87,8 @@ appList.controller("list", function($scope, $http, $window) {
         $http.put(url, status).then(resp => {
             $scope.order = resp.data;
             console.log("Update Sucess", resp);
-            $scope.load_list_order();
             alert("Cancel sucessfull!");
+            window.location.href = "orders-list.html";
         }).catch(error => {
             console.log("Update Error", error);
         });
@@ -180,4 +181,43 @@ appList.controller("list", function($scope, $http, $window) {
     };
 
     $scope.cart.loadFormLocalStorage();
+
+    //Pgae order list---------------------------------------------------
+    $scope.pager = {
+        page: 0,
+        size: 5,
+        get items() {
+            var value;
+            if ($scope.list_order != undefined) {
+                var start = this.page * this.size;
+                value = $scope.list_order.slice(start, start + this.size);
+            }
+            return value;
+        },
+        get count() {
+            var value;
+            if ($scope.list_order != undefined) {
+                value = Math.ceil(1.0 * $scope.list_order.length / this.size);
+            }
+            return value;
+        },
+        first() {
+            this.page = 0;
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.last();
+            }
+        },
+        next() {
+            this.page++;
+            if (this.page >= this.count) {
+                this.first();
+            }
+        },
+        last() {
+            this.page = this.count - 1;
+        }
+    }
 });

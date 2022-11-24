@@ -1,6 +1,7 @@
 package com.nhathanh.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -34,6 +38,8 @@ public class Discount {
 	private Date EndDate;
 	@Column(name = "discountform")
 	private boolean DiscountForm;
+	@Column(name = "codediscount")
+	private String codeDiscount ; 
 
 	@ManyToOne
 	@JoinColumn(name = "idproduct")
@@ -41,4 +47,10 @@ public class Discount {
 	@ManyToOne
 	@JoinColumn(name = "conditionsofuse")
 	Condition conditions;
+	
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "discount")
+	List<TheTimeUsed> TheTimeUsed;
+	
 }

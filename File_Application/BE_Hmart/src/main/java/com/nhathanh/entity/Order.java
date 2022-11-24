@@ -30,6 +30,7 @@ public class Order  implements Serializable{
 	Long id;
 	String address;
 	String note;
+	Double amount;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Createdate")
