@@ -39,11 +39,6 @@ appPr.controller("product",
 
             $http.get(url).then(resp => {
                 $scope.list_product = resp.data;
-                // $scope.list_product.forEach(e => {
-                //     if (e.available == true) {
-                //         e.remove();
-                //     }
-                // });
                 console.log("List Product Sucess", resp);
             }).catch(error => {
                 console.log("List Product Error", error);
@@ -56,8 +51,17 @@ appPr.controller("product",
             $window.location.href = 'single-product.html';
         }
 
-        var username = localStorage.getItem("user");
+        $scope.checkExist = function(idPr) {
+            $http.get(`http://localhost:8080/hfn/favour/checkExist/${idPr}`).then(resp => {
+                console.log(resp.data);
+                return resp.data;
+            }).catch(error => {
+                console.log("Check exist favour ", error);
+            });
+        }
 
+        //var username = localStorage.getItem("user");
+        var username = "tpph0503";
         //Add to favourite list
         $scope.addToFav = function(idPr) {
             var item = {
