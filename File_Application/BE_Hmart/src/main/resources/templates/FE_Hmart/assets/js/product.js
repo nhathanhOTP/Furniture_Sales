@@ -51,56 +51,47 @@ appPr.controller("product",
             $window.location.href = 'single-product.html';
         }
 
-        $scope.load_list_idProFav = function() {
-            $http.get(`http://localhost:8080/hfn/favour/checkExist/${username}`).then(resp => {
-                $scope.list_idProFav = resp.data;
-                console.log("list idPr ", resp.data);
-            }).catch(error => {
-                console.log("Load list id Product favour ", error);
-            });
-        }
-
-        $scope.checkExist = function(idPr) {
-            $scope.list_idProFav.forEach(e => {
-                if (e == idPr) {
-                    return false;
-                }
-            });
-            return true;
-        }
-
-        //var username = localStorage.getItem("user");
-
         //Add to favourite list
-        $scope.addToFav = function(idPr) {
+        $scope.addToFav = function(idPr, name, image) {
             var user = JSON.parse(localStorage.getItem("user"));
             if (user == null || user == undefined) {
+                $scope.checkAddFV = false;
                 alert("Please login with your account!");
                 window.location.href = "login.html";
             } else {
-                var item = {
-                    account: {
-                        username: user.username
-                    },
-                    product: {
-                        id: idPr
+                $http.get(`http://localhost:8080/hfn/favour/checkExist/${idPr}`).then(resp => {
+                    $scope.rs = resp.data;
+                    console.log("list idPr ", resp.data);
+                    if($scope.rs == true){
+                        $scope.checkAddFV = true;
+                        var item = {
+                            account: {
+                                username: user.username
+                            },
+                            product: {
+                                id: idPr
+                            }
+                        };
+                        $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => { 
+                            $scope.productMessage = resp.data;
+                            console.log("Add Fav Sucess", resp);
+                        }).catch(error => {
+                            console.log("Add Fav Error", error);
+                        });
+                    }else{
+                        $scope.productImage = image;
+                        $scope.productName = name;
+                        $scope.checkAddFV = false;
                     }
-                };
-                $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => {
-                    $scope.productMessage = resp.data;
-                    $scope.load_list_idProFav();
-                    console.log("Add Fav Sucess", resp);
                 }).catch(error => {
-                    console.log("Add Fav Error", error);
+                    console.log("list idPr ", error);
                 });
+                
             }
+            
         }
 
-        $scope.load_list_idProFav();
-        $timeout(function() {
-            $scope.load_list_product();
-        }, 1000);
-
+        $scope.load_list_product();
 
         $scope.clearWhenInCart = function() {
             $scope.cart.clear();
@@ -177,5 +168,8 @@ appPr.controller("product",
         };
 
         $scope.cart.loadFormLocalStorage();
+
+
     }
+    
 );

@@ -49,8 +49,8 @@ public class Discount {
 	Condition conditions;
 	
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "discount")
-	List<TheTimeUsed> TheTimeUsed;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "discount")
+//	List<TheTimeUsed> TheTimeUsed;
 	
 }

@@ -499,7 +499,7 @@
                                                         <div class="actions">
                                                             <button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
                                                                 class="pe-7s-shopbag"></i></button>
-                                                            <button ng-show="checkExist(pr.id) == true" class="action wishlist" title="Wishlist" ng-click="addToFav(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
+                                                            <button class="action wishlist" title="Wishlist" ng-click="addToFav(pr.id, pr.name, pr.image)" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
                                                                     class="pe-7s-like"></i></button>
                                                             <button class="action quickview" ng-click="saveIdProduct(pr.id)" title="Quick view"><i class="pe-7s-look"></i></button>
                                                         </div>

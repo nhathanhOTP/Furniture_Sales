@@ -85,13 +85,17 @@ public class FavouriteRestController {
 	
 	
 	@GetMapping("/hfn/favour/checkExist/{username}")
-	public List<Integer> checkE(@PathVariable("username") String username) {	
-		return favourDao.findIdProduct(username);
+	public Boolean checkE(@PathVariable("username") Integer username) {
+		if(favourDao.findByProducId(username) == null) {
+			return true;
+		}else {
+			return false;		
+		}
 	}
 	
-	@DeleteMapping("/hfn/favour/delete/{id}")
-	public String delete(@PathVariable("id") Integer id){
+	@GetMapping("/hfn/favour/delete/{id}")
+	public Integer delete(@PathVariable("id") Integer id){
 		favourDao.deleteById(id);
-		return "Done!";
+		return id;
 	}
 }

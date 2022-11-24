@@ -46,17 +46,16 @@ appFv.controller("favourite", function($scope, $http, $window) {
             }).catch(error => {
                 console.log("List Fav Error", error);
             });
-        }
-
-
+        } 
     };
 
     //Xoa fav khoi list
     $scope.deleteFav = function(id) {
         var url = `${hostFv}/delete/${id}`;
-        $http.delete(url).then(resp => {
+        $http.get(url).then(resp => {
             console.log("Del Fav Sucess", resp);
-            $window.reload();
+            alert("Delete Successfully!");
+            $window.location.reload();
         }).catch(error => {
             console.log("Del Fav Error", error);
         });

@@ -174,5 +174,60 @@ appSg.controller("detail", function($scope, $http, $window) {
             }
         }
         return ds;
+
+        
     }
+
+    //danh gia san pham
+    //Add to evaluate list
+    $scope.danhGia = function() {
+        var user = JSON.parse(localStorage.getItem("user"));
+        var idPr = sessionStorage.getItem("idProduct");
+        if (user == null || user == undefined) {
+            alert("Please login with your account!");
+            window.location.href = "login.html";
+        } else {
+            $http.get(`http://localhost:8080/hfn/evaluate/checkUser/${user.username}/${idPr}`).then(resp => {
+                console.log("kiem tra user da mua hang success", resp.data);
+                $scope.rs = resp.data;
+                if($scope.rs > 0){
+                    var item = {
+                        account: {
+                            username: user.username
+                        },
+                        product: {
+                            id: idPr
+                        },
+                        numberStart: $scope.eva.NumberStart,
+                        contents: $scope.eva.Contents
+                    };
+                    $http.post(`http://localhost:8080/hfn/evaluate/add`, item).then(resp => { 
+                        console.log("Add Eva Sucess", resp);
+                        alert("Add comment successfully!");
+                        window.location.reload();
+                    }).catch(error => {
+                        console.log("Add Eva Error", error);
+                    });
+                }else{
+                    alert("You only can comment after buy this product!");
+                }
+            }).catch(error => {
+                console.log("kiem tra user da mua hang error", error);
+            });
+            
+        }
+        
+    }
+
+    $scope.load_list_eva = function(){
+        var idPr = sessionStorage.getItem("idProduct");
+        $http.get(`http://localhost:8080/hfn/evaluate/getByPr/${idPr}`).then(resp => { 
+            $scope.list_eva = resp.data;
+            $scope.countEva = $scope.list_eva.length;
+            console.log("Load Eva Sucess", resp);
+        }).catch(error => {
+            console.log("Load Eva Error", error);
+        });
+    }
+    $scope.load_list_eva();
 });
