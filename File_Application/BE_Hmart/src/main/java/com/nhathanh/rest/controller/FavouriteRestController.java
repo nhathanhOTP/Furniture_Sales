@@ -84,14 +84,9 @@ public class FavouriteRestController {
 	}
 	
 	
-	@GetMapping("/hfn/favour/checkExist/{idPr}")
-	public Boolean checkE(@PathVariable Integer id) {	
-		try {
-			favourDao.findByProducId(id);
-			return true;
-		}catch(Exception e) {
-			return false;
-		}	
+	@GetMapping("/hfn/favour/checkExist/{username}")
+	public List<Integer> checkE(@PathVariable("username") String username) {	
+		return favourDao.findIdProduct(username);
 	}
 	
 	@DeleteMapping("/hfn/favour/delete/{id}")
