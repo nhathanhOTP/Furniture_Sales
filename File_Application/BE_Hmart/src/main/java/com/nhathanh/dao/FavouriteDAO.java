@@ -15,6 +15,9 @@ public interface FavouriteDAO extends JpaRepository<Favourite, Integer> {
 	@Query("SELECT p FROM Favourite p WHERE p.account.username=?1")
 	List<Favourite> findByUsername(String id);
 	
-	@Query("SELECT p.product.id FROM Favourite p WHERE p.account.username=?1")
+	@Query("SELECT p.product.id FROM Favourite p WHERE p.account.username = ?1")
 	List<Integer> findIdProduct(String username);
+	
+	@Query("SELECT p FROM Favourite p WHERE p.product.id=?1")
+	Favourite findByProducId(Integer id);	
 }

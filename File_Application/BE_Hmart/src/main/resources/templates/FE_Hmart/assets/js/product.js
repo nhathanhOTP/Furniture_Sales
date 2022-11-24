@@ -1,9 +1,9 @@
 let hostPr = "http://localhost:8080/hfn/product";
 const appPr = angular.module("myProduct", []);
-
+var username = "tpph0503";
 //Xu li menu
 appPr.controller("product",
-    function($scope, $http, $window) {
+    function($scope, $http, $window, $timeout) {
         //Load du lieu cua tat ca category vao list
         $scope.load_list_cate = function() {
             var url = `http://localhost:8080/hfn/categories/getAll`;
@@ -51,8 +51,26 @@ appPr.controller("product",
             $window.location.href = 'single-product.html';
         }
 
-        var username = localStorage.getItem("user");
+        $scope.load_list_idProFav = function() {
+            $http.get(`http://localhost:8080/hfn/favour/checkExist/${username}`).then(resp => {
+                $scope.list_idProFav = resp.data;
+                console.log("list idPr ",resp.data);
+            }).catch(error => {
+                console.log("Load list id Product favour ", error);
+            });
+        }
 
+        $scope.checkExist = function(idPr) {
+            $scope.list_idProFav.forEach(e => {
+                if(e == idPr){
+                    return false;
+                }
+            });
+            return true;
+        }
+
+        //var username = localStorage.getItem("user");
+        
         //Add to favourite list
         $scope.addToFav = function(idPr) {
             var user = JSON.parse(localStorage.getItem("user"));
@@ -70,13 +88,19 @@ appPr.controller("product",
             };
             $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => {
                 $scope.productMessage = resp.data;
+                $scope.load_list_idProFav();
                 console.log("Add Fav Sucess", resp);
             }).catch(error => {
                 console.log("Add Fav Error", error);
             });
         }
+        
+        $scope.load_list_idProFav();
+        $timeout(function () {
+            $scope.load_list_product();
+        }, 1000);
 
-        $scope.load_list_product();
+        
         $scope.clearWhenInCart = function() {
             $scope.cart.clear();
             $window.location.href = 'empty-cart.html';

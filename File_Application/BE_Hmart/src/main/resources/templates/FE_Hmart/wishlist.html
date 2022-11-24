@@ -257,7 +257,7 @@
                 <div class="body customScroll">
                     <ul class="minicart-product-list" ng-show="cart.count != 0 && cart.count != null">
                         <li ng-repeat="it in cart.items">
-                            <a href="single-product.html" class="image"><img src="File_Local/Images/product-image/{{it.image}}/main.jpg" alt="Cart product Image"></a>
+                            <a href="single-product.html" class="image"><img src="http://localhost:8080/getImage/{{it.image}}" alt="{{item.product.name}}"></a>
                             <div class="content">
                                 <a href="single-product.html" class="title">{{it.name}}</a>
                                 <span class="quantity-price">{{it.quantity}} x <span class="amount">{{it.price | number}}Vnd</span></span>
@@ -456,7 +456,7 @@
                                     <tbody>
                                         <tr ng-repeat="item in list_fav">
                                             <td class="product-thumbnail">
-                                                <a href="#"><img class="img-responsive ml-15px" src="File_Local/Images/product-image/{{item.product.image}}/main.jpg" alt="{{item.product.name}}" /></a>
+                                                <a href="#"><img class="img-responsive ml-15px" src="http://localhost:8080/getImage/{{item.product.image}}" alt="{{item.product.name}}" /></a>
                                             </td>
                                             <td class="product-name"><a href="#">{{item.product.name}}</a></td>
                                             <td class="product-price-cart"><span class="amount">{{item.product.price | number}} Vnd</span></td>
