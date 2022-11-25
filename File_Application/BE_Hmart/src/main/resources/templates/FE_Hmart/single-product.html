@@ -35,6 +35,7 @@
 
 <body ng-app="myDetail" ng-controller="detail">
     <div class="main-wrapper">
+        <!-- Header -->
         <header>
             <!-- Header top area start -->
             <div class="header-top">
@@ -48,8 +49,8 @@
                         <div class="col d-none d-lg-block">
                             <div class="top-nav">
                                 <ul>
-                                    <li><a href=""><i class="fa fa-phone"></i> +84 769 628 823</a></li>
-                                    <li><a href=""><i class="fa fa-envelope-o"></i> hungtppps16493@fpt.edu.vn</a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> {{user.phone}}</a></li>
+                                    <li><a href=""><i class="fa fa-envelope-o"></i>{{user.email}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -69,17 +70,17 @@
                         <div class="col-lg-6 d-none d-lg-block">
                             <div class="search-element">
                                 <form action="#">
-                                    <input type="text" placeholder="Search" />
-                                    <button><i class="pe-7s-search"></i></button>
+                                    <input type="text" placeholder="Search" ng-model="search" ng-keydown="searchData()" />
+                                    <button ng-click=""><i class="pe-7s-search"></i></button>
                                 </form>
                             </div>
                         </div>
                         <div class="col-lg-3 col">
                             <div class="header-actions">
-                                <a href="my-account.html"><i class="fa fa-user"></i> Account</a>
+                                <a href="my-account.html"><i class="fa fa-user"></i> {{user.fullname!=null?user.fullname:'Account'}}</a>
                                 <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                                     <i class="pe-7s-shopbag"></i>
-                                    <span class="header-action-num">{{cart.count?cart.count:'0'}}</span>
+                                    <span class="header-action-num">{{cart.count?cart.count:'+'}}</span>
                                 </a>
                                 <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                     <i class="pe-7s-menu"></i>
@@ -173,7 +174,7 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown position-static"><a href="#">Shop <i
-                                    class="fa fa-angle-down"></i></a>
+                                        class="fa fa-angle-down"></i></a>
                                     <ul class="mega-menu d-block">
                                         <li class="d-flex">
                                             <ul class="d-block">
@@ -245,6 +246,7 @@
                 </div>
             </div>
         </header>
+        <!-- End header -->
         <!-- offcanvas overlay start -->
         <div class="offcanvas-overlay"></div>
         <!-- offcanvas overlay end -->
@@ -258,7 +260,7 @@
                 <div class="body customScroll">
                     <ul class="minicart-product-list" ng-show="cart.count != 0 && cart.count != null">
                         <li ng-repeat="it in cart.items">
-                            <a href="single-product.html" class="image"><img src="File_Local/Images/{{it.image}}/main.jpg" alt="Cart product Image"></a>
+                            <a href="single-product.html" class="image"><img src="http://localhost:8080/getImage/{{it.image}}" alt="Cart product Image"></a>
                             <div class="content">
                                 <a href="single-product.html" class="title">{{it.name}}</a>
                                 <span class="quantity-price">{{it.quantity}} x <span class="amount">{{it.price | number}}Vnd</span></span>
