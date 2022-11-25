@@ -41,15 +41,8 @@ public class EvaluateRestController {
 	}
 	
 	@GetMapping("/hfn/evaluate/getByPr/{id}")
-	public List<Evaluate> getByPr(@PathVariable("id") Integer id){
-		
+	public List<Evaluate> getByPr(@PathVariable("id") Integer id){		
 		List<Evaluate> ds = evaDao.findByProductId(id);
-		for (int i = 0; i < ds.size(); i++) {
-			if (ds.get(i).getStatusEva() == false) {
-				ds.remove(i);
-			}
-		}
-		
 		return ds;
 	}
 	

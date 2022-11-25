@@ -88,7 +88,7 @@ appList.controller("list", function($scope, $http, $window) {
             $scope.order = resp.data;
             console.log("Update Sucess", resp);
             alert("Cancel sucessfull!");
-            window.location.href = "orders-list.html";
+            $window.location.reload();
         }).catch(error => {
             console.log("Update Error", error);
         });
@@ -100,7 +100,7 @@ appList.controller("list", function($scope, $http, $window) {
         $http.put(url, status).then(resp => {
             $scope.order = resp.data;
             console.log("Update Sucess", resp);
-            $scope.load_list_order();
+            $window.location.reload();
             alert("Order Done!");
         }).catch(error => {
             console.log("Update Error", error);
@@ -113,7 +113,7 @@ appList.controller("list", function($scope, $http, $window) {
         $http.put(url, status).then(resp => {
             $scope.order = resp.data;
             console.log("Update Sucess", resp);
-            $scope.load_list_order();
+            $window.location.reload();
             alert("Confirm sucessfull!");
         }).catch(error => {
             console.log("Update Error", error);
