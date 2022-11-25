@@ -36,8 +36,8 @@ appFv.controller("favourite", function($scope, $http, $window) {
     //Load add fav list
     $scope.load_list_fav = function() {
         if (user.username == null || user.username == undefined) {
-            alert("Please login with your account!");
             window.location.href = "login.html";
+            alert("Please login with your account!");
         } else {
             var url = `${hostFv}/user/${user.username}`;
             $http.get(url).then(resp => {
@@ -46,7 +46,7 @@ appFv.controller("favourite", function($scope, $http, $window) {
             }).catch(error => {
                 console.log("List Fav Error", error);
             });
-        } 
+        }
     };
 
     //Xoa fav khoi list
