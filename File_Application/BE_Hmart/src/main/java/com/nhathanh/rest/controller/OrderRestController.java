@@ -45,6 +45,14 @@ public class OrderRestController {
 	
 	@PutMapping("/hfn/order/update/{id}")
 	public Order updateStatus(@PathVariable("id")Long id, @RequestBody Integer statusId){
+		if(statusId == 4) {
+			Order or = orderDao.findById(id).get();
+			for (int i = 0; i < or.getOrderDetails().size(); i++) {
+				int a = or.getOrderDetails().get(i).getQuantity();
+				int b = or.getOrderDetails().get(i).getProduct().getProductQty();
+				or.getOrderDetails().get(i).getProduct().setProductQty(a+b);
+			}
+		}	
 		orderDao.updateStatus(statusId, id);
 		return orderDao.findById(id).get();
 	}
