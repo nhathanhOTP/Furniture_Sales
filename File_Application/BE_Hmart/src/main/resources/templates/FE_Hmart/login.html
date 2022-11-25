@@ -540,13 +540,15 @@
                                         <div class="login-register-form">
                                             <form action="#" method="post">
                                                 <input type="text" name="user-name" placeholder="Username" ng-model="form2.username" />
-                                                <input type="text" name="full-name" placeholder="Username" ng-model="form2.fullname" />
+                                                <input type="text" name="full-name" placeholder="Fullname" ng-model="form2.fullname" />
                                                 <input type="password" name="user-password" placeholder="Password" ng-model="form2.password" />
                                                 <input name="user-email" placeholder="Email" type="email" ng-model="form2.email" />
                                                 <input type="hidden" ng-model="form2.photo" value="b.jpg" />
                                                 <input type="hidden" value="CUS" ng-model="form2.roleid">
-                                                <button ng-click="create()"><span>Register</span></button>
                                             </form>
+                                            <div class="button-box">
+                                                <button ng-click="createAccount()"><span>Register</span></button>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -687,63 +689,7 @@
     <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/login_check.js"></script>
-    <script>
-        let host = "http://localhost:8080/rest/account";
-        const app = angular.module("app", []);
-        app.controller("ctrl", function($scope, $http) {
-            $scope.form = {};
-            $scope.form2 = {};
-            $scope.mes = "";
-            $scope.reset = function() {
-                $scope.form = {
-                    username: '',
-                    password: '',
-                    email: ''
-                };
-                $scope.form2 = {
-                    username: '',
-                    password: '',
-                    email: ''
-                }
-            }
 
-            $scope.getData = function() {
-                var url = `${host}`;
-                $http.get(url).then(resp => {
-                    $scope.mes = resp.data[0];
-                    console.log("Success", resp);
-                }).catch(error => {
-                    console.log("Error", error);
-                })
-            }
-
-            $scope.login = function() {
-                var item = angular.copy($scope.form);
-                var url = `${host}/loginCheck`;
-                $http.post(url, item).then(resp => {
-                    $scope.mes = resp.data[0];
-                    console.log($scope.mes);
-                    console.log("Success", resp);
-                }).catch(error => {
-                    console.log("Error", error);
-                })
-            }
-            $scope.create = function() {
-
-                var item = angular.copy($scope.form2);
-                console.log(item);
-                var url = `${host}/createUser`;
-                console.log(item);
-                $http.post(url, item).then(resp => {
-                    $scope.reset();
-                    console.log("Success", resp);
-                    alert("Tạo tài khoản thành công !")
-                }).catch(error => {
-                    console.log("Error", error);
-                })
-            }
-        })
-    </script>
     <!--Main JS (Common Activation Codes)-->
     <!-- <script src="assets/js/main.js"></script> -->
 </body>

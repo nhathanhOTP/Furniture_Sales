@@ -41,6 +41,7 @@
 
 <body ng-app="myProduct" ng-controller="product">
     <div class="main-wrapper">
+        <!-- Header -->
         <header>
             <!-- Header top area start -->
             <div class="header-top">
@@ -75,17 +76,17 @@
                         <div class="col-lg-6 d-none d-lg-block">
                             <div class="search-element">
                                 <form action="#">
-                                    <input type="text" placeholder="Search" />
-                                    <button><i class="pe-7s-search"></i></button>
+                                    <input type="text" placeholder="Search" ng-model="search" ng-keydown="searchData()" />
+                                    <button ng-click=""><i class="pe-7s-search"></i></button>
                                 </form>
                             </div>
                         </div>
                         <div class="col-lg-3 col">
                             <div class="header-actions">
-                                <a href="my-account.html"><i class="fa fa-user"></i> Account</a>
+                                <a href="my-account.html"><i class="fa fa-user"></i> {{user.fullname!=null?user.fullname:'Account'}}</a>
                                 <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                                     <i class="pe-7s-shopbag"></i>
-                                    <span class="header-action-num">{{cart.count?cart.count:'0'}}</span>
+                                    <span class="header-action-num">{{cart.count?cart.count:'+'}}</span>
                                 </a>
                                 <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                     <i class="pe-7s-menu"></i>
@@ -179,7 +180,7 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown position-static"><a href="#">Shop <i
-                                    class="fa fa-angle-down"></i></a>
+                                        class="fa fa-angle-down"></i></a>
                                     <ul class="mega-menu d-block">
                                         <li class="d-flex">
                                             <ul class="d-block">
@@ -251,6 +252,7 @@
                 </div>
             </div>
         </header>
+        <!-- End header -->
         <!-- offcanvas overlay start -->
         <div class="offcanvas-overlay"></div>
         <!-- offcanvas overlay end -->
@@ -428,278 +430,234 @@
         <div class="shop-category-area pt-100px pb-100px">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <!-- Shop Top Area Start -->
-                        <div class="shop-top-bar d-flex">
-                            <p class="compare-product"> <span>12</span> Product Found of <span>30</span></p>
-                            <!-- Left Side End -->
-                            <div class="shop-tab nav">
-                                <button class="active" data-bs-target="#shop-grid" data-bs-toggle="tab">
-                                    <i class="fa fa-th" aria-hidden="true"></i>
-                                </button>
-                                <button data-bs-target="#shop-list" data-bs-toggle="tab">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <!-- Right Side Start -->
-                            <div class="select-shoing-wrap d-flex align-items-center">
-                                <div class="shot-product">
-                                    <p>Sort By:</p>
+                    <div class="product-area related-product">
+                        <div class="container">
+                            <!-- Section Title & Tab Start -->
+                            <div class="row" ng-show="suggestForUser!=undefined">
+                                <div class="col-12">
+                                    <div class="section-title text-center m-0">
+                                        <h2 class="title">Suggestions for you</h2>
+                                        <p>There are many products for you from us</p>
+                                    </div>
                                 </div>
-                                <!-- Single Wedge End -->
-                                <div class="header-bottom-set dropdown">
-                                    <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">Default <i class="fa fa-angle-down"></i></button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a class="dropdown-item" href="#">Name, A to Z</a></li>
-                                        <li><a class="dropdown-item" href="#">Name, Z to A</a></li>
-                                        <li><a class="dropdown-item" href="#">Price, low to high</a></li>
-                                        <li><a class="dropdown-item" href="#">Price, high to low</a></li>
-                                        <li><a class="dropdown-item" href="#">Sort By new</a></li>
-                                        <li><a class="dropdown-item" href="#">Sort By old</a></li>
-                                    </ul>
-                                </div>
-                                <!-- Single Wedge Start -->
                             </div>
-                            <!-- Right Side End -->
-                        </div>
-                        <!-- Shop Top Area End -->
-                        <!-- Shop Bottom Area Start -->
-                        <div class="shop-bottom-area">
-                            <!-- Tab Content Area Start -->
+                            <!-- Section Title & Tab End -->
                             <div class="row">
                                 <div class="col">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="shop-grid">
-                                            <div class="row mb-n-30px">
-                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-30px" ng-repeat="pr in list_product">
-                                                    <!-- Single Prodect -->
-                                                    <div class="product">
-                                                        <span class="badges">
-                                                        <span class="new">New</span>
+                                    <div class="new-product-slider swiper-container slider-nav-style-1" ng-show="suggestForUser!=undefined">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide" ng-repeat="su in suggestForUser">
+                                                <!-- Single Prodect -->
+                                                <div class="product">
+                                                    <span class="badges">
+                                                    <span class="new">For you</span>
+                                                    </span>
+                                                    <div class="thumb">
+                                                        <a href="single-product.html" class="image">
+                                                            <img src="http://localhost:8080/getImage/{{su.image}}" alt="Product" />
+                                                            <img class="hover-image" src="http://localhost:8080/getImage/{{su.image}}" alt="Product" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="content">
+                                                        <span class="category"><a href="#">{{su.category.name}}</a></span>
+                                                        <h5 class="title text-center"><a href="single-product.html">{{su.name}}</a></h5>
+                                                        <span class="price">
+                                                        <span class="new text-danger">{{su.price|number}} Vnd</span>
                                                         </span>
-                                                        <div class="thumb">
-                                                            <a href="single-product.html" class="image">
-                                                                <img src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
-                                                                <img class="hover-image" src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="content pt-1">
-                                                            <span class="category"><a href="#">{{pr.category.name}}</a></span>
-                                                            <h5 class="title product_name text-center"><a href="single-product.html">{{pr.name}}
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(su.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
+                                                            class="pe-7s-shopbag"></i></button>
+                                                        <button class="action wishlist" title="Wishlist" ng-click="addToFav(su.id, su.name, su.image)" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
+                                                                class="pe-7s-like"></i></button>
+                                                        <button class="action quickview" ng-click="saveIdProduct(su.id)" title="Quick view"><i class="pe-7s-look"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="list_product!=''">
+                                        <div class="col-md-12">
+                                            <!-- Shop Top Area Start -->
+                                            <div class="shop-top-bar d-flex">
+                                                <p class="compare-product"> <span>12</span> Product Found of <span>30</span></p>
+                                                <!-- Left Side End -->
+                                                <div class="shop-tab nav">
+                                                    <button class="active" data-bs-target="#shop-grid" data-bs-toggle="tab">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                 </button>
+                                                    <button data-bs-target="#shop-list" data-bs-toggle="tab">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                 </button>
+                                                </div>
+                                                <!-- Right Side Start -->
+                                                <div class="select-shoing-wrap d-flex align-items-center">
+                                                    <div class="shot-product">
+                                                        <p>Sort By:</p>
+                                                    </div>
+                                                    <!-- Single Wedge End -->
+                                                    <div class="header-bottom-set dropdown">
+                                                        <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">Default <i class="fa fa-angle-down"></i></button>
+                                                        <ul class="dropdown-menu dropdown-menu-right">
+                                                            <li><a class="dropdown-item" href="#">Name, A to Z</a></li>
+                                                            <li><a class="dropdown-item" href="#">Name, Z to A</a></li>
+                                                            <li><a class="dropdown-item" href="#">Price, low to high</a></li>
+                                                            <li><a class="dropdown-item" href="#">Price, high to low</a></li>
+                                                            <li><a class="dropdown-item" href="#">Sort By new</a></li>
+                                                            <li><a class="dropdown-item" href="#">Sort By old</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- Single Wedge Start -->
+                                                </div>
+                                                <!-- Right Side End -->
+                                            </div>
+                                            <!-- Shop Top Area End -->
+                                            <!-- Shop Bottom Area Start -->
+                                            <div class="shop-bottom-area">
+                                                <!-- Tab Content Area Start -->
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane fade show active" id="shop-grid">
+                                                                <div class="row mb-n-30px">
+                                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-30px" ng-repeat="pr in list_product">
+                                                                        <!-- Single Prodect -->
+                                                                        <div class="product">
+                                                                            <span class="badges">
+                                                        <span class="new">New</span>
+                                                                            </span>
+                                                                            <div class="thumb">
+                                                                                <a href="single-product.html" class="image">
+                                                                                    <img src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
+                                                                                    <img class="hover-image" src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="content pt-1">
+                                                                                <span class="category"><a href="#">{{pr.category.name}}</a></span>
+                                                                                <h5 class="title product_name text-center"><a href="single-product.html">{{pr.name}}
                                                                 </a>
-                                                            </h5>
-                                                            <span class="price">
+                                                                                </h5>
+                                                                                <span class="price">
                                                                 <span class="new text-danger">
                                                                     {{pr.price | number}} Vnd
                                                                 </span>
-                                                            </span>
-                                                            <div class="text-center"> <small>{{pr.productQty>10?'More than':'The remaining product left'}} {{pr.productQty}}</small></div>
-                                                        </div>
+                                                                                </span>
+                                                                                <div class="text-center"> <small>{{pr.productQty>10?'More than':'The remaining product left'}} {{pr.productQty}}</small></div>
+                                                                            </div>
 
-                                                        <div class="actions">
-                                                            <button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
+                                                                            <div class="actions">
+                                                                                <button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
                                                                 class="pe-7s-shopbag"></i></button>
-                                                            <button class="action wishlist" title="Wishlist" ng-click="addToFav(pr.id, pr.name, pr.image)" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
+                                                                                <button class="action wishlist" title="Wishlist" ng-click="addToFav(pr.id, pr.name, pr.image)" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
                                                                     class="pe-7s-like"></i></button>
-                                                            <button class="action quickview" ng-click="saveIdProduct(pr.id)" title="Quick view"><i class="pe-7s-look"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade mb-n-30px" id="shop-list">
-                                            <div class="shop-list-wrapper mb-30px" ng-repeat="pr in list_product">
-                                                <div class="row">
-                                                    <div class="col-md-5 col-lg-5 col-xl-4 mb-lm-30px">
-                                                        <div class="product">
-                                                            <div class="thumb">
-                                                                <a href="single-product.html" class="image">
-                                                                    <img src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
-                                                                    <img class="hover-image" src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
-                                                                </a>
-                                                                <span class="badges">
-                                                                <span class="new">New</span>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-7 col-lg-7 col-xl-8">
-                                                        <div class="content-desc-wrap">
-                                                            <div class="content">
-                                                                <span class="category"><a href="#">{{pr.category.name}}</a></span>
-                                                                <h5 class="title"><a href="single-product.html">{{pr.name}}</a></h5>
-                                                                <div class="pro-details-rating-wrap">
-                                                                    <div class="rating-product text-warning">
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
+                                                                                <button class="action quickview" ng-click="saveIdProduct(pr.id)" title="Quick view"><i class="pe-7s-look"></i></button>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                    <span class="read-review"><a class="reviews" href="#">(5 Customer Review)</a></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="box-inner">
-                                                                <span class="price">
+                                                            <div class="tab-pane fade mb-n-30px" id="shop-list">
+                                                                <div class="shop-list-wrapper mb-30px" ng-repeat="pr in list_product">
+                                                                    <div class="row">
+                                                                        <div class="col-md-5 col-lg-5 col-xl-4 mb-lm-30px">
+                                                                            <div class="product">
+                                                                                <div class="thumb">
+                                                                                    <a href="single-product.html" class="image">
+                                                                                        <img src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
+                                                                                        <img class="hover-image" src="http://localhost:8080/getImage/{{pr.image}}" alt="Product" />
+                                                                                    </a>
+                                                                                    <span class="badges">
+                                                                <span class="new">New</span>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-7 col-lg-7 col-xl-8">
+                                                                            <div class="content-desc-wrap">
+                                                                                <div class="content">
+                                                                                    <span class="category"><a href="#">{{pr.category.name}}</a></span>
+                                                                                    <h5 class="title"><a href="single-product.html">{{pr.name}}</a></h5>
+                                                                                    <div class="pro-details-rating-wrap">
+                                                                                        <div class="rating-product text-warning">
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                        </div>
+                                                                                        <span class="read-review"><a class="reviews" href="#">(5 Customer Review)</a></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="box-inner">
+                                                                                    <span class="price">
                                                                 <span class="new">{{pr.price | number}} Vnd</span>
-                                                                </span>
-                                                                <div class="actions">
-                                                                    <button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i class="pe-7s-shopbag"></i></button>
-                                                                    <button class="action wishlist" title="Wishlist" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
+                                                                                    </span>
+                                                                                    <div class="actions">
+                                                                                        <button title="Add To Cart" class="action add-to-cart" ng-click="cart.add(pr.id)" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i class="pe-7s-shopbag"></i></button>
+                                                                                        <button class="action wishlist" title="Wishlist" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
                                                                             class="pe-7s-like"></i></button>
-                                                                    <button class="action quickview" data-link-action="quickview" ng-click="saveIdProduct(pr.id)" title="Quick view"><i class="pe-7s-look"></i></button>
+                                                                                        <button class="action quickview" data-link-action="quickview" ng-click="saveIdProduct(pr.id)" title="Quick view"><i class="pe-7s-look"></i></button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Tab Content Area End -->
+                                                <!--  Pagination Area Start -->
+                                                <div class="pro-pagination-style text-center text-lg-end" data-aos="fade-up" data-aos-delay="200">
+                                                    <div class="pages">
+                                                        <ul>
+                                                            <li class="li"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a>
+                                                            </li>
+                                                            <li class="li"><a class="page-link active" href="#">1</a></li>
+                                                            <li class="li"><a class="page-link" href="#">2</a></li>
+                                                            <li class="li"><a class="page-link" href="#">3</a></li>
+                                                            <li class="li"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!--  Pagination Area End -->
+                                            </div>
+                                            <!-- Shop Bottom Area End -->
+                                        </div>
+                                    </div>
+                                    <div class="empty-cart-area pb-100px pt-100px" ng-show="list_product==''">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="cart-heading">
+                                                        <h2>Product not apply</h2>
+                                                    </div>
+                                                    <div class="empty-text-contant text-center">
+                                                        <i class="pe-7s-shopbag"></i>
+                                                        <h3>There are no more product when you find</h3>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
-                            <!-- Tab Content Area End -->
-                            <!--  Pagination Area Start -->
-                            <div class="pro-pagination-style text-center text-lg-end" data-aos="fade-up" data-aos-delay="200">
-                                <div class="pages">
-                                    <ul>
-                                        <li class="li"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a>
-                                        </li>
-                                        <li class="li"><a class="page-link active" href="#">1</a></li>
-                                        <li class="li"><a class="page-link" href="#">2</a></li>
-                                        <li class="li"><a class="page-link" href="#">3</a></li>
-                                        <li class="li"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!--  Pagination Area End -->
+                            <!-- Shop Page End  -->
+                            <!-- Footer Area Start -->
+                            <div ng-include="'layout/footer.html'"></div>
+                            <!-- Footer Area End -->
                         </div>
-                        <!-- Shop Bottom Area End -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Shop Page End  -->
-        <!-- Footer Area Start -->
-        <div class="footer-area">
-            <div class="footer-container">
-                <div class="footer-top">
-                    <div class="container">
-                        <div class="row">
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 mb-md-30px mb-lm-30px">
-                                <div class="single-wedge">
-                                    <div class="footer-logo">
-                                        <a href="index.html"><img src="assets/images/logo/footer-logo.png" alt=""></a>
-                                    </div>
-                                    <p class="about-text">Lorem ipsum dolor sit amet consl adipisi elit, sed do eiusmod templ incididunt ut labore
-                                    </p>
-                                    <ul class="link-follow">
-                                        <li>
-                                            <a class="m-0" title="Twitter" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-facebook"
-                                                aria-hidden="true"></i></a>
-                                        </li>
-                                        <li>
-                                            <a title="Tumblr" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-tumblr" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a title="Facebook" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-twitter" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a title="Instagram" target="_blank" rel="noopener noreferrer" href="#"><i class="fa fa-instagram" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 col-sm-6 mb-lm-30px pl-lg-60px">
-                                <div class="single-wedge">
-                                    <h4 class="footer-herading">Services</h4>
-                                    <div class="footer-links">
-                                        <div class="footer-row">
-                                            <ul class="align-items-center">
-                                                <li class="li"><a class="single-link" href="my-account.html">My Account</a></li>
-                                                <li class="li"><a class="single-link" href="contact.html">Contact</a></li>
-                                                <li class="li"><a class="single-link" href="cart.html">Shopping cart</a></li>
-                                                <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shop</a></li>
-                                                <li class="li"><a class="single-link" href="login.html">Services Login</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 col-sm-6 mb-lm-30px pl-lg-40px">
-                                <div class="single-wedge">
-                                    <h4 class="footer-herading">My Account</h4>
-                                    <div class="footer-links">
-                                        <div class="footer-row">
-                                            <ul class="align-items-center">
-                                                <li class="li"><a class="single-link" href="my-account.html">My Account</a></li>
-                                                <li class="li"><a class="single-link" href="contact.html">Contact</a></li>
-                                                <li class="li"><a class="single-link" href="cart.html">Shopping cart</a></li>
-                                                <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shop</a></li>
-                                                <li class="li"><a class="single-link" href="login.html">Services Login</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
-                            <!-- Start single blog -->
-                            <div class="col-md-6 col-lg-3 col-sm-12">
-                                <div class="single-wedge">
-                                    <h4 class="footer-herading">Contact Info</h4>
-                                    <div class="footer-links">
-                                        <!-- News letter area -->
-                                        <p class="address">Address: Your Address Goes Here.</p>
-                                        <p class="phone">Phone/Fax:<a href="tel:0123456789"> 0123456789</a></p>
-                                        <p class="mail">Email:<a href="mailto:demo@example.com"> demo@example.com</a></p>
-                                        <p class="mail"><a href="https://demo@example.com/"> demo@example.com</a></p>
-                                        <!-- News letter area  End -->
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End single blog -->
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <div class="container">
-                        <div class="line-shape-top line-height-1">
-                            <div class="row flex-md-row-reverse align-items-center">
-                                <div class="col-md-6 text-center text-md-end">
-                                    <div class="payment-mth">
-                                        <a href="#"><img class="img img-fluid" src="assets/images/icons/payment.png" alt="payment-image"></a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-center text-md-start">
-                                    <p class="copy-text"> © 2021 <strong>Hmart</strong> Made With <i class="fa fa-heart" aria-hidden="true"></i> By
-                                        <a class="company-name" href="https://themeforest.net/user/codecarnival/portfolio">
-                                            <strong> Codecarnival </strong></a>.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer Area End -->
-    </div>
 
 
-    <div ng-include="'/modal/ModalWishList.html'"></div>
-    <div ng-include="'/modal/ModalCompare.html'"></div>
-    <!-- Global Vendor, plugins JS -->
-    <!-- JS Files
+                        <div ng-include="'/modal/ModalWishList.html'"></div>
+                        <div ng-include="'/modal/ModalCompare.html'"></div>
+                        <!-- Global Vendor, plugins JS -->
+                        <!-- JS Files
     ============================================ -->
-    <!-- <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+                        <!-- <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
     <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-migrate-3.3.2.min.js"></script>
     <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
@@ -710,15 +668,15 @@
     <script src="assets/js/plugins/jquery-ui.min.js"></script>
     <script src="assets/js/plugins/mailchimp-ajax.js"></script> -->
 
-    <!-- Minify Version -->
-    <script src="assets/js/vendor.min.js"></script>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/main.min.js"></script>
-    <script src="assets/js/product.js"></script>
-    <script src="assets/js/login_check.js"></script>
+                        <!-- Minify Version -->
+                        <script src="assets/js/vendor.min.js"></script>
+                        <script src="assets/js/plugins.min.js"></script>
+                        <script src="assets/js/main.min.js"></script>
+                        <script src="assets/js/product.js"></script>
+                        <script src="assets/js/login_check.js"></script>
 
-    <!--Main JS (Common Activation Codes)-->
-    <!-- <script src="assets/js/main.js"></script> -->
+                        <!--Main JS (Common Activation Codes)-->
+                        <!-- <script src="assets/js/main.js"></script> -->
 </body>
 
 

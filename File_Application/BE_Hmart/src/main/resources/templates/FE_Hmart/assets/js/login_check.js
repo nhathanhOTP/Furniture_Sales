@@ -25,6 +25,23 @@ app.controller("login", function($scope, $http) {
             } else {
                 alert("Your account not correct, try again!");
             }
-        })
+        });
+    }
+
+
+    $scope.form2 = {};
+
+    $scope.createAccount = function() {
+        var item = angular.copy($scope.form2);
+        console.log(item);
+        var url = `${host_BangPhi}/bangphi/createUser`;
+        console.log(item);
+        $http.post(url, item).then(resp => {
+            console.log("Success", resp);
+            alert("Register successfully!");
+        }).catch(error => {
+            console.log("Error", error);
+        });
+        $window.location.reload();
     }
 });

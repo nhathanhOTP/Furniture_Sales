@@ -1,6 +1,26 @@
 let hostPr = "http://localhost:8080/hfn/product";
 const appPr = angular.module("myProduct", []);
-var username = "tpph0503";
+
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') { c = c.substring(1); }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 //Xu li menu
 appPr.controller("product",
     function($scope, $http, $window, $timeout) {
@@ -51,10 +71,10 @@ appPr.controller("product",
             $window.location.href = 'single-product.html';
         }
 
+        $scope.user = JSON.parse(localStorage.getItem("user"));
         //Add to favourite list
         $scope.addToFav = function(idPr, name, image) {
-            var user = JSON.parse(localStorage.getItem("user"));
-            if (user == null || user == undefined) {
+            if ($scope.user == null || $scope.user == undefined) {
                 $scope.checkAddFV = false;
                 alert("Please login with your account!");
                 window.location.href = "login.html";
@@ -62,23 +82,23 @@ appPr.controller("product",
                 $http.get(`http://localhost:8080/hfn/favour/checkExist/${idPr}`).then(resp => {
                     $scope.rs = resp.data;
                     console.log("list idPr ", resp.data);
-                    if($scope.rs == true){
+                    if ($scope.rs == true) {
                         $scope.checkAddFV = true;
                         var item = {
                             account: {
-                                username: user.username
+                                username: $scope.user.username
                             },
                             product: {
                                 id: idPr
                             }
                         };
-                        $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => { 
+                        $http.post(`http://localhost:8080/hfn/favour/add`, item).then(resp => {
                             $scope.productMessage = resp.data;
                             console.log("Add Fav Sucess", resp);
                         }).catch(error => {
                             console.log("Add Fav Error", error);
                         });
-                    }else{
+                    } else {
                         $scope.productImage = image;
                         $scope.productName = name;
                         $scope.checkAddFV = false;
@@ -86,9 +106,9 @@ appPr.controller("product",
                 }).catch(error => {
                     console.log("list idPr ", error);
                 });
-                
+
             }
-            
+
         }
 
         $scope.load_list_product();
@@ -169,7 +189,31 @@ appPr.controller("product",
 
         $scope.cart.loadFormLocalStorage();
 
+        $scope.searchData = function() {
+            if ($scope.search != undefined) {
+                $http.get(`${host_NhaThanh}/search/products/${$scope.search}`).then(resp => {
+                    $scope.list_product = resp.data;
+                    if (resp.data == '' || resp.data != null || resp.data != undefined) {
+                        setCookie("search", $scope.list_product[0].category.id, 10);
+                    }
+                });
+            }
+        }
+        $scope.suggest = function() {
+            var value = getCookie("search");
+            if (value != undefined || value != '') {
+                $http.get(`${host_NhaThanh}/hfn/product/cate/${value}`).then(resp => {
+                    $scope.suggestForUser = resp.data;
+                    for (let i = 0; i < $scope.suggestForUser.length; i++) {
+                        if (i == 8) {
+                            var index = $scope.bdays.indexOf($scope.suggestForUser[i]);
+                            $scope.suggestForUser.splice(index, 1);
+                        }
+                    }
+                });
+            }
+        };
+        $scope.suggest();
 
     }
-    
 );

@@ -32,14 +32,14 @@ appFv.controller("favourite", function($scope, $http, $window) {
         $window.location.href = 'single-product.html';
     }
 
-    var user = JSON.parse(localStorage.getItem("user"));
+    $scope.user = JSON.parse(localStorage.getItem("user"));
     //Load add fav list
     $scope.load_list_fav = function() {
-        if (user == null || user == undefined) {
+        if ($scope.user == null || $scope.user == undefined) {
             window.location.href = "login.html";
             alert("Please login with your account!");
         } else {
-            var url = `${hostFv}/user/${user.username}`;
+            var url = `${hostFv}/user/${$scope.user.username}`;
             $http.get(url).then(resp => {
                 $scope.list_fav = resp.data;
                 console.log("List Fav Sucess", resp);
