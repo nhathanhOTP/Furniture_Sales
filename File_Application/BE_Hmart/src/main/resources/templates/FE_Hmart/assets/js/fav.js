@@ -35,7 +35,7 @@ appFv.controller("favourite", function($scope, $http, $window) {
     var user = JSON.parse(localStorage.getItem("user"));
     //Load add fav list
     $scope.load_list_fav = function() {
-        if (user.username == null || user.username == undefined) {
+        if (user == null || user == undefined) {
             window.location.href = "login.html";
             alert("Please login with your account!");
         } else {
