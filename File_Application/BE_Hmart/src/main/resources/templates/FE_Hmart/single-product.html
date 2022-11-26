@@ -49,8 +49,8 @@
                         <div class="col d-none d-lg-block">
                             <div class="top-nav">
                                 <ul>
-                                    <li><a href=""><i class="fa fa-phone"></i> {{user.phone}}</a></li>
-                                    <li><a href=""><i class="fa fa-envelope-o"></i>{{user.email}}</a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> {{user.phone!=null?user.phone:'Phone Number'}}</a></li>
+                                    <li><a href=""><i class="fa fa-envelope-o"></i>{{user.email!=null?user.email:'Email'}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -508,7 +508,7 @@
                                             <div class="review-wrapper">
                                                 <div class="single-review" ng-repeat="ps in list_eva">
                                                     <div class="review-img">
-                                                        <img src="assets/images/review-image/1.png" alt="" />
+                                                        <img src="http://localhost:8080/hfn/getImage/{{ps.account.photo}}" alt="" style="border-radius: 50%;"/>
                                                     </div>
                                                     <div class="review-content">
                                                         <div class="review-top-wrap">

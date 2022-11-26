@@ -47,9 +47,8 @@
                         <div class="col d-none d-lg-block">
                             <div class="top-nav">
                                 <ul>
-                                    <li><a href=""><i class="fa fa-phone"></i> +84 769 628 823</a></li>
-                                    <li><a href=""><i class="fa fa-envelope-o"></i> hungtppps16493@fpt.edu.vn</a></li>
-                                    <li><a href="my-account.html"><i class="fa fa-user"></i> Account</a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> {{user.phone!=null?user.phone:'Phone Number'}}</a></li>
+                                    <li><a href=""><i class="fa fa-envelope-o"></i>{{user.email!=null?user.email:'Email'}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -67,16 +66,27 @@
                             </div>
                         </div>
                         <div class="col-lg-6 d-none d-lg-block">
-
+                            <div class="search-element">
+                                <form action="#">
+                                    <input type="text" placeholder="Search" ng-model="search" ng-keydown="searchData()" />
+                                    <button ng-click=""><i class="pe-7s-search"></i></button>
+                                </form>
+                            </div>
                         </div>
                         <div class="col-lg-3 col">
-                            <div class="header-actions"> </div>
+                            <div class="header-actions">
+                                <a href="my-account.html"><i class="fa fa-user"></i> {{user.fullname!=null?user.fullname:'Account'}}</a>
+                                <a ng-show="user.fullname!=null" href="login.html">Login</a>
+                                <a ng-show="user.fullname==null" ng-click="logout()">Logout</a>
+                                <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
+                                    <i class="pe-7s-menu"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Header action area end -->
-
         </header>
         <!-- offcanvas overlay start -->
         <div class="offcanvas-overlay"></div>

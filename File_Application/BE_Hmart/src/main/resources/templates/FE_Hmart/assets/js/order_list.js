@@ -24,18 +24,29 @@ appList.controller("list", function($scope, $http, $window) {
         $window.location.href = 'shop-4-column.html';
     }
 
+    $scope.logout= function(){
+        localStorage.setItem("user",null);
+        alert("Logout Successfully!");
+        $window.location.reload();
+    }
+
     $scope.load_list_cate();
     //Load du lieu cua tat ca order vao list theo username
     var user = JSON.parse(localStorage.getItem("user"));
     //Load du lieu cua tat ca order vao list theo username
     $scope.load_admin_list_order = function() {
-        var url = `${hostList}/getAll`;
-        $http.get(url).then(resp => {
-            $scope.admin_list_order = resp.data;
-            console.log("List Order Sucess", resp);
-        }).catch(error => {
-            console.log("List Order Error", error);
-        });
+        if(user == null || user == undefined || user.role.id != 'STA'){
+            alert("Please login with Staff role!");
+            $window.location.href = 'login.html';
+        }else{     
+            var url = `${hostList}/getAll`;
+            $http.get(url).then(resp => {
+                $scope.admin_list_order = resp.data;
+                console.log("List Order Sucess", resp);
+            }).catch(error => {
+                console.log("List Order Error", error);
+            });
+        }
 
     };
     $scope.load_admin_list_order();

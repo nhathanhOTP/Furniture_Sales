@@ -35,6 +35,12 @@ appPr.controller("product",
             });
         };
 
+        $scope.logout= function(){
+            localStorage.setItem("user",null);
+            alert("Logout Successfully!");
+            $window.location.reload();
+        }
+
         //Luu id category len session
         $scope.saveIdCategory = function(id) {
             if (id == 'null') {
